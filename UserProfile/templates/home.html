@@ -6,26 +6,17 @@
     <title>Welcome to FitCheckApp</title>
 </head>
 <body>
-    <header>
-        <h1>Welcome to FitCheckApp!</h1>
-    </header>
+    <h1>Welcome to FitCheckApp</h1>
+    <p>Your health and fitness journey starts here!</p>
 
-    <main>
-        <p>Your personal health and fitness tracker starts here. Let's get started!</p>
-        
-        <!-- Navigation Buttons -->
-        <div>
-            <a href="{% url 'user_create' %}">
-                <button>Create Account</button>
-            </a>
-            <a href="{% url 'login' %}">
-                <button>Login</button>
-            </a>
-        </div>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 FitCheckApp. All rights reserved.</p>
-    </footer>
+    <!-- Navigation Buttons -->
+    <div>
+        <a href="{% url 'user_login' %}">
+            <button>Login</button>
+        </a>
+        <a href="{% url 'user_create' %}">
+            <button>Register</button>
+        </a>
+    </div>
 </body>
 </html>
