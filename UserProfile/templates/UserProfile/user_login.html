@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+</head>
+<body>
+    <h1>Login to FitCheckApp</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+
+    <p>
+        Don't have an account? 
+        <a href="{% url 'user_create' %}">Create an Account</a>
+    </p>
+
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li style="color: red;">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <!-- Back Button -->
+    <button onclick="window.history.back()">Back</button>
+</body>
+</html>
