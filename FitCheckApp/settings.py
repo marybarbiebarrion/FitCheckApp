@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'UserCreate',
 ]
 
 MIDDLEWARE = [
@@ -56,8 +57,8 @@ ROOT_URLCONF = 'FitCheckApp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [BASE_DIR / "templates"],  # For the global templates folder
+        'APP_DIRS': True,  # For app-specific templates
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
