@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Analysis</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>Food Analysis</h1>
+    
+    <div class="main-content">
+        <section id="upper-left">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label>Upload Image:</label>
+                {{ form.image }}
+                <button type="submit" name="upload">Upload</button>
+                <button type="submit" name="analyze">Analyze</button>
+            </form>
+        </section>
+        
+        {% if analysis %}
+        <section id="upper-right">
+            <h3>Ingredients</h3>
+            <p>{{ analysis.ingredients }}</p>
+        </section>
+        
+        <section id="lower-left">
+            <h3>Allergens</h3>
+            <p>{{ analysis.allergens }}</p>
+        </section>
+        
+        <section id="lower-middle">
+            <h3>Food Alternatives</h3>
+            <p>{{ analysis.alternatives }}</p>
+        </section>
+        {% endif %}
+        
+        <section id="lower-right">
+            <h3>Past Analyses</h3>
+            <ul>
+                {% for past in past_analyses %}
+                    <li>{{ past.analyzed_at }} - {{ past.ingredients }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+
+</body>
+</html>
