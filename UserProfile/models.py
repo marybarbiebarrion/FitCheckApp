@@ -18,7 +18,7 @@ class User(AbstractUser):
     # Account Information
     username = models.CharField(max_length=150, unique=True, null=False)  # Add username field
     email = models.EmailField(unique=True, null=False)  # Use Django's default email field
-    password = models.CharField(max_length=255, null=False)  # Will be hashed
+    # password = models.CharField(max_length=255, null=False)  # Will be hashed
 
     USERNAME_FIELD = 'username'  # Set username as the unique identifier
     REQUIRED_FIELDS = ['email']  # Email is required in addition to username

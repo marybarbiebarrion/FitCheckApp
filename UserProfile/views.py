@@ -15,10 +15,15 @@ def user_create(request):
             messages.success(request, "Account created successfully. You can now log in.")
             return redirect('user_login')  # Redirect to login page after successful registration
         else:
+            print("Form errors:", form.errors)  # Debugging: Print form errors to the console
             messages.error(request, "Please correct the errors below.")
     else:
         form = UserCreateForm()
-    return render(request, 'UserProfile/user_create.html', {'form': form})
+
+    # Add a flag to indicate whether the form has errors
+    form_has_errors = form.errors and len(form.errors) > 0
+
+    return render(request, 'UserProfile/user_create.html', {'form': form, 'form_has_errors': form_has_errors})
 
 def health_profile(request):
     # Logic for health profile setup
@@ -30,23 +35,17 @@ def dashboard(request):
 
 def user_login(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')  # Retrieve username from form
-            password = form.cleaned_data.get('password')
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)  # Log the user in
-                messages.success(request, f"Welcome back, {user.first_name}!")
-                # Redirect based on whether health profile is completed
-                return redirect('dashboard')  # Or 'health_profile' if needed
-            else:
-                messages.error(request, "Invalid username or password.")
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('dashboard')  # Redirect to the home page or dashboard
         else:
             messages.error(request, "Invalid username or password.")
-    else:
-        form = AuthenticationForm()
-    return render(request, 'UserProfile/user_login.html', {'form': form})
+    
+    return render(request, 'UserProfile/user_login.html')
 
 def user_logout(request):
     logout(request)

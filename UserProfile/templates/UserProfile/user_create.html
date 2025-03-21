@@ -20,7 +20,7 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}  <!-- Dynamically render all form fields -->
-        <button type="submit" id="create-user-button" disabled>Create User</button>
+        <button type="submit" id="create-user-button" {% if form_has_errors %}disabled{% endif %}>Create User</button>
     </form>
 
     <p>
@@ -32,17 +32,37 @@
     <button onclick="window.history.back()">Back</button>
 
     <script>
-        // Enable the "Create User" button only if both checkboxes are checked
-        const consentCheckbox = document.getElementById('id_expression_of_consent');
-        const declarationCheckbox = document.getElementById('id_declaration_undertaking');
+        const form = document.querySelector('form');
         const createUserButton = document.getElementById('create-user-button');
 
-        function toggleCreateButton() {
-            createUserButton.disabled = !(consentCheckbox.checked && declarationCheckbox.checked);
+        // Function to check if all required fields are valid
+        function validateForm() {
+            const inputs = form.querySelectorAll('input, select');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (input.required && !input.value.trim()) {
+                    isValid = false;
+                }
+            });
+
+            // Check if both checkboxes are checked
+            const consentCheckbox = document.getElementById('id_expression_of_consent');
+            const declarationCheckbox = document.getElementById('id_declaration_undertaking');
+            if (!consentCheckbox.checked || !declarationCheckbox.checked) {
+                isValid = false;
+            }
+
+            // Enable or disable the button based on form validity
+            createUserButton.disabled = !isValid;
         }
 
-        consentCheckbox.addEventListener('change', toggleCreateButton);
-        declarationCheckbox.addEventListener('change', toggleCreateButton);
+        // Attach event listeners to all form inputs
+        form.addEventListener('input', validateForm);
+        form.addEventListener('change', validateForm);
+
+        // Initial validation check
+        validateForm();
     </script>
 </body>
 </html>
