@@ -4,7 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Analysis</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General styles */
+        body {
+            background-color: skyblue;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Main container to position everything */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 20px;
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        /* Styling for sections */
+        #upper-left, #upper-right, #lower-left, #lower-middle, #lower-right {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            margin: 10px;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        /* Grid placement */
+        #upper-left {
+            grid-column: 1 / 3;
+            grid-row: 1 / 2;
+        }
+
+        #upper-right {
+            grid-column: 3 / 3;
+            grid-row: 1 / 2;
+        }
+
+        #lower-left {
+            grid-column: 1 / 2;
+            grid-row: 2 / 3;
+        }
+
+        #lower-middle {
+            grid-column: 2 / 2;
+            grid-row: 2 / 3;
+        }
+
+        #lower-right {
+            grid-column: 3 / 3;
+            grid-row: 2 / 3;
+        }
+
+        /* Form styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* List styling */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 5px 0;
+        }
+    </style>
 </head>
 <body>
 
