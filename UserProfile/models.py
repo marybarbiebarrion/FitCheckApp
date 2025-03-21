@@ -16,8 +16,12 @@ class User(AbstractUser):
     sex_at_birth = models.CharField(max_length=1, choices=sex_at_birth_choices, null=False)
 
     # Account Information
-    email_address = models.EmailField(unique=True, null=False)  # Used as a unique identifier
+    username = models.CharField(max_length=150, unique=True, null=False)  # Add username field
+    email = models.EmailField(unique=True, null=False)  # Use Django's default email field
     password = models.CharField(max_length=255, null=False)  # Will be hashed
+
+    USERNAME_FIELD = 'username'  # Set username as the unique identifier
+    REQUIRED_FIELDS = ['email']  # Email is required in addition to username
 
     # Consent and Declarations
     expression_of_consent = models.BooleanField(default=False, null=False)  # Yes/No
@@ -39,4 +43,4 @@ class User(AbstractUser):
     )
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} ({self.email_address})"
+        return f"{self.first_name} {self.last_name} ({self.email})"
