@@ -106,9 +106,13 @@
                 {% csrf_token %}
                 <label>Upload Image:</label>
                 {{ form.image }}
-                <button type="submit" name="upload">Upload</button>
+                {% comment %} <button type="submit" name="upload">Upload</button> {% endcomment %}
                 <button type="submit" name="analyze">Analyze</button>
             </form>
+            {% if analysis %}
+                <h3>Predicted Food</h3>
+                <p><strong>{{ analysis.food_name }}</strong></p>
+            {% endif %}
         </section>
         
         {% if analysis %}
