@@ -7,24 +7,26 @@
 </head>
 <body>
     <h1>Login to FitCheckApp</h1>
+
+    <!-- Display success or error messages -->
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form.as_p }}  <!-- Dynamically render all form fields -->
         <button type="submit">Login</button>
     </form>
 
     <p>
         Don't have an account? 
-        <a href="{% url 'user_create' %}">Create an Account</a>
+        <a href="{% url 'user_create' %}">Create an Account</a>.
     </p>
-
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-            <li style="color: red;">{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
 
     <!-- Back Button -->
     <button onclick="window.history.back()">Back</button>
