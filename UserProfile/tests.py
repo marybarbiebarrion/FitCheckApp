@@ -1,55 +1,70 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from django.utils.crypto import get_random_string
+from parameterized import parameterized
 
 User = get_user_model()
 
 class UserProfileTests(TestCase):
     def setUp(self):
         """
-        Set up initial test data for the tests.
+        Set up reusable test data for all tests.
         """
-        # Create a test user for login tests
+        # Create a reusable test user for login/logout tests
         self.test_user = User.objects.create_user(
-            email_address='testuser@example.com',
+            username='testuser',
+            email='testuser@example.com',
             password='password123',
             first_name='Test',
             last_name='User'
         )
 
+    def create_user_data(self, username=None, email=None):
+        """
+        Helper method to generate dynamic user data for tests.
+        """
+        return {
+            'username': username or get_random_string(8),
+            'first_name': 'John',
+            'last_name': 'Doe',
+            'birthdate_month': '1',  # January
+            'birthdate_day': '1',   # 1st
+            'birthdate_year': '1990',  # 1990
+            'sex_at_birth': 'M',
+            'email': email or f"{get_random_string(5)}@example.com",
+            'password1': 'Str0ngP@ssw0rd!',
+            'password2': 'Str0ngP@ssw0rd!',
+            'expression_of_consent': True,
+            'declaration_undertaking': True,
+        }
+
     def test_user_create(self):
         """
         Test that a new user can register successfully.
         """
-        # Simulate a POST request to create a new user
-        response = self.client.post(reverse('user_create'), {
-            'first_name': 'John',
-            'last_name': 'Doe',
-            'birthdate': '1990-01-01',
-            'sex_at_birth': 'M',
-            'email_address': 'johndoe@example.com',
-            'password1': 'password123',
-            'password2': 'password123',
-            'expression_of_consent': True,
-            'declaration_undertaking': True,
-        })
-
-        # Check if the user was successfully created
+        user_data = self.create_user_data(username='johndoe', email='johndoe@example.com')
+        response = self.client.post(reverse('user_create'), user_data)
+    
+        # Debugging: Print form errors if the response status code is not 302
+        if response.status_code != 302:
+            print("Form errors:", response.context['form'].errors)
+    
+        # Assertions
         self.assertEqual(response.status_code, 302)  # Should redirect to login page
         self.assertRedirects(response, reverse('user_login'))  # Check the redirect target
-        self.assertTrue(User.objects.filter(email_address='johndoe@example.com').exists())  # User exists in the database
+        self.assertTrue(User.objects.filter(username='johndoe').exists())  # User exists in the database
 
-    def test_login_with_email(self):
+    def test_login_with_username(self):
         """
-        Test that a user can log in using their email address and password.
+        Test that a user can log in using their username and password.
         """
-        # Simulate a POST request to log in with email address
         response = self.client.post(reverse('user_login'), {
-            'username': 'testuser@example.com',  # Use email_address here
+            'username': self.test_user.username,
             'password': 'password123',
         })
 
-        # Check if the login is successful and redirects to the dashboard
+        # Assertions
         self.assertEqual(response.status_code, 302)  # Should redirect to dashboard
         self.assertRedirects(response, reverse('dashboard'))  # Check the redirect target
         self.assertTrue(response.wsgi_request.user.is_authenticated)  # User should be authenticated
@@ -58,13 +73,65 @@ class UserProfileTests(TestCase):
         """
         Test that invalid login credentials return an error.
         """
-        # Attempt to log in with incorrect credentials
         response = self.client.post(reverse('user_login'), {
-            'username': 'wrongemail@example.com',
+            'username': 'wrongusername',
             'password': 'wrongpassword',
         })
 
-        # Check if the login page reloads with an error message
+        # Assertions
         self.assertEqual(response.status_code, 200)  # Page reloads on error
-        self.assertContains(response, "Invalid email or password.")  # Check for error message
+        self.assertContains(response, "Invalid username or password.")  # Check for error message
         self.assertFalse(response.wsgi_request.user.is_authenticated)  # User should not be authenticated
+
+    def test_user_logout(self):
+        """
+        Test that a logged-in user can log out successfully.
+        """
+        self.client.login(username=self.test_user.username, password='password123')
+        response = self.client.get(reverse('user_logout'))
+
+        # Assertions
+        self.assertEqual(response.status_code, 302)  # Should redirect to home page
+        self.assertRedirects(response, reverse('home'))  # Check the redirect target
+        self.assertFalse(response.wsgi_request.user.is_authenticated)  # User should be logged out
+
+    @parameterized.expand([
+        ("missing_username", {'username': '', 'email': 'test@example.com'}, "This field is required."),
+        ("missing_email", {'username': 'testuser', 'email': ''}, "This field is required."),
+        ("password_mismatch", {'password1': 'password123', 'password2': 'password456'}, "The two password fields didn’t match."),
+        ("invalid_email", {'email': 'invalid-email'}, "Enter a valid email address."),
+        ("missing_consent", {'expression_of_consent': False}, "You must agree to share your health data."),
+    ])
+    def test_user_create_validation_errors(self, name, invalid_data, expected_error):
+        """
+        Test user creation with invalid data to ensure proper validation errors.
+        """
+        user_data = self.create_user_data()
+        user_data.update(invalid_data)  # Inject invalid data
+        response = self.client.post(reverse('user_create'), user_data)
+
+        # Assertions
+        self.assertEqual(response.status_code, 200)  # Form should reload with errors
+        self.assertContains(response, expected_error)  # Check for specific validation error
+
+    def test_duplicate_username(self):
+        """
+        Test that creating a user with a duplicate username fails.
+        """
+        user_data = self.create_user_data(username='testuser', email='newemail@example.com')
+        response = self.client.post(reverse('user_create'), user_data)
+
+        # Assertions
+        self.assertEqual(response.status_code, 200)  # Form should reload with errors
+        self.assertContains(response, "A user with that username already exists.")  # Check for duplicate username error
+
+    def test_duplicate_email(self):
+        """
+        Test that creating a user with a duplicate email fails.
+        """
+        user_data = self.create_user_data(username='newuser', email='testuser@example.com')
+        response = self.client.post(reverse('user_create'), user_data)
+
+        # Assertions
+        self.assertEqual(response.status_code, 200)  # Form should reload with errors
+        self.assertContains(response, "A user with this Email Address already exists.")  # Check for duplicate email error
