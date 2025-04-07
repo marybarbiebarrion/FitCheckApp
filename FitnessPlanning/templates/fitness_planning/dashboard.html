@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Fitness Planning Dashboard</h2>
+
+<!-- Exercise Recommendation -->
+<h3>Exercise Recommendation</h3>
+<form method="post">
+  {% csrf_token %}
+  {{ exercise_form.as_p }}
+  <button name="exercise-submit" type="submit">Calculate Exercise</button>
+</form>
+
+{% if exercise_result %}
+  <p><strong>Recommended:</strong> {{ exercise_result.recommended_exercise }}</p>
+  <p><strong>Duration:</strong> {{ exercise_result.duration }}</p>
+  <p><strong>Calories Burned:</strong> {{ exercise_result.calories_burned }}</p>
+{% endif %}
+
+<hr>
+
+<!-- Calorie Deficit Planner -->
+<h3>Calorie Deficit Planner</h3>
+<form method="post">
+  {% csrf_token %}
+  {{ deficit_form.as_p }}
+  <button name="deficit-submit" type="submit">Plan Deficit</button>
+</form>
+
+{% if deficit_result %}
+  <p><strong>Target Weight:</strong> {{ deficit_result.target_weight }}</p>
+  <p><strong>Daily Calories:</strong> {{ deficit_result.daily_caloric_intake }}</p>
+{% endif %}
+
+<hr>
+
+<!-- Intermittent Fasting Scheduler -->
+<h3>Intermittent Fasting Schedule</h3>
+<form method="post">
+  {% csrf_token %}
+  {{ fasting_form.as_p }}
+  <button name="fasting-submit" type="submit">Set Schedule</button>
+</form>
+
+{% if fasting_result %}
+  <p><strong>Fasting Type:</strong> {{ fasting_result.fasting_type }}</p>
+  <p><strong>Fasting Window:</strong> {{ fasting_result.fasting_window_start }} - {{ fasting_result.fasting_window_end }}</p>
+  <p><strong>Eating Window:</strong> {{ fasting_result.eating_window_start }} - {{ fasting_result.eating_window_end }}</p>
+{% endif %}
+
+<hr>
+
+<!-- Fasting Log -->
+<h3>Fasting Log</h3>
+<form method="post">
+  {% csrf_token %}
+  {{ fasting_log_form.as_p }}
+  <button name="log-submit" type="submit">Save Log</button>
+</form>
+
+{% if log_saved %}
+  <p>✅ Fasting log saved for today!</p>
+{% endif %}
+
+{% endblock %}
