@@ -7,7 +7,7 @@
 <form method="post">
   {% csrf_token %}
   {{ exercise_form.as_p }}
-  <button name="exercise-submit" type="submit">Calculate Exercise</button>
+  <button class="button" name="exercise-submit" type="submit">Calculate Exercise</button>
 </form>
 
 {% if exercise_result %}
@@ -23,7 +23,7 @@
 <form method="post">
   {% csrf_token %}
   {{ deficit_form.as_p }}
-  <button name="deficit-submit" type="submit">Plan Deficit</button>
+  <button class="button" name="deficit-submit" type="submit">Plan Deficit</button>
 </form>
 
 {% if deficit_result %}
@@ -38,7 +38,7 @@
 <form method="post">
   {% csrf_token %}
   {{ fasting_form.as_p }}
-  <button name="fasting-submit" type="submit">Set Schedule</button>
+  <button class="button" name="fasting-submit" type="submit">Set Schedule</button>
 </form>
 
 {% if fasting_result %}
@@ -54,7 +54,7 @@
 <form method="post">
   {% csrf_token %}
   {{ fasting_log_form.as_p }}
-  <button name="log-submit" type="submit">Save Log</button>
+  <button class="button" name="log-submit" type="submit">Save Log</button>
 </form>
 
 {% if log_saved %}
