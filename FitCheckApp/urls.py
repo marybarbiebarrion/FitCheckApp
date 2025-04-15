@@ -24,5 +24,7 @@ urlpatterns = [
     path('user_create/', views.user_create, name='user_create'),
     path('health_profile/', views.health_profile, name='health_profile'),
     path('dashboard/', views.dashboard, name='dashboard'),
-    path('', include('FoodAnalysis.urls')),  # Add this line
+    path('nutritionguidance/', include('NutritionGuidance.urls', namespace="NutritionGuidance")), # Add this line
+    path('foodanalysis/', include('FoodAnalysis.urls', namespace="FoodAnalysis")),
+    
 ]
