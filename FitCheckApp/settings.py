@@ -56,8 +56,8 @@ ROOT_URLCONF = 'FitCheckApp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [BASE_DIR / "templates"],  # For the global templates folder
+        'APP_DIRS': True,  # For app-specific templates
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'FitCheckApp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'fitcheck_db',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
