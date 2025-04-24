@@ -3,7 +3,10 @@ from django.db import models
 # Create your models here.
 class Ingredient(models.Model):
     ingredient_id = models.AutoField(primary_key=True)
-    ingredient_name = models.CharField(max_length=256, null=False)    
+    ingredient_name = models.CharField(max_length=256, null=False)  
+    
+    def __str__(self):
+        return self.ingredient_name 
 
 class Recipe(models.Model):
     recipe_id = models.AutoField(primary_key=True)
@@ -14,10 +17,16 @@ class Recipe_Ingredients(models.Model):
     ingredient_id = models.ForeignKey('Ingredient', related_name='recipe_ingredient', on_delete=models.CASCADE)
     quantity = models.CharField(max_length=20, null=False)
     
+    def __str__(self):
+        return f'{self.ingredient_id.ingredient_name} - {self.quantity} - {self.recipe_id}' 
+    
 class Meal(models.Model):
     meal_id = models.AutoField(primary_key=True)
     meal_name = models.CharField(max_length=256, null=False)   
     recipe_id = models.ForeignKey('Recipe', related_name="meal_recipe", on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.meal_name
     
 class Meal_Plan(models.Model):
     MEAL_TYPE = (
