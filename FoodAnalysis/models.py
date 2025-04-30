@@ -9,10 +9,11 @@ class UploadedImage(models.Model):
 
 class FoodAnalysis(models.Model):
     image = models.ImageField(upload_to='food_images/')
-    food_name = models.CharField(max_length=255)  # Ensure this field exists
+    food_name = models.CharField(max_length=255)
     ingredients = models.TextField()
     allergens = models.TextField()
     alternatives = models.TextField()
+    calories = models.IntegerField(null=True, blank=True)
     analyzed_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

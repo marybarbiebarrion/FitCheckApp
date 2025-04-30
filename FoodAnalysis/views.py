@@ -145,47 +145,21 @@ def analyze_image(image_path):
         _, predicted_idx = torch.max(outputs, 1)
         predicted_food = food_classes[predicted_idx.item()]
 
-    # Dummy data for allergens & alternatives (You can replace with real data)
+    # Dummy data for allergens & alternatives
     allergens = "Dairy, Gluten" if "cheese" in predicted_food.lower() else "None"
     alternatives = "Gluten-free Bread, Vegan Cheese" if "bread" in predicted_food.lower() else "None"
+
+    # Dummy calories data (Replace with actual data)
+    calories = 250  # Just an example, you can map food name to calories in a dictionary or API
 
     return {
         "food_name": predicted_food,
         "ingredients": "Tomato, Cheese, Dough",
         "allergens": allergens,
-        "alternatives": alternatives
+        "alternatives": alternatives,
+        "calories": calories
     }
 
-# Django view for food analysis
-# def food_analysis_view(request):
-#     if request.method == 'POST':
-#         form = FoodAnalysisForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             image = form.cleaned_data['image']
-#             image_path = default_storage.save(image.name, image)
-#             image_full_path = os.path.join(settings.MEDIA_ROOT, image_path)
-
-#             # Run model prediction
-#             results = analyze_image(image_full_path)
-
-#             # Save results in database
-#             analysis = FoodAnalysis.objects.create(
-#                 image=image,
-#                 food_name=results['food_name'],
-#                 ingredients=results['ingredients'],
-#                 allergens=results['allergens'],
-#                 alternatives=results['alternatives']
-#             )
-
-#             return render(request, 'food_analysis.html', {
-#                 'form': form,
-#                 'analysis': analysis,
-#                 'past_analyses': FoodAnalysis.objects.all().order_by('-analyzed_at')[:5]
-#             })
-#     else:
-#         form = FoodAnalysisForm()
-
-#     return render(request, 'food_analysis.html', {'form': form, 'past_analyses': FoodAnalysis.objects.all().order_by('-analyzed_at')[:5]})
 
 def food_analysis_view(request):
     form = FoodAnalysisForm()
