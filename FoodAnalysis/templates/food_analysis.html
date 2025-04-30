@@ -11,66 +11,41 @@
 
       <h3>Food Classifier</h3>
 
-      <!-- Hidden file input -->
-      <input type="file" id="file-input" name="image" accept="image/*" style="display: none;" onchange="previewImage(this)">
-
-      <!-- Button row -->
-      <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-        <button type="button" class="button" onclick="document.getElementById('file-input').click();">Upload</button>
-        <button type="submit" name="analyze" class="button">Analyze</button>
-      </div>
-
-      <!-- Preview image -->
-      <div id="preview-container">
+      <div id="preview-container" style="text-align: center;">
         {% if analysis %}
-          <img src="{{ analysis.image.url }}" alt="Uploaded Image" style="max-width: 100%; border-radius: 10px;"><br><br>
+          <img src="{{ analysis.image.url }}" alt="Uploaded Image" style="max-width: 80%; border-radius: 10px;"><br><br>
         {% else %}
-          <div style="width: 100%; height: 200px; background-color: #eee; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+          <div style="width: 80%; height: 200px; background-color: #eee; border-radius: 10px; margin: auto; display: flex; align-items: center; justify-content: center;">
             <p style="color: #999;">No image uploaded</p>
           </div><br>
         {% endif %}
       </div>
 
+      <input type="file" id="file-input" name="image" accept="image/*" style="display: none;" onchange="previewImage(this)">
+      <div style="display: flex; justify-content: center; margin-bottom: 15px;">
+        <div style="display: flex; gap: 10px;">
+          <button type="button" class="button" onclick="document.getElementById('file-input').click();">Upload</button>
+          <button type="submit" name="analyze" class="button">Analyze</button>
+        </div>
+      </div>
+      
 
     </form>
 
     {% if analysis %}
       <br>
-      <p>
-        <span style="font-weight: 300;">Detected Food:</span>
-        <span style="font-size: 1.5em; font-weight: bold;"> {{ analysis.food_name }}</span>
-      </p>
-      
+      <div style="text-align: center;">
+        <p>
+          <span style="font-weight: 300;">Detected Food:</span>
+          <span style="font-size: 1.5em; font-weight: bold;"> {{ analysis.food_name }}</span>
+        </p>
+      </div>
 
     {% endif %}
   </section>
 
   {% if analysis %}
   <section id="upper-right">
-    <p>
-      <span style="font-size: 1.17em; font-weight: bold;">Calories:</span>
-      <span style="font-weight: normal;">{{ analysis.calories }}</span>
-      <span style="font-size: 0.9em;">kcal</span>
-    </p>
-    
-
-
-    <h3>Ingredients</h3>
-    <p>{{ analysis.ingredients }}</p>
-  </section>
-
-  <section id="lower-left">
-    <h3>Allergens</h3>
-    <p>{{ analysis.allergens }}</p>
-  </section>
-
-  <section id="lower-middle">
-    <h3>Food Alternatives</h3>
-    <p>{{ analysis.alternatives }}</p>
-  </section>
-  {% endif %}
-
-  <section id="lower-right">
     <h3>Past Analyses</h3>
     <ul>
       {% for past in past_analyses %}
@@ -80,6 +55,27 @@
       {% endfor %}
     </ul>
   </section>
+
+  <section id="lower-left">
+    <p>
+      <span style="font-size: 1.17em; font-weight: bold;">Calories:</span>
+      <span style="font-weight: normal;">{{ analysis.calories }}</span>
+      <span style="font-size: 0.9em;">kcal</span>
+    </p>
+    <h3>Ingredients</h3>
+    <p>{{ analysis.ingredients }}</p>
+  </section>
+
+  <section id="lower-middle">
+    <h3>Allergens</h3>
+    <p>{{ analysis.allergens }}</p>
+  </section>
+
+  <section id="lower-right">
+    <h3>Food Alternatives</h3>
+    <p>{{ analysis.alternatives }}</p>
+  </section>
+  {% endif %}
 </div>
 
 <script>
@@ -88,11 +84,9 @@
     if (file) {
       const previewContainer = document.getElementById('preview-container');
       const reader = new FileReader();
-
       reader.onload = function(e) {
         previewContainer.innerHTML = `<img src="${e.target.result}" alt="Preview" style="max-width: 100%; border-radius: 10px;"><br><br>`;
       };
-
       reader.readAsDataURL(file);
     }
   });

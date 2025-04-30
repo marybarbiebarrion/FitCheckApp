@@ -97,46 +97,24 @@
       background: #f0f0f0;
     }
 
-    .custom-file-input {
-    display: none;
-    }
-
-    .custom-upload-label {
-    background-color: black;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 20px;
-    cursor: pointer;
-    text-align: center;
-    }
-
-    .custom-upload-label:hover {
-    background-color: white;
-    color: black;
-    border: 1px solid black;
-    }
-
-
     /* Grid layout for the content */
     .main-content {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;  /* 3 columns to fill space */
-        grid-template-rows: auto auto;
-        gap: 20px;
-        padding: 20px;
-        width: 100%;  /* Ensure it takes up full width */
-    }
-
-    #upper-left, #upper-right, #lower-left, #lower-middle, #lower-right {
-        background-color: rgba(255, 255, 255, 0.9);
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-        margin: 10px;
-        width: 100%;  /* Ensure each section occupies full column width */
-    }
-
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;  /* 3 columns */
+      grid-template-rows: auto auto;
+      gap: 20px;  /* Controls both row and column spacing */
+      padding: 20px;
+      width: 100%;
+  }
+  
+  #upper-left, #upper-right, #lower-left, #lower-middle, #lower-right {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+      width: 100%;
+  }
+  
     /* Adjust grid placement */
     #upper-left {
         grid-column: 1 / 3;
