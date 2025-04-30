@@ -6,6 +6,7 @@ import torchvision.models as models
 from torchvision.models import resnet18
 from PIL import Image
 import os
+import csv
 from django.shortcuts import render
 from django.core.files.storage import default_storage
 from django.conf import settings
@@ -125,6 +126,22 @@ food_classes = ['baby_back_ribs',
  'tiramisu',
  'waffles']
 
+nutrition_file_path = os.path.join(settings.BASE_DIR, "model", "nutrition.csv")
+
+nutrition_data = {}
+with open(nutrition_file_path, mode='r') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        nutrition_data[row['label'].lower()] = {
+            'calories': row['calories'],
+            'protein': row['protein'],
+            'carbohydrates': row['carbohydrates'],
+            'fats': row['fats'],
+            'fiber': row['fiber'],
+            'sugars': row['sugars'],
+            'sodium': row['sodium']
+        }
+
 # Image preprocessing function
 def preprocess_image(image_path):
     transform = transforms.Compose([
@@ -145,19 +162,35 @@ def analyze_image(image_path):
         _, predicted_idx = torch.max(outputs, 1)
         predicted_food = food_classes[predicted_idx.item()]
 
+    # Get nutrition data from CSV based on detected food
+    food_label = predicted_food.lower()
+    nutrition = nutrition_data.get(food_label, {})
+
     # Dummy data for allergens & alternatives
     allergens = "Dairy, Gluten" if "cheese" in predicted_food.lower() else "None"
     alternatives = "Gluten-free Bread, Vegan Cheese" if "bread" in predicted_food.lower() else "None"
 
-    # Dummy calories data (Replace with actual data)
-    calories = 250  # Just an example, you can map food name to calories in a dictionary or API
+    # Dummy nutritional values (replace these with real data or APIs)
+    # calories = 250
+    # protein = 10.5
+    # carbohydrates = 35.0
+    # fats = 9.0
+    # fiber = 2.5
+    # sugars = 7.0
+    # sodium = 500  # in mg
 
     return {
         "food_name": predicted_food,
         "ingredients": "Tomato, Cheese, Dough",
         "allergens": allergens,
         "alternatives": alternatives,
-        "calories": calories
+        "calories": nutrition.get('calories', 'N/A'),
+        "protein": nutrition.get('protein', 'N/A'),
+        "carbohydrates": nutrition.get('carbohydrates', 'N/A'),
+        "fats": nutrition.get('fats', 'N/A'),
+        "fiber": nutrition.get('fiber', 'N/A'),
+        "sugars": nutrition.get('sugars', 'N/A'),
+        "sodium": nutrition.get('sodium', 'N/A')
     }
 
 
@@ -181,7 +214,14 @@ def food_analysis_view(request):
                 food_name=results['food_name'],
                 ingredients=results['ingredients'],
                 allergens=results['allergens'],
-                alternatives=results['alternatives']
+                alternatives=results['alternatives'],
+                calories=results['calories'],
+                protein=results['protein'],
+                carbohydrates=results['carbohydrates'],
+                fats=results['fats'],
+                fiber=results['fiber'],
+                sugars=results['sugars'],
+                sodium=results['sodium']
             )
 
     return render(request, 'food_analysis.html', {

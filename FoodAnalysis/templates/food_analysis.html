@@ -22,25 +22,22 @@
       </div>
 
       <input type="file" id="file-input" name="image" accept="image/*" style="display: none;" onchange="previewImage(this)">
-      <div style="display: flex; justify-content: center; margin-bottom: 15px;">
+      <div style="display: flex; justify-content: center; margin-bottom: 0;">
         <div style="display: flex; gap: 10px;">
-          <button type="button" class="button" onclick="document.getElementById('file-input').click();">Upload</button>
-          <button type="submit" name="analyze" class="button">Analyze</button>
+            <button type="button" class="button" onclick="document.getElementById('file-input').click();">Upload</button>
+            <button type="submit" name="analyze" class="button">Analyze</button>
         </div>
-      </div>
-      
-
+    </div>
+    
     </form>
 
     {% if analysis %}
-      <br>
       <div style="text-align: center;">
         <p>
           <span style="font-weight: 300;">Detected Food:</span>
           <span style="font-size: 1.5em; font-weight: bold;"> {{ analysis.food_name }}</span>
         </p>
       </div>
-
     {% endif %}
   </section>
 
@@ -62,11 +59,42 @@
       <span style="font-weight: normal;">{{ analysis.calories }}</span>
       <span style="font-size: 0.9em;">kcal</span>
     </p>
-    <h3>Ingredients</h3>
-    <p>{{ analysis.ingredients }}</p>
+    <p>
+      <span style="font-size: 1.17em; font-weight: bold;">Protein:</span>
+      <span style="font-weight: normal;">{{ analysis.protein }}</span>
+      <span style="font-size: 0.9em;">g</span>
+    </p>
+    <p>
+      <span style="font-size: 1.17em; font-weight: bold;">Carbohydrates:</span>
+      <span style="font-weight: normal;">{{ analysis.carbohydrates }}</span>
+      <span style="font-size: 0.9em;">g</span>
+    </p>
+    <p>
+      <span style="font-size: 1.17em; font-weight: bold;">Fats:</span>
+      <span style="font-weight: normal;">{{ analysis.fats }}</span>
+      <span style="font-size: 0.9em;">g</span>
+    </p>
+    <p>
+      <span style="font-size: 1.17em; font-weight: bold;">Fiber:</span>
+      <span style="font-weight: normal;">{{ analysis.fiber }}</span>
+      <span style="font-size: 0.9em;">g</span>
+    </p>
+    <p>
+      <span style="font-size: 1.17em; font-weight: bold;">Sugars:</span>
+      <span style="font-weight: normal;">{{ analysis.sugars }}</span>
+      <span style="font-size: 0.9em;">g</span>
+    </p>
+    <p>
+      <span style="font-size: 1.17em; font-weight: bold;">Sodium:</span>
+      <span style="font-weight: normal;">{{ analysis.sodium }}</span>
+      <span style="font-size: 0.9em;">mg</span>
+    </p>
   </section>
 
   <section id="lower-middle">
+    <h3>Ingredients</h3>
+    <p>{{ analysis.ingredients }}</p>
+
     <h3>Allergens</h3>
     <p>{{ analysis.allergens }}</p>
   </section>

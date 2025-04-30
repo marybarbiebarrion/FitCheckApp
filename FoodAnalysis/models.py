@@ -14,6 +14,12 @@ class FoodAnalysis(models.Model):
     allergens = models.TextField()
     alternatives = models.TextField()
     calories = models.IntegerField(null=True, blank=True)
+    protein = models.FloatField(null=True, blank=True)  # Protein in grams
+    carbohydrates = models.FloatField(null=True, blank=True)  # Carbs in grams
+    fats = models.FloatField(null=True, blank=True)  # Fats in grams
+    fiber = models.FloatField(null=True, blank=True)  # Fiber in grams
+    sugars = models.FloatField(null=True, blank=True)  # Sugars in grams
+    sodium = models.FloatField(null=True, blank=True)  # Sodium in mg
     analyzed_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
