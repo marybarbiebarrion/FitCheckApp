@@ -1,38 +1,102 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<h2>Food Analysis</h2>
+<h1>Food Analysis</h1>
 
-<!-- Image Upload and Analysis -->
-<h3>Upload and Analyze Food</h3>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.image }}
-    <button class="button" type="submit" name="analyze">Analyze</button>
-</form>
+<div class="main-content">
+  <section id="upper-left">
+    <form method="post" enctype="multipart/form-data" id="upload-form">
+      {% csrf_token %}
 
-{% if analysis %}
-  <hr>
-  <h3>Predicted Food</h3>
-  <p><strong>{{ analysis.food_name }}</strong></p>
+      <h3>Food Classifier</h3>
 
-  <h3>Ingredients</h3>
-  <p>{{ analysis.ingredients }}</p>
+      <!-- Hidden file input -->
+      <input type="file" id="file-input" name="image" accept="image/*" style="display: none;" onchange="previewImage(this)">
 
-  <h3>Allergens</h3>
-  <p>{{ analysis.allergens }}</p>
+      <!-- Button row -->
+      <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+        <button type="button" class="button" onclick="document.getElementById('file-input').click();">Upload</button>
+        <button type="submit" name="analyze" class="button">Analyze</button>
+      </div>
 
-  <h3>Food Alternatives</h3>
-  <p>{{ analysis.alternatives }}</p>
-{% endif %}
+      <!-- Preview image -->
+      <div id="preview-container">
+        {% if uploaded_image_url %}
+          <img id="preview-image" src="{{ uploaded_image_url }}" alt="Uploaded Image" style="max-width: 100%; border-radius: 10px;"><br><br>
+        {% else %}
+          <div style="width: 100%; height: 200px; background-color: #eee; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+            <p style="color: #999;" id="preview-placeholder">No image uploaded</p>
+          </div><br>
+        {% endif %}
+      </div>
+    </form>
 
-<hr>
+    {% if analysis %}
+      <br>
+      <h3>Detected Food:</h3>
+      <p><strong>{{ analysis.food_name }}</strong></p>
+    {% endif %}
+  </section>
 
-<!-- Past Analyses -->
-<h3>Past Analyses</h3>
-<ul>
-  {% for past in past_analyses %}
-    <li>{{ past.analyzed_at }} - {{ past.ingredients }}</li>
-  {% endfor %}
-</ul>
+  {% if analysis %}
+  <section id="upper-right">
+    <h3>Ingredients</h3>
+    <p>{{ analysis.ingredients }}</p>
+  </section>
+
+  <section id="lower-left">
+    <h3>Allergens</h3>
+    <p>{{ analysis.allergens }}</p>
+  </section>
+
+  <section id="lower-middle">
+    <h3>Food Alternatives</h3>
+    <p>{{ analysis.alternatives }}</p>
+  </section>
+  {% endif %}
+
+  <section id="lower-right">
+    <h3>Past Analyses</h3>
+    <ul>
+      {% for past in past_analyses %}
+        <li>{{ past.analyzed_at }} - {{ past.ingredients }}</li>
+      {% empty %}
+        <li>No past analyses available.</li>
+      {% endfor %}
+    </ul>
+  </section>
+</div>
+
+<!-- Image preview script -->
+<script>
+  function previewImage(input) {
+    const previewContainer = document.getElementById('preview-container');
+    const previewPlaceholder = document.getElementById('preview-placeholder');
+
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        // Remove placeholder if exists
+        if (previewPlaceholder) {
+          previewPlaceholder.remove();
+        }
+
+        // Replace or create preview image
+        let img = document.getElementById('preview-image');
+        if (!img) {
+          img = document.createElement('img');
+          img.id = 'preview-image';
+          img.style.maxWidth = '100%';
+          img.style.borderRadius = '10px';
+          previewContainer.appendChild(img);
+        }
+        img.src = e.target.result;
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script>
 {% endblock %}
