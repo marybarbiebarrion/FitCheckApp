@@ -49,7 +49,7 @@
     <h3>Past Analyses</h3>
     <ul>
       {% for past in past_analyses %}
-        <li>{{ past.analyzed_at }} - {{ past.ingredients }}</li>
+        <li>{{ past.food_name }} - {{ past.analyzed_at|date:"F j, Y" }}, {{ past.analyzed_at|time:"g:i a" }}</li>
       {% empty %}
         <li>No past analyses available.</li>
       {% endfor %}
