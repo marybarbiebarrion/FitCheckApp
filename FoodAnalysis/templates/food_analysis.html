@@ -1,146 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Analysis</title>
-    <style>
-        /* General styles */
-        body {
-            background-color: skyblue;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+{% extends 'base.html' %}
 
-        /* Main container to position everything */
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto auto;
-            gap: 20px;
-            padding: 20px;
-            max-width: 900px;
-            margin: auto;
-        }
+{% block content %}
+<h2>Food Analysis</h2>
 
-        h1 {
-            text-align: center;
-        }
+<!-- Image Upload and Analysis -->
+<h3>Upload and Analyze Food</h3>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.image }}
+    <button class="button" type="submit" name="analyze">Analyze</button>
+</form>
 
-        /* Styling for sections */
-        #upper-left, #upper-right, #lower-left, #lower-middle, #lower-right {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-            margin: 10px;
-            width: 80%;
-            max-width: 600px;
-        }
+{% if analysis %}
+  <hr>
+  <h3>Predicted Food</h3>
+  <p><strong>{{ analysis.food_name }}</strong></p>
 
-        /* Grid placement */
-        #upper-left {
-            grid-column: 1 / 3;
-            grid-row: 1 / 2;
-        }
+  <h3>Ingredients</h3>
+  <p>{{ analysis.ingredients }}</p>
 
-        #upper-right {
-            grid-column: 3 / 3;
-            grid-row: 1 / 2;
-        }
+  <h3>Allergens</h3>
+  <p>{{ analysis.allergens }}</p>
 
-        #lower-left {
-            grid-column: 1 / 2;
-            grid-row: 2 / 3;
-        }
+  <h3>Food Alternatives</h3>
+  <p>{{ analysis.alternatives }}</p>
+{% endif %}
 
-        #lower-middle {
-            grid-column: 2 / 2;
-            grid-row: 2 / 3;
-        }
+<hr>
 
-        #lower-right {
-            grid-column: 3 / 3;
-            grid-row: 2 / 3;
-        }
-
-        /* Form styling */
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        /* List styling */
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            padding: 5px 0;
-        }
-    </style>
-</head>
-<body>
-
-    <h1>Food Analysis</h1>
-    
-    <div class="main-content">
-        <section id="upper-left">
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <label>Upload Image:</label>
-                {{ form.image }}
-                {% comment %} <button type="submit" name="upload">Upload</button> {% endcomment %}
-                <button type="submit" name="analyze">Analyze</button>
-            </form>
-            {% if analysis %}
-                <h3>Predicted Food</h3>
-                <p><strong>{{ analysis.food_name }}</strong></p>
-            {% endif %}
-        </section>
-        
-        {% if analysis %}
-        <section id="upper-right">
-            <h3>Ingredients</h3>
-            <p>{{ analysis.ingredients }}</p>
-        </section>
-        
-        <section id="lower-left">
-            <h3>Allergens</h3>
-            <p>{{ analysis.allergens }}</p>
-        </section>
-        
-        <section id="lower-middle">
-            <h3>Food Alternatives</h3>
-            <p>{{ analysis.alternatives }}</p>
-        </section>
-        {% endif %}
-        
-        <section id="lower-right">
-            <h3>Past Analyses</h3>
-            <ul>
-                {% for past in past_analyses %}
-                    <li>{{ past.analyzed_at }} - {{ past.ingredients }}</li>
-                {% endfor %}
-            </ul>
-        </section>
-    </div>
-
-</body>
-</html>
+<!-- Past Analyses -->
+<h3>Past Analyses</h3>
+<ul>
+  {% for past in past_analyses %}
+    <li>{{ past.analyzed_at }} - {{ past.ingredients }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}
