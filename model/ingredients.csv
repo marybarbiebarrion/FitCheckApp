@@ -1,0 +1,102 @@
+label,general_ingredients,allergens
+apple_pie,"apples, flour, butter, sugar, cinnamon","gluten, dairy"
+baby_back_ribs,"pork ribs, BBQ sauce, spices",none
+baklava,"phyllo dough, honey, walnuts, butter, sugar","gluten, nuts, dairy"
+beef_carpaccio,"raw beef, olive oil, lemon, capers, arugula",none
+beef_tartare,"raw beef, egg yolk, onions, capers, mustard",none
+beet_salad,"beets, goat cheese, arugula, walnuts, olive oil","dairy, nuts"
+beignets,"flour, sugar, yeast, butter, powdered sugar","gluten, dairy"
+bibimbap,"rice, beef, egg, vegetables, gochujang",egg
+bread_pudding,"bread, eggs, milk, sugar, cinnamon","gluten, dairy, egg"
+breakfast_burrito,"tortilla, eggs, sausage, cheese, vegetables","gluten, dairy, egg"
+bruschetta,"tomatoes, basil, garlic, olive oil, baguette",gluten
+caesar_salad,"romaine lettuce, croutons, parmesan cheese, caesar dressing","gluten, dairy, egg, fish"
+cannoli,"ricotta cheese, phyllo dough, sugar, chocolate chips","gluten, dairy, nuts"
+caprese_salad,"tomatoes, mozzarella cheese, basil, olive oil, balsamic vinegar",dairy
+carrot_cake,"carrots, flour, eggs, sugar, cinnamon, walnuts","gluten, dairy, egg, nuts"
+ceviche,"fish, lime juice, onions, cilantro, tomatoes, chili",fish
+cheese_plate,"various cheeses, fruits, crackers, nuts","dairy, nuts, gluten"
+cheesecake,"cream cheese, sugar, eggs, graham cracker crust","gluten, dairy, egg"
+chicken_curry,"chicken, curry paste, coconut milk, rice, vegetables",none
+chicken_quesadilla,"chicken, tortilla, cheese, beans, vegetables","gluten, dairy"
+chicken_wings,"chicken wings, hot sauce, butter, spices",dairy
+chocolate_cake,"flour, cocoa powder, sugar, eggs, butter","gluten, dairy, egg"
+chocolate_mousse,"chocolate, eggs, cream, sugar","dairy, egg"
+churros,"flour, sugar, butter, eggs, cinnamon","gluten, dairy, egg"
+clam_chowder,"clams, potatoes, cream, butter, onions","dairy, shellfish"
+club_sandwich,"bread, turkey, bacon, lettuce, tomato, mayonnaise","gluten, egg"
+crab_cakes,"crab meat, breadcrumbs, egg, mayonnaise, spices","gluten, egg, shellfish"
+creme_brulee,"cream, egg yolks, sugar, vanilla","dairy, egg"
+croque_madame,"bread, ham, cheese, egg, béchamel sauce","gluten, dairy, egg"
+Cupcakes,"flour, sugar, eggs, butter, frosting","gluten, dairy, egg"
+deviled_eggs,"eggs, mayonnaise, mustard, paprika",egg
+donuts,"flour, sugar, eggs, milk, butter, yeast","gluten, dairy, egg"
+dumplings,"flour wrapper, pork or vegetables, soy sauce, garlic","gluten, soy"
+edamame,"soybeans, salt",soy
+eggs_benedict,"eggs, English muffin, ham, hollandaise sauce","gluten, dairy, egg"
+escargots,"snails, garlic butter, parsley",dairy
+falafel,"chickpeas, garlic, parsley, flour, spices",gluten (optional depending on recipe)
+filet_mignon,"beef tenderloin, butter, garlic, herbs",dairy
+fish_and_chips,"white fish, flour, eggs, potatoes, oil","gluten, egg, fish"
+foie_gras,"duck or goose liver, butter, wine, spices",dairy
+french_fries,"potatoes, oil, salt",none
+french_onion_soup,"onions, beef broth, bread, cheese, butter","gluten, dairy"
+french_toast,"bread, eggs, milk, cinnamon, sugar","gluten, dairy, egg"
+fried_calamari,"calamari, flour, oil, spices","gluten, seafood"
+fried_rice,"rice, egg, vegetables, soy sauce","egg, soy"
+frozen_yogurt,"milk, sugar, live cultures",dairy
+garlic_bread,"bread, garlic, butter, parsley","gluten, dairy"
+gnocchi,"potatoes, flour, eggs","gluten, egg"
+greek_salad,"tomatoes, cucumbers, olives, feta cheese, olive oil",dairy
+grilled_cheese,"bread, cheese, butter","gluten, dairy"
+grilled_salmon,"salmon, olive oil, lemon, garlic, herbs",fish
+guacamole,"avocados, lime, onions, tomatoes, cilantro",none
+gyoza,"wheat wrappers, pork, cabbage, garlic, soy sauce","gluten, soy"
+hamburger,"beef patty, burger bun, lettuce, tomato, cheese","gluten, dairy"
+Hot and Sour Soup,"tofu, mushrooms, vinegar, pepper, soy sauce",soy
+hot_dog,"hot dog bun, sausage, mustard, ketchup, relish",gluten
+huevos_rancheros,"eggs, tortillas, salsa, beans, cheese","egg, dairy, gluten"
+hummus,"chickpeas, tahini, lemon, garlic, olive oil",sesame
+ice_cream,"milk, cream, sugar, flavorings",dairy
+lasagna,"lasagna noodles, ground beef, tomato sauce, cheese","gluten, dairy"
+lobster_bisque,"lobster, cream, butter, brandy, vegetables","shellfish, dairy"
+lobster_roll,"lobster, mayonnaise, buttered bun, lemon","shellfish, gluten, egg"
+macaroni_and_cheese,"macaroni pasta, cheddar cheese, milk, butter","gluten, dairy"
+macarons,"almond flour, egg whites, sugar, food coloring","nuts, egg"
+miso_soup,"miso paste, tofu, seaweed, dashi broth, green onions","soy, fish"
+mussels,"mussels, garlic, white wine, butter, herbs","shellfish, dairy"
+nachos,"tortilla chips, cheese, jalapeños, beans, salsa",dairy
+omelette,"eggs, cheese, vegetables, butter","egg, dairy"
+onion_rings,"onions, flour, breadcrumbs, eggs, oil","gluten, egg"
+oysters,"raw oysters, lemon, cocktail sauce",shellfish
+pad_thai,"rice noodles, shrimp or chicken, eggs, peanuts, bean sprouts, tamarind sauce","peanuts, egg"
+paella,"rice, saffron, chicken, seafood, peas, bell peppers",shellfish
+pancakes,"flour, eggs, milk, sugar, baking powder","gluten, dairy, egg"
+panna_cotta,"cream, sugar, gelatin, vanilla",dairy
+peking_duck,"duck, soy sauce, hoisin sauce, scallions, pancakes","gluten, soy"
+pho,"rice noodles, beef broth, beef, herbs, bean sprouts",none
+pizza,"flour, tomato sauce, cheese, various toppings","gluten, dairy"
+pork_chop,"pork chop, garlic, rosemary, olive oil",none
+poutine,"french fries, cheese curds, gravy",dairy
+prime_rib,"beef rib roast, garlic, herbs, salt, pepper",none
+pulled_pork_sandwich,"pulled pork, barbecue sauce, bun, coleslaw",gluten
+ramen,"noodles, broth, pork, egg, scallions","gluten, egg"
+ravioli,"pasta dough, cheese or meat filling, tomato sauce","gluten, dairy, egg"
+red_velvet_cake,"flour, cocoa powder, buttermilk, sugar, cream cheese frosting","gluten, dairy, egg"
+risotto,"arborio rice, broth, butter, Parmesan cheese, onion",dairy
+samosa,"flour, potatoes, peas, spices",gluten
+sashimi,"raw fish, soy sauce, wasabi",none
+scallops,"scallops, butter, garlic, lemon","shellfish, dairy"
+seaweed_salad,"seaweed, sesame oil, soy sauce, vinegar",soy
+shrimp_and_grits,"shrimp, grits, butter, cheese, bacon","shellfish, dairy"
+spaghetti_bolognese,"spaghetti, ground beef, tomato sauce, onions, garlic",gluten
+spaghetti_carbonara,"spaghetti, eggs, pancetta, parmesan cheese, black pepper","gluten, egg, dairy"
+spring_rolls,"rice paper, vegetables, shrimp, noodles","shellfish (optional), gluten (optional)"
+steak,"beef, salt, pepper, butter",dairy (optional)
+strawberry_shortcake,"shortcake, strawberries, whipped cream","gluten, dairy"
+sushi,"rice, raw fish, seaweed, vegetables","fish, soy (if served with soy sauce)"
+tacos,"tortilla, beef or chicken, cheese, lettuce, tomato","gluten (if flour tortilla), dairy"
+takoyaki,"octopus, flour batter, green onion, pickled ginger, mayonnaise","gluten, egg, seafood"
+tiramisu,"ladyfingers, mascarpone, coffee, cocoa, eggs","gluten, dairy, egg"
+tuna_tartare,"raw tuna, avocado, soy sauce, lime juice, sesame oil","fish, soy (optional)"
+waffles,"flour, eggs, milk, butter, sugar","gluten, dairy, egg"
