@@ -188,7 +188,8 @@ def analyze_image(image_path):
 #     return render(request, 'food_analysis.html', {'form': form, 'past_analyses': FoodAnalysis.objects.all().order_by('-analyzed_at')[:5]})
 
 def food_analysis_view(request):
-    uploaded_image_url = None
+    form = FoodAnalysisForm()
+    analysis = None
 
     if request.method == 'POST':
         form = FoodAnalysisForm(request.POST, request.FILES)
@@ -196,12 +197,11 @@ def food_analysis_view(request):
             image = form.cleaned_data['image']
             image_path = default_storage.save(image.name, image)
             image_full_path = os.path.join(settings.MEDIA_ROOT, image_path)
-            uploaded_image_url = default_storage.url(image_path)
 
-            # Run model prediction
+            # Analyze image
             results = analyze_image(image_full_path)
 
-            # Save results in database
+            # Save to database
             analysis = FoodAnalysis.objects.create(
                 image=image,
                 food_name=results['food_name'],
@@ -210,17 +210,8 @@ def food_analysis_view(request):
                 alternatives=results['alternatives']
             )
 
-            return render(request, 'food_analysis.html', {
-                'form': form,
-                'analysis': analysis,
-                'uploaded_image_url': uploaded_image_url,
-                'past_analyses': FoodAnalysis.objects.all().order_by('-analyzed_at')[:5]
-            })
-    else:
-        form = FoodAnalysisForm()
-
     return render(request, 'food_analysis.html', {
         'form': form,
-        'uploaded_image_url': uploaded_image_url,
+        'analysis': analysis,
         'past_analyses': FoodAnalysis.objects.all().order_by('-analyzed_at')[:5]
     })
