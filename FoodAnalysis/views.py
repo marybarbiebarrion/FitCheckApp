@@ -142,6 +142,18 @@ with open(nutrition_file_path, mode='r') as file:
             'sodium': row['sodium']
         }
 
+ingredients_file_path = os.path.join(settings.BASE_DIR, "model", "ingredients.csv")
+
+ingredients_data = {}
+with open(ingredients_file_path, mode='r') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        ingredients_data[row['label'].lower()] = {
+            'general_ingredients': row['general_ingredients'],
+            'allergens': row['allergens']
+        }
+
+
 # Image preprocessing function
 def preprocess_image(image_path):
     transform = transforms.Compose([
@@ -166,8 +178,10 @@ def analyze_image(image_path):
     food_label = predicted_food.lower()
     nutrition = nutrition_data.get(food_label, {})
 
-    # Dummy data for allergens & alternatives
-    allergens = "Dairy, Gluten" if "cheese" in predicted_food.lower() else "None"
+    # Get ingredient and allergen data
+    ingredient_info = ingredients_data.get(food_label, {})
+    ingredients = ingredient_info.get('general_ingredients', 'Unknown')
+    allergens = ingredient_info.get('allergens', 'Unknown')
     alternatives = "Gluten-free Bread, Vegan Cheese" if "bread" in predicted_food.lower() else "None"
 
     # Dummy nutritional values (replace these with real data or APIs)
@@ -181,7 +195,7 @@ def analyze_image(image_path):
 
     return {
         "food_name": predicted_food,
-        "ingredients": "Tomato, Cheese, Dough",
+        "ingredients": ingredients,
         "allergens": allergens,
         "alternatives": alternatives,
         "calories": nutrition.get('calories', 'N/A'),
