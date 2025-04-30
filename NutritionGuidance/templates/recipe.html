@@ -95,6 +95,42 @@
           color: #888;
           background: #f0f0f0;
         }
+        /* Styling for sections */
+        #upper-left, #upper-right, #lower-left, #lower-middle, #lower-right {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            margin: 10px;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        /* Grid placement */
+        #upper-left {
+            grid-column: 1 / 3;
+            grid-row: 1 / 2;
+        }
+
+        #upper-right {
+            grid-column: 3 / 3;
+            grid-row: 1 / 2;
+        }
+
+        #lower-left {
+            grid-column: 1 / 2;
+            grid-row: 2 / 3;
+        }
+
+        #lower-middle {
+            grid-column: 2 / 2;
+            grid-row: 2 / 3;
+        }
+
+        #lower-right {
+            grid-column: 3 / 3;
+            grid-row: 2 / 3;
+        }
         /* List styling */
         ul {
             list-style-type: none;
@@ -116,17 +152,16 @@
         <a href="{% url 'NutritionGuidance:ng_index' %}"><i class="fas fa-book"></i> Nutrition Guidance</a>
         <a href="#"><i class="fas fa-heartbeat"></i> Wellness Tracker</a>
         <a href="#">Logout</a>
-      </div>
+    </div>
+
     <ul>
-    {% for key, day in days.items %}
-        <h2> {{ day }}</h2>
-        {% for meal in meals %}
-            {% if meal.day == key %}
-            <li>
-                {{ meal.get_meal_type_display }}: {{ meal.meal_id.meal_name }}
-            </li>
-            {% endif %}
+        <h2> Ingredients: </h2>
+        {% for ingredient in meal.recipe_id.ingredient.all %}
+            <li> {{ ingredient }} </li>
         {% endfor %}
-    {% endfor %}
+        <br />
+        <h2> Instructions </h2>
+        <p> {{ meal.recipe_id.recipe_instructions }} </p>
     </ul>
+        
 </body>
