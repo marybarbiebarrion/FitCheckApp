@@ -7,6 +7,17 @@ client = OpenAI(
     base_url="https://openrouter.ai/api/v1"
 )
 
+def normalize_newlines(text):
+    lines = [line.strip() for line in text.splitlines()]
+    non_empty = []
+    for line in lines:
+        if line:
+            non_empty.append(line)
+        elif non_empty and non_empty[-1] != '':
+            non_empty.append('')  # Add only a single empty line
+    return '\n'.join(non_empty).strip()
+
+
 def ask_food_description(food_name):
     prompt = f"Give a 1-sentence description of the food '{food_name}' in simple terms."
     messages = [{"role": "system", "content": "You are a helpful assistant."},
@@ -45,6 +56,7 @@ def ask_food_alternatives(food_name, ingredients, allergens):
     
     alternatives = response.choices[0].message.content.strip()
     
-    formatted_alternatives = "\n\n".join(alternatives.split("\n"))
+    # formatted_alternatives = "\n\n".join(alternatives.split("\n"))
+    formatted_alternatives = normalize_newlines(alternatives)
     
     return formatted_alternatives 
