@@ -2,7 +2,7 @@ import os
 from openai import OpenAI
 
 client = OpenAI(
-    api_key="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",  # Use env var for security
+    api_key="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",  # Use env var for security
     base_url="https://openrouter.ai/api/v1"
 )
 
@@ -15,7 +15,9 @@ def ask_food_description(food_name):
         model="mistralai/mistral-7b-instruct",
         messages=messages
     )
-    return response.choices[0].message.content.strip()
+    
+    description = response.choices[0].message.content.strip()
+    return description
 
 def ask_food_alternatives(food_name, ingredients, allergens):
     # prompt = (
@@ -40,4 +42,8 @@ def ask_food_alternatives(food_name, ingredients, allergens):
         messages=messages
     )
     
-    return response.choices[0].message.content.strip()
+    alternatives = response.choices[0].message.content.strip()
+    
+    formatted_alternatives = "\n\n".join(alternatives.split("\n"))
+    
+    return formatted_alternatives 
