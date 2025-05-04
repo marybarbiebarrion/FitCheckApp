@@ -2,35 +2,32 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
-    # Primary Key
-    user_id = models.AutoField(primary_key=True)  # Auto-generated unique ID
+    username = None  # ← Add this line to remove inherited username field
+
+    user_id = models.AutoField(primary_key=True)
 
     # Personal Information
     first_name = models.CharField(max_length=30, null=False)
-    middle_name = models.CharField(max_length=30, null=True, blank=True)  # Optional
+    middle_name = models.CharField(max_length=30, null=True, blank=True)
     last_name = models.CharField(max_length=30, null=False)
-    suffix = models.CharField(max_length=10, null=True, blank=True)  # Optional
-    nickname = models.CharField(max_length=30, null=True, blank=True)  # Optional
+    suffix = models.CharField(max_length=10, null=True, blank=True)
+    nickname = models.CharField(max_length=30, null=True, blank=True)
     birthdate = models.DateField(null=False)
     sex_at_birth_choices = [('M', 'Male'), ('F', 'Female')]
     sex_at_birth = models.CharField(max_length=1, choices=sex_at_birth_choices, null=False)
 
-    # Account Information
-    username = models.CharField(max_length=150, unique=True, null=False)  # Add username field
-    email = models.EmailField(unique=True, null=False)  # Use Django's default email field
-    # password = models.CharField(max_length=255, null=False)  # Will be hashed
+    # Email as unique identifier
+    email = models.EmailField(unique=True, null=False)
 
-    USERNAME_FIELD = 'username'  # Set username as the unique identifier
-    REQUIRED_FIELDS = ['email']  # Email is required in addition to username
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
     # Consent and Declarations
-    expression_of_consent = models.BooleanField(default=False, null=False)  # Yes/No
-    declaration_undertaking = models.BooleanField(default=False, null=False)  # Yes/No
+    expression_of_consent = models.BooleanField(default=False, null=False)
+    declaration_undertaking = models.BooleanField(default=False, null=False)
 
-    # Metadata
     last_updated = models.DateTimeField(auto_now=True, null=False)
 
-    # Resolve conflict by adding related_name
     groups = models.ManyToManyField(
         'auth.Group',
         related_name='custom_user_groups',
