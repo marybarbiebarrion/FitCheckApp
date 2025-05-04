@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from .forms import UserCreateForm
+from .forms import UserCreateForm, EditProfileForm
 
 
 def user_create(request):
@@ -55,3 +55,14 @@ def dashboard_view(request):
         'nickname': request.user.nickname if request.user.is_authenticated else 'Guest'
     }
     return render(request, 'dashboard.html', context)
+
+def edit_profile(request):
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')  # After saving, redirect to a profile page or dashboard
+    else:
+        form = EditProfileForm(instance=request.user)
+    
+    return render(request, 'UserProfile/edit_profile.html', {'form': form})

@@ -35,7 +35,7 @@
       background-color: white;
       border-color: white;
     }
-    
+
     .sidebar {
       width: 220px;
       background-color: #AED9E0;
@@ -109,8 +109,8 @@
   <div class="sidebar">
     <h2>FitCheck</h2>
     <a href="#" class="{% if request.path == '/dashboard/' %}active{% endif %}"><i class="fas fa-compass"></i> Dashboard</a>
-    <a href="#"><i class="fas fa-user"></i>  Health Profile </a>
-    <a href="#"> <i class="fas fa-puzzle-piece"></i>  Food Analysis </a>
+    <a href="#"><i class="fas fa-user"></i> Health Profile </a>
+    <a href="#"> <i class="fas fa-puzzle-piece"></i> Food Analysis </a>
     <a href="#"><i class="fas fa-spoon"></i> FitnessPlanning</a>
     <a href="#"><i class="fas fa-book"></i> Guidance</a>
     <a href="#"><i class="fas fa-heartbeat"></i> Wellness Tracker</a>
@@ -123,7 +123,10 @@
   <div class="main">
     <div class="topbar">
       Welcome, {{ request.user.nickname|default:"User" }}!
-      <i class="fas fa-user-circle"></i>
+      <!-- Link the user circle icon to the profile edit page -->
+      <a href="{% url 'edit_profile' %}">
+        <i class="fas fa-user-circle"></i>
+      </a>
     </div>
     <div class="content">
       {% block content %}

@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import User
 from datetime import date
 
@@ -83,3 +83,14 @@ class UserCreateForm(UserCreationForm):
             raise forms.ValidationError("Password must contain at least one letter.")
 
         return password2
+
+class EditProfileForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = [
+            'nickname', 'email', 'phone_number', 'address', 'country', 
+            'region', 'province', 'municipality', 'city', 'address_block'
+        ]
+        widgets = {
+            'address': forms.Textarea(attrs={'rows': 3}),
+        }

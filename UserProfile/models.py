@@ -19,10 +19,17 @@ class User(AbstractUser):
     # Email as unique identifier
     email = models.EmailField(unique=True, null=False)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    # Profile Information (New fields)
+    phone_number = models.CharField(max_length=15, null=True, blank=True)
+    address = models.TextField(null=True, blank=True)
+    country = models.CharField(max_length=50, null=True, blank=True)
+    region = models.CharField(max_length=50, null=True, blank=True)
+    province = models.CharField(max_length=50, null=True, blank=True)
+    municipality = models.CharField(max_length=50, null=True, blank=True)
+    city = models.CharField(max_length=50, null=True, blank=True)
+    address_block = models.CharField(max_length=100, null=True, blank=True)
 
-    # Consent and Declarations
+    # Consent and Declarations (unchanged)
     expression_of_consent = models.BooleanField(default=False, null=False)
     declaration_undertaking = models.BooleanField(default=False, null=False)
 
@@ -38,6 +45,9 @@ class User(AbstractUser):
         related_name='custom_user_permissions',
         blank=True
     )
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.email})"
