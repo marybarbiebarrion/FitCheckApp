@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import User
-from datetime import datetime, date
+from datetime import date
 
 class UserCreateForm(UserCreationForm):
     first_name = forms.CharField(required=True, max_length=30, label="First Name")
@@ -9,11 +9,21 @@ class UserCreateForm(UserCreationForm):
     last_name = forms.CharField(required=True, max_length=30, label="Last Name")
     suffix = forms.CharField(required=False, max_length=10, label="Suffix")
     nickname = forms.CharField(required=False, max_length=30, label="Nickname")
+
     birthdate = forms.DateField(
-        widget=forms.SelectDateWidget(years=range(1900, datetime.now().year + 1)),
+        widget=forms.DateInput(
+            attrs={
+                'type': 'text',  # Change from 'date' to 'text' to allow JS calendar picker
+                'class': 'form-control flatpickr',
+                'placeholder': 'MM/DD/YYYY',
+            },
+            format='%m/%d/%Y',
+        ),
+        input_formats=['%m/%d/%Y'],
         label="Birthdate",
         error_messages={'required': 'Please select your birthdate.'}
     )
+
     sex_at_birth = forms.ChoiceField(choices=User.sex_at_birth_choices, label="Sex at Birth")
     email = forms.EmailField(
         required=True,
@@ -23,6 +33,7 @@ class UserCreateForm(UserCreationForm):
     password2 = forms.CharField(
         required=True,
         label="Password confirmation",
+        widget=forms.PasswordInput,
         error_messages={'required': 'The two password fields didn’t match.'}
     )
     expression_of_consent = forms.BooleanField(

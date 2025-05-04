@@ -3,8 +3,6 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from .forms import UserCreateForm
 
-def home(request):
-    return render(request, 'home.html')
 
 def user_create(request):
     if request.method == 'POST':
@@ -43,7 +41,11 @@ def user_login(request):
 
     return render(request, 'UserProfile/user_login.html')
 
-def user_logout(request):
-    logout(request)
-    messages.success(request, "You have been logged out successfully.")
-    return redirect('home')
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('UserProfile/user_login.html')  # or wherever you want the user to go after logout
+    return render(request, 'UserProfile/user_logout.html')  # shows confirmation page
+
+def splash(request):
+    return render(request, 'splash.html')

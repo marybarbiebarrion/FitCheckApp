@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="text-align:center;">
+  <h2>Are you sure you want to logout?</h2>
+  <form method="post">
+    {% csrf_token %}
+    <a href="{% url 'splash' %}" class="button" style="text-decoration: none;">Yes, Logout</a>
+    <a href="{% url 'dashboard' %}" class="button" style="margin-left: 10px; text-decoration: none;">Cancel</a>    
+  </form>
+</div>
+{% endblock %}

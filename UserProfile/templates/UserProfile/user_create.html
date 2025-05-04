@@ -1,68 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create User</title>
+  <meta charset="UTF-8">
+  <title>Create Account</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(#AED9E0, #FAF3DD, #B5DCE1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 40px;
+      max-width: 700px;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+    h1 { text-align: center; margin-bottom: 30px; color: #333; }
+    form { display: flex; flex-direction: column; gap: 20px; }
+    .form-row { display: flex; flex-wrap: wrap; gap: 15px; }
+    .form-group { flex: 1; min-width: 120px; display: flex; flex-direction: column; }
+    label { font-weight: bold; margin-bottom: 5px; color: #444; }
+    input, select { padding: 10px; border: 1px solid #ccc; border-radius: 10px; font-size: 14px; }
+    input:focus, select:focus { outline: none; border-color: #AED9E0; box-shadow: 0 0 5px rgba(174, 217, 224, 0.5); }
+    .checkbox-group { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+    .checkbox-label { font-size: 14px; color: #333; display: flex; align-items: center; gap: 10px; }
+    .button { background-color: black; color: white; padding: 14px; border: none; border-radius: 25px; font-weight: bold; font-size: 16px; cursor: pointer; transition: all 0.3s ease; }
+    .button:hover { background-color: white; color: black; border: 1px solid black; }
+    .messages { margin-bottom: 15px; }
+    .messages li { padding: 10px; border-radius: 6px; }
+    .success { background-color: #d4edda; color: #155724; }
+    .error { background-color: #f8d7da; color: #721c24; }
+    .footer-link { margin-top: 10px; text-align: center; font-size: 14px; }
+    .footer-link a { color: #4CAF50; text-decoration: none; font-weight: bold; }
+  </style>
 </head>
 <body>
-    <h1>Create User Account</h1>
+  <div class="container">
+    <h1>Create Your Account</h1>
 
-    <!-- Display success or error messages -->
     {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li class="{{ message.tags }}">{{ message }}</li>
-            {% endfor %}
-        </ul>
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
     {% endif %}
 
     <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}  <!-- Dynamically render all form fields -->
-        <button type="submit" id="create-user-button" {% if form_has_errors %}disabled{% endif %}>Create User</button>
+      {% csrf_token %}
+      
+      <!-- Name Fields -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="id_first_name">First Name</label>
+          {{ form.first_name }}
+        </div>
+        <div class="form-group">
+          <label for="id_middle_name">Middle Name <span style="font-weight: normal;">(Optional)</span></label>
+          {{ form.middle_name }}
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="id_last_name">Last Name</label>
+          {{ form.last_name }}
+        </div>
+        <div class="form-group">
+          <label for="id_suffix">Suffix <span style="font-weight: normal;">(Optional)</span></label>
+          {{ form.suffix }}
+        </div>
+      </div>
+
+      <!-- Birth Info -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="id_birthdate">Birthdate</label>
+          {{ form.birthdate }}
+        </div>
+        <div class="form-group">
+          <label for="id_sex_at_birth">Sex at Birth</label>
+          {{ form.sex_at_birth }}
+        </div>
+      </div>
+
+      <!-- Email & Password -->
+      <div class="form-group">
+        <label for="id_email">Email Address</label>
+        {{ form.email }}
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="id_password1">Password</label>
+          {{ form.password1 }}
+        </div>
+        <div class="form-group">
+          <label for="id_password2">Confirm Password</label>
+          {{ form.password2 }}
+        </div>
+      </div>
+
+      <!-- Agreements -->
+      <div class="checkbox-group">
+        <label class="checkbox-label">
+          {{ form.expression_of_consent }} I agree to the data privacy terms.
+        </label>
+        <label class="checkbox-label">
+          {{ form.declaration_undertaking }} I confirm the accuracy of my information.
+        </label>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="button">Sign Up</button>
+
+      <div class="footer-link">
+        Already have an account? <a href="{% url 'user_login' %}">Log in</a>
+      </div>
     </form>
+  </div>
 
-    <p>
-        Already have an account? 
-        <a href="{% url 'user_login' %}">Log in here</a>.
-    </p>
-
-    <!-- Back Button -->
-    <button onclick="window.history.back()">Back</button>
-
-    <script>
-        const form = document.querySelector('form');
-        const createUserButton = document.getElementById('create-user-button');
-
-        // Function to check if all required fields are valid
-        function validateForm() {
-            const inputs = form.querySelectorAll('input, select');
-            let isValid = true;
-
-            inputs.forEach(input => {
-                if (input.required && !input.value.trim()) {
-                    isValid = false;
-                }
-            });
-
-            // Check if both checkboxes are checked
-            const consentCheckbox = document.getElementById('id_expression_of_consent');
-            const declarationCheckbox = document.getElementById('id_declaration_undertaking');
-            if (!consentCheckbox.checked || !declarationCheckbox.checked) {
-                isValid = false;
-            }
-
-            // Enable or disable the button based on form validity
-            createUserButton.disabled = !isValid;
-        }
-
-        // Attach event listeners to all form inputs
-        form.addEventListener('input', validateForm);
-        form.addEventListener('change', validateForm);
-
-        // Initial validation check
-        validateForm();
-    </script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      flatpickr('.flatpickr', {
+        dateFormat: 'm/d/Y',  // Format for MM/DD/YYYY
+        altInput: true,  // Show the selected date in an alternate input
+        altFormat: 'm/d/Y',  // The format shown in the input field
+        allowInput: true,  // Allow manual input (optional)
+      });
+    });
+  </script>
 </body>
 </html>
