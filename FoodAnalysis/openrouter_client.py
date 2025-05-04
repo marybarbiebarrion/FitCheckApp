@@ -1,8 +1,9 @@
 import os
 from openai import OpenAI
+from django.conf import settings
 
 client = OpenAI(
-    api_key="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",  # Use env var for security
+    api_key = settings.OPENAI_API_KEY,
     base_url="https://openrouter.ai/api/v1"
 )
 
