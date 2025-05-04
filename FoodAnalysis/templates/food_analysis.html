@@ -28,8 +28,13 @@
             <button type="submit" name="analyze" class="button">Analyze</button>
         </div>
     </div>
-    
     </form>
+
+    <div style="text-align: center;" id="loading-indicator" hidden>
+      <p style="font-size: 1.3em; font-weight: bold;">
+        Analyzing new food<span id="dots">.</span>
+      </p>
+    </div>
 
     {% if analysis %}
       <div style="text-align: center;">
@@ -123,6 +128,21 @@
       };
       reader.readAsDataURL(file);
     }
+  });
+
+  document.getElementById('upload-form').addEventListener('submit', function() {
+    const loading = document.getElementById('loading-indicator');
+    const dots = document.getElementById('dots');
+
+    loading.hidden = false;
+
+    let count = 1;
+    const interval = setInterval(() => {
+      dots.textContent = '.'.repeat(count);
+      count = (count % 3) + 1;
+    }, 500);
+    
+    // Let form continue to submit normally
   });
 </script>
 {% endblock %}
