@@ -49,3 +49,9 @@ def logout_view(request):
 
 def splash(request):
     return render(request, 'splash.html')
+
+def dashboard_view(request):
+    context = {
+        'nickname': request.user.nickname if request.user.is_authenticated else 'Guest'
+    }
+    return render(request, 'dashboard.html', context)

@@ -35,29 +35,46 @@
     .checkbox-label { font-size: 14px; color: #333; display: flex; align-items: center; gap: 10px; }
     .button { background-color: black; color: white; padding: 14px; border: none; border-radius: 25px; font-weight: bold; font-size: 16px; cursor: pointer; transition: all 0.3s ease; }
     .button:hover { background-color: white; color: black; border: 1px solid black; }
-    .messages { margin-bottom: 15px; }
-    .messages li { padding: 10px; border-radius: 6px; }
-    .success { background-color: #d4edda; color: #155724; }
-    .error { background-color: #f8d7da; color: #721c24; }
     .footer-link { margin-top: 10px; text-align: center; font-size: 14px; }
     .footer-link a { color: #4CAF50; text-decoration: none; font-weight: bold; }
+
+    /* Toast styles */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .toast {
+      background-color: #f44336;
+      color: white;
+      padding: 12px 20px;
+      margin-top: 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      opacity: 0.95;
+      animation: fadein 0.5s, fadeout 0.5s 4s;
+    }
+
+    @keyframes fadein {
+      from { opacity: 0; right: 0px; }
+      to { opacity: 0.95; right: 20px; }
+    }
+
+    @keyframes fadeout {
+      from { opacity: 0.95; }
+      to { opacity: 0; }
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Create Your Account</h1>
 
-    {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-          <li class="{{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-
     <form method="post">
       {% csrf_token %}
-      
+
       <!-- Name Fields -->
       <div class="form-row">
         <div class="form-group">
@@ -93,12 +110,19 @@
         </div>
       </div>
 
-      <!-- Email & Password -->
-      <div class="form-group">
-        <label for="id_email">Email Address</label>
-        {{ form.email }}
+      <!-- Email & Nickname -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="id_email">Email Address</label>
+          {{ form.email }}
+        </div>
+        <div class="form-group">
+          <label for="id_nickname">Nickname <span style="font-weight: normal;">(What should we call you?)</span></label>
+          {{ form.nickname }}
+        </div>
       </div>
 
+      <!-- Password -->
       <div class="form-row">
         <div class="form-group">
           <label for="id_password1">Password</label>
@@ -129,15 +153,35 @@
     </form>
   </div>
 
+  <!-- Toast Error Display -->
+  <div class="toast-container" id="toast-container">
+    {% if form.errors %}
+      {% for field in form %}
+        {% for error in field.errors %}
+          <div class="toast">{{ field.label }}: {{ error }}</div>
+        {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+        <div class="toast">{{ error }}</div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       flatpickr('.flatpickr', {
-        dateFormat: 'm/d/Y',  // Format for MM/DD/YYYY
-        altInput: true,  // Show the selected date in an alternate input
-        altFormat: 'm/d/Y',  // The format shown in the input field
-        allowInput: true,  // Allow manual input (optional)
+        dateFormat: 'm/d/Y',
+        altInput: true,
+        altFormat: 'm/d/Y',
+        allowInput: true,
       });
+
+      // Automatically remove toasts after 5s
+      setTimeout(() => {
+        const toasts = document.querySelectorAll('.toast');
+        toasts.forEach(toast => toast.remove());
+      }, 5000);
     });
   </script>
 </body>

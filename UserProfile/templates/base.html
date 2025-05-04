@@ -122,7 +122,7 @@
   <!-- Main Area (Topbar + Content) -->
   <div class="main">
     <div class="topbar">
-      Welcome, User!
+      Welcome, {{ request.user.nickname|default:"User" }}!
       <i class="fas fa-user-circle"></i>
     </div>
     <div class="content">
