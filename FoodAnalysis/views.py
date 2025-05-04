@@ -12,7 +12,7 @@ from django.core.files.storage import default_storage
 from django.conf import settings
 from .models import FoodAnalysis
 from .forms import FoodAnalysisForm
-from .openrouter_client import ask_openrouter
+from .openrouter_client import ask_food_description, ask_food_alternatives
 
 # Load the trained model
 MODEL_PATH = os.path.join(settings.BASE_DIR, "model", "resnet18_food101.pth")
@@ -213,6 +213,7 @@ def food_analysis_view(request):
     form = FoodAnalysisForm()
     analysis = None
     ai_description = None
+    food_alternatives = None
 
     if request.method == 'POST':
         form = FoodAnalysisForm(request.POST, request.FILES)
@@ -225,15 +226,15 @@ def food_analysis_view(request):
             results = analyze_image(image_full_path)
             
             # Ask OpenRouter for food description
-            ai_description = ask_openrouter(results['food_name'])
-
+            ai_description = ask_food_description(results['food_name'])
+            food_alternatives = ask_food_alternatives(results['food_name'], results['ingredients'], results['allergens'])
             # Save to database
             analysis = FoodAnalysis.objects.create(
                 image=image,
                 food_name=results['food_name'],
                 ingredients=results['ingredients'],
                 allergens=results['allergens'],
-                alternatives=results['alternatives'],
+                alternatives=food_alternatives,
                 calories=results['calories'],
                 protein=results['protein'],
                 carbohydrates=results['carbohydrates'],
@@ -248,4 +249,5 @@ def food_analysis_view(request):
         'analysis': analysis,
         'past_analyses': FoodAnalysis.objects.all().order_by('-analyzed_at')[:5],
         'ai_description': ai_description,
+        'food_alternatives': food_alternatives
     })
