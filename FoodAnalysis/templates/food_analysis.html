@@ -13,7 +13,7 @@
 
       <div id="preview-container" style="text-align: center;">
         {% if analysis %}
-          <img src="{{ analysis.image.url }}" alt="Uploaded Image" style="max-width: 80%; border-radius: 10px;"><br><br>
+          <img src="{{ analysis.image.url }}" alt="Uploaded Image" style="height: 200px; width: auto; border-radius: 10px;">
         {% else %}
           <div style="width: 80%; height: 200px; background-color: #eee; border-radius: 10px; margin: auto; display: flex; align-items: center; justify-content: center;">
             <p style="color: #999;">No image uploaded</p>
@@ -124,7 +124,7 @@
       const previewContainer = document.getElementById('preview-container');
       const reader = new FileReader();
       reader.onload = function(e) {
-        previewContainer.innerHTML = `<img src="${e.target.result}" alt="Preview" style="max-width: 100%; border-radius: 10px;"><br><br>`;
+        previewContainer.innerHTML = `<img src="${e.target.result}" alt="Preview" style="height: 200px; width: auto; border-radius: 10px;"><br><br>`;
       };
       reader.readAsDataURL(file);
     }
