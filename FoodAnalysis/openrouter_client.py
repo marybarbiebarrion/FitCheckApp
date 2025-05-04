@@ -18,12 +18,17 @@ def ask_food_description(food_name):
     return response.choices[0].message.content.strip()
 
 def ask_food_alternatives(food_name, ingredients, allergens):
+    # prompt = (
+    #     f"Suggest food alternatives for {food_name}, that is different from food itself, based on the following ingredients and allergens. "
+    #     f"List alternatives that have almost similar ingredients but exclude the allergens listed.\n"
+    #     f"Ingredients: {ingredients}\n"
+    #     f"Allergens: {allergens}\n"
+    #     f"Provide a list of alternatives with a short description and why each one is a good alternative."
+    # )
     prompt = (
-        f"Suggest food alternatives for {food_name} based on the following ingredients and allergens. "
-        f"List alternatives that have almost similar ingredients but exclude the allergens listed.\n"
-        f"Ingredients: {ingredients}\n"
+        f"Suggest 3 food alternatives for {food_name}, that is different from food itself, but lacks the allergens in the initial food. "
         f"Allergens: {allergens}\n"
-        f"Provide a list of alternatives with a short description and why each one is a good alternative."
+        f"Provide a list of alternatives with a max-20-word explanation why each one is a good alternative."
     )
     
     messages = [{"role": "system", "content": "You are a helpful assistant."},
