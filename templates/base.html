@@ -286,7 +286,7 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <h2>FitCheck</h2>
-    <a href="{% url 'dashboard' %}" class="{% if request.path == '/dashboard/' %}active{% endif %}">
+    <a href="{% url 'UserProfile:dashboard' %}" class="{% if request.path == '/dashboard/' %}active{% endif %}">
       <i class="fas fa-compass"></i> Dashboard
     </a>
     <a href="#"><i class="fas fa-user"></i> Health Profile </a>
@@ -295,7 +295,7 @@
     <a href="{% url 'NutritionGuidance:ng_index' %}" class="{% if request.path == '/nutritionguidance/home/' %}active{% endif %}">
         <i class="fas fa-book"></i> NutritionGuidance</a>
     <a href="#"><i class="fas fa-heartbeat"></i> Wellness Tracker</a>
-    <a href="{% url 'user_logout' %}" class="{% if request.path == '/logout/' %}active{% endif %}">
+    <a href="{% url 'UserProfile:user_logout' %}" class="{% if request.path == '/logout/' %}active{% endif %}">
       <i class="fas fa-sign-out-alt"></i> Logout
     </a>    
   </div>
@@ -305,7 +305,7 @@
     <div class="topbar">
       Welcome, {{ request.user.nickname|default:"User" }}!
       <!-- Link the user circle icon to the profile edit page -->
-      <a href="{% url 'edit_profile' %}">
+      <a href="{% url 'UserProfile:edit_profile' %}">
         <i class="fas fa-user-circle"></i>
       </a>
     </div>

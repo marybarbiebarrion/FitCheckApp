@@ -10,7 +10,7 @@ def user_create(request):
         if form.is_valid():
             user = form.save()
             messages.success(request, "Account created successfully. You can now log in.")
-            return redirect('user_login')
+            return redirect('UserProfile:user_login')
         else:
             print("Form errors:", form.errors)
             messages.error(request, "Please correct the errors below.")
@@ -35,7 +35,7 @@ def user_login(request):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
-            return redirect('dashboard')
+            return redirect('UserProfile:dashboard')
         else:
             messages.error(request, "Invalid email or password.")
 

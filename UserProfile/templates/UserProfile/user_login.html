@@ -115,7 +115,7 @@
         <h1>Welcome back!</h1>
         <p>Elevate Your Health, One Check at a Time with FitCheck</p>
 
-        <form method="POST" action="{% url 'user_login' %}">
+        <form method="POST" action="{% url 'UserProfile:user_login' %}">
             {% csrf_token %}
             <input type="email" name="email" placeholder="Email" class="form-input" required>
 
@@ -128,7 +128,7 @@
         </form>
 
         <div class="register-link">
-            Not a member? <a href="{% url 'user_create' %}">Register now</a>
+            Not a member? <a href="{% url 'UserProfile:user_create' %}">Register now</a>
         </div>
     </div>
 </body>

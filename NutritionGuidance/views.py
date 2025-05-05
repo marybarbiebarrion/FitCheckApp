@@ -7,7 +7,7 @@ from .forms import HydrationTrackerForm
 from .models import Meal, Meal_Plan, Hydration_Tracker
 
 
-@login_required
+# @login_required
 def ng_homeview(request):
     message = ""
     if request.method == 'POST':
@@ -35,7 +35,7 @@ def ng_homeview(request):
         ht = Hydration_Tracker.objects.filter(user_id=user).first()
     return render(request, 'index.html', {'current_meal': current_meal, 'ht': ht, 'message': message})
 
-@login_required
+# @login_required
 def ht_create(request):
     if request.method == 'POST':
         htform = HydrationTrackerForm(request.POST, prefix='hydrotracker')

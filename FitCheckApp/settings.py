@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'UserProfile',
     'FoodAnalysis',
-    'FitnessPlanning'
+    'FitnessPlanning',
     'NutritionGuidance',
 ]
 
@@ -135,8 +135,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'UserProfile.User'
-LOGIN_REDIRECT_URL = '/homepage' # set this so that redirects go somewhere
+AUTH_USER_MODEL = 'UserProfile.User' # set this so that redirects go somewhere
 
 AUTHENTICATION_BACKENDS = [
     'UserProfile.backends.EmailBackend',
