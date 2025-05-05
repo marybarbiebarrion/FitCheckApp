@@ -5,8 +5,6 @@ from .models import Ingredient, Recipe, Recipe_Ingredients, Meal, Meal_Favorites
 from UserProfile.models import User
 from .forms import MealPlanForm, HydrationTrackerForm
 
-
-    
 def ng_homeview(request):
     message = ""
     if request.method == 'POST':
@@ -51,8 +49,7 @@ def ht_create(request):
             return redirect('NutritionGuidance:ng_index')
     else:
         htform = HydrationTrackerForm(prefix='hydrotracker')
-    return render(request, 'index.html', )
-    
+    return render(request, 'ht_form.html', {'form': htform})
 
 class NG_MPListView(View):
     def get(self, request, *args, **kwargs):
@@ -79,4 +76,25 @@ class NG_Recipe(View):
     def get(self, request, meal_id, *args, **kwargs):
         meal = Meal.objects.get(meal_name=meal_id)
         return render(request, 'recipe.html', {'meal': meal})
+
+class HT_Update(View):
+    def get(self, request):
+        tracker = Hydration_Tracker.objects.get(user_id=1)
+        htform = HydrationTrackerForm(instance=tracker)
+        return render(request, 'ht_form.html', {'form': htform})
     
+    def post(self, request):
+        tracker = Hydration_Tracker.objects.get(user_id=1)
+        htform = HydrationTrackerForm(request.POST, instance=tracker)
+        if htform.is_valid():
+            htform.save()
+            return redirect('NutritionGuidance:ng_index')
+        return render(request, 'ht_form.html', {'form': htform})
+    
+class HT_Delete(View):
+    def post(self, request, *args, **kwargs):
+        tracker = Hydration_Tracker.objects.get(user_id=1)
+        tracker.delete()
+        return redirect('NutritionGuidance:ng_index')
+            
+        
