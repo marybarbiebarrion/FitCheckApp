@@ -174,4 +174,92 @@
       </form>
       <br />
     {% endif %}
+    <!-- Hydration tracker -->
+    {% if ht %}
+    {{ ht.water_goal|json_script:"water_goal" }}
+    {{ ht.container_size|json_script:"cont_size" }}
+    {{ ht.active_end|json_script:"active_end" }}
+    {{ ht.active_start|json_script:"active_start" }}
+    <h4> Next water notification at: </h4>
+    <h2 id="next"></h2>
+    <script>
+        // variables calculations
+        // times to drink = water goal / container size (ceiling division)
+        // active hours = active end - active start
+        // intervals = active hours / times to drink
+        
+        const water_goal = JSON.parse(document.getElementById('water_goal').textContent);
+        const cont_size = JSON.parse(document.getElementById('cont_size').textContent);
+        const active_end = JSON.parse(document.getElementById('active_end').textContent);
+        const active_end_hours = parseInt(active_end);
+        const active_end_minutes = active_end.substring(3,5);
+        const active_start = JSON.parse(document.getElementById('active_start').textContent);
+        const active_start_hours = parseInt(active_start);
+        const active_start_minutes = active_start.substring(3,5);
+
+        const times_to_drink = Math.ceil(water_goal/cont_size);
+        const active_hours = active_end_hours - active_start_hours;
+        const active_minutes = parseInt(active_end_minutes) - parseInt(active_start_minutes);
+        const intervals = (active_hours + (active_minutes / 60))/times_to_drink;
+        let next_hours = 0;
+        let next_minutes = 0;
+
+
+        // function to get next notification at any time
+        // nowfromthen = current time - active start
+        // progress = nowfromthen / intervals
+        // nextnotif = active start + intervals*(progress) + intervals
+        function nextNotif() {
+            
+            const current = new Date();
+            const current_hours = current.getHours();
+            const current_minutes = current.getMinutes();
+            const nowfromthen_hours = current_hours - active_start_hours;
+            const nowfromthen_minutes = current_minutes - parseInt(active_start_minutes);
+            const progress = Math.floor((nowfromthen_hours + (nowfromthen_minutes / 60))/intervals);
+
+            next_hours = Math.floor(active_start_hours + intervals*(progress + 1));
+            next_minutes = Math.floor(parseInt(active_start_minutes) + ((intervals%1)*60)*(progress + 1));
+
+            if (next_minutes >= 60){
+                next_hours += Math.floor(next_minutes/60);
+                next_minutes = next_minutes % 60;
+            }
+            next_hours = next_hours.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false});
+            next_minutes = next_minutes.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false});
+            if ((next_hours > active_end_hours || (next_hours == active_end_hours && next_minutes > active_end_minutes)
+                    || next_hours < active_start_hours)){
+                document.getElementById('next').innerHTML = active_start_hours.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false}) 
+                                                    + ":" + active_start_minutes.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false});
+            }
+            else {
+                document.getElementById('next').innerHTML = next_hours + ":" + next_minutes;
+            }
+            
+        }
+
+        // function to check notifications
+        // if current time >= current notification time
+        // javascript alert
+        function checkNotif() {
+            const current = new Date();
+            const current_hours = current.getHours();
+            const current_minutes = current.getMinutes();
+
+            if (current_hours == next_hours && current_minutes == next_minutes){
+                alert("You should drink water NOW!");
+            }
+        }
+
+        // poll check function every minute
+        setInterval(checkNotif, 10000);
+
+        // get next notification on page load
+        nextNotif();
+        
+
+    </script>
+    {% else %}
+    <p>no hydration tracker found</p>
+    {% endif %}
 </body>

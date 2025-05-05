@@ -75,6 +75,8 @@ class Meal_Favorites(models.Model):
     
 class Hydration_Tracker(models.Model):
     user_id = models.ForeignKey('UserProfile.User', related_name='hydration_tracker', on_delete=models.CASCADE)
-    container_size = models.IntegerField()
-    water_goal = models.IntegerField()
-    active_hours = models.IntegerField()
+    container_size = models.FloatField()
+    water_goal = models.FloatField()
+    active_start = models.TimeField(default="0:00")
+    active_end = models.TimeField(default="23:59")
+    

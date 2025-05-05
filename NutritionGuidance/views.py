@@ -1,10 +1,10 @@
 from django.http import HttpResponseRedirect
 from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Ingredient, Recipe, Recipe_Ingredients, Meal, Meal_Favorites, Meal_Plan
+from .models import Ingredient, Recipe, Recipe_Ingredients, Meal, Meal_Favorites, Meal_Plan, Hydration_Tracker
 from UserProfile.models import User
-from .forms import MealPlanForm
-from django.db.models.query import QuerySet
+from .forms import MealPlanForm, HydrationTrackerForm
+
 
     
 def ng_homeview(request):
@@ -33,7 +33,26 @@ def ng_homeview(request):
     else:
         mealform = MealPlanForm(prefix='mealplan')
         current_meal = Meal_Plan.objects.filter(user_id=1).first()
-    return render(request, 'index.html', {'current_meal': current_meal, 'form': mealform, 'message': message})
+        ht = Hydration_Tracker.objects.filter(user_id=1).first()
+    return render(request, 'index.html', {'current_meal': current_meal, 'ht': ht, 'form': mealform, 'message': message})
+
+def ht_create(request):
+    if request.method == 'POST':
+        htform = HydrationTrackerForm(request.POST, prefix='hydrotracker')
+        if htform.is_valid():
+            ht = Hydration_Tracker()
+            ht.user_id = htform.cleaned_data.get('user_id')
+            ht.container_size = htform.cleaned_data.get('container_size')
+            ht.water_goal = htform.cleaned_data.get('water_goal')
+            ht.active_start = htform.cleaned_data.get('active_start')
+            ht.active_end = htform.cleaned_data.get('active_end')
+            ht.save()
+            
+            return redirect('NutritionGuidance:ng_index')
+    else:
+        htform = HydrationTrackerForm(prefix='hydrotracker')
+    return render(request, 'index.html', )
+    
 
 class NG_MPListView(View):
     def get(self, request, *args, **kwargs):
@@ -60,9 +79,4 @@ class NG_Recipe(View):
     def get(self, request, meal_id, *args, **kwargs):
         meal = Meal.objects.get(meal_name=meal_id)
         return render(request, 'recipe.html', {'meal': meal})
-
-class NG_MPDemo(View):
-    def get(self, request, *args, **kwargs):
-        meals = Meal.objects.exclude(allergen_id__allergen_name__contains="Sesame").filter(calories__lte=2000/3).order_by('?')[:21]
-        return render(request, 'demo.html', {'meals': meals})
     
