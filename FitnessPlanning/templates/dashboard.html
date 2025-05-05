@@ -6,7 +6,7 @@
   <div class="section">
     <div class="half">
       {% if window_status %}
-        <h4>{{ window_status }}</h4>  
+        <h4>{{ window_status }} </h4> 
       {% endif %}
       <h3>Fasting Schedule for the Week</h3>
       <table class="table table-bordered">
@@ -65,17 +65,6 @@
           </tr>
         </tbody>
       </table>
-
-
-<div class="current-time">
-  <h3>Current Time: {{ current_time|date:"H:i:s" }}</h3>
-</div>
-
-<div class="window-info">
-  <h3>Your Eating and Fasting Windows</h3>
-  <p><strong>Eating Window:</strong> From {{ eating_window_start|date:"H:i" }} to {{ eating_window_end|date:"H:i" }}</p>
-  <p><strong>Fasting Window:</strong> From {{ fasting_window_start|date:"H:i" }} to {{ fasting_window_end|date:"H:i" }}</p>
-</div>
     </div>
 
     <div class="half">
@@ -96,6 +85,24 @@
         {{ exercise_form.as_p }}
         <button type="submit" name="exercise-submit">Save Exercise</button>
       </form>
+
+      {% if exercise_result %}
+        <hr>
+        <h3>Recommendation</h3>
+        <p><strong>Exercise Type:</strong> {{ exercise_result.exercise_type }}</p>
+        <p><strong>Recommended Exercise:</strong> {{ exercise_result.recommended_exercise }}</p>
+        <p><strong>Calories Burned:</strong> {{ exercise_result.calories_burned }}</p>
+        <p><strong>Duration:</strong> {{ exercise_result.duration }}</p>
+      {% endif %}
+
+      <!-- <h4>Previous Exercise Entries</h4>
+      <ul>
+        {% for entry in exercise_entries %}
+          <li>{{ entry.recommended_exercise }} — {{ entry.duration }} — {{ entry.calories_burned }} kcal</li>
+        {% empty %}
+          <li>No previous exercise recommendations.</li>
+        {% endfor %}
+      </ul> -->
     </div>
 
     <div class="half">
@@ -105,6 +112,27 @@
         {{ deficit_form.as_p }}
         <button type="submit" name="deficit-submit">Save Caloric Plan</button>
       </form>
+
+      {% if deficit_result %}
+        <hr>
+        <h3>Plan Summary</h3>
+        <p><strong>Current Weight:</strong> {{ deficit_result.current_weight }} kg</p>
+        <p><strong>Target Weight:</strong> {{ deficit_result.target_weight }} kg</p>
+        <p><strong>Goal Date:</strong> {{ deficit_result.target_date }}</p>
+        <p><strong>Recommended Daily Caloric Intake:</strong> {{ deficit_result.daily_caloric_intake }} kcal/day</p>
+      {% endif %}
+
+      <!-- <h4>Previous Calorie Plans</h4>
+      <ul>
+        {% for entry in deficit_entries %}
+          <li>
+            {{ entry.start_date }}: {{ entry.current_weight }} kg → {{ entry.target_weight }} kg by {{ entry.target_date }}  
+            — {{ entry.daily_caloric_intake }} kcal/day
+          </li>
+        {% empty %}
+          <li>No previous plans.</li>
+        {% endfor %} -->
+      <!-- </ul> -->
     </div>
   </div>
 </div>
