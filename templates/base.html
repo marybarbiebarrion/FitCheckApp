@@ -20,8 +20,8 @@
 
     .button {
       background-color: black;
-      color:white;
-      border: 1px, solid, black;
+      color: white;
+      border: 1px solid black;
       padding: 15px 30px;
       border-radius: 20px;
     }
@@ -30,6 +30,7 @@
       color: black;
       background-color: white;
     }
+
     .button:active {
       color: black;
       background-color: white;
@@ -91,8 +92,9 @@
     .content {
       flex: 1;
       padding: 30px;
-      background: linear-gradient(#AED9E0, #FAF3DD, #B5DCE1);;
+      background: linear-gradient(#AED9E0, #FAF3DD, #B5DCE1);
       overflow-y: auto;
+      padding-top: 60px; /* Adds spacing for a less constrained content section */
     }
 
     footer {
@@ -101,6 +103,47 @@
       color: #888;
       background: #f0f0f0;
     }
+
+    /* Health Profile Specific Styles */
+    .health-profile-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .health-profile-form input,
+    .health-profile-form select,
+    .health-profile-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .health-profile-form button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .health-profile-form button:hover {
+      background-color: #45a049;
+    }
+
+    .health-profile-form h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
   </style>
 </head>
 <body>
@@ -111,7 +154,7 @@
     <a href="{% url 'dashboard' %}" class="{% if request.path == '/dashboard/' %}active{% endif %}">
       <i class="fas fa-compass"></i> Dashboard
     </a>
-    <a href="#"><i class="fas fa-user"></i> Health Profile </a>
+    <a href="{% url 'health_profile' %}"><i class="fas fa-user"></i> Health Profile </a>
     <a href="#"> <i class="fas fa-puzzle-piece"></i> Food Analysis </a>
     <a href="#"><i class="fas fa-spoon"></i> FitnessPlanning</a>
     <a href="#"><i class="fas fa-book"></i> Guidance</a>
@@ -125,7 +168,6 @@
   <div class="main">
     <div class="topbar">
       Welcome, {{ request.user.nickname|default:"User" }}!
-      <!-- Link the user circle icon to the profile edit page -->
       <a href="{% url 'edit_profile' %}">
         <i class="fas fa-user-circle"></i>
       </a>
@@ -134,9 +176,6 @@
       {% block content %}
       {% endblock %}
     </div>
-    <!-- <footer>
-        FitCheck 
-    </footer> -->
   </div>
 
 </body>
