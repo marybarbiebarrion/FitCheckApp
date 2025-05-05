@@ -5,94 +5,215 @@
   <script src="https://kit.fontawesome.com/4a1b605065.js" crossorigin="anonymous"></script>
   <title>FitCheck Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- CSS Styles for the Dashboard -->
   <style>
-    * {
-      box-sizing: border-box;
-    }
+ * {
+  box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      height: 100vh;
-      display: flex;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  height: 100vh;
+  display: flex;
+}
 
-    .button {
-      background-color: black;
-      color:white;
-      border: 1px, solid, black;
-      padding: 15px 30px;
-      border-radius: 20px;
-    }
+button {
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+  padding: 15px 30px;
+  border-radius: 20px;
+}
 
-    .button:hover {
-      color: black;
-      background-color: white;
-    }
-    .button:active {
-      color: black;
-      background-color: white;
-      border-color: white;
-    }
-    .sidebar {
-      width: 220px;
-      background-color: #AED9E0;
-      color: black;
-      padding: 20px;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      border-right: 1px solid black;
-    }
+  .button:hover {
+    color: black;
+    background-color: white;
+  }
+  .button:active {
+    color: black;
+    background-color: white;
+    border-color: white;
+  }
+  .sidebar {
+    width: 220px;
+    background-color: #AED9E0;
+    color: black;
+    padding: 20px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid black;
+  }
 
-    .sidebar h2 {
-      margin-top: 0;
-      font-size: 1.4rem;
-    }
+input[type="text"], input[type="number"], input[type="month"], textarea {
+  padding: 10px;
+  border: 1px solid #ddd; /* Light grey border */
+  border-radius: 5px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
 
-    .sidebar a {
-      display: block;
-      color: #5E6472;
-      text-decoration: none;
-      margin: 10px 0;
-      padding: 15px;
-      border-radius: 5px;
-    }
+input[type="text"]:focus, input[type="number"]:focus, input[type="month"]:focus, textarea:focus {
+  outline: none;
+  border-color: #AED9E0;
+  box-shadow: 0 0 5px rgba(173, 217, 224, 0.8);
+}
 
-    .sidebar a:hover {
-      background-color: #B8F2E6;
-    }
+textarea {
+  height: 30px;
+}
 
-    .sidebar a.active {
-      background-color: #4CAF50;
-      color: white;
-    }
+  .sidebar a.active {
+    background-color: #4CAF50;
+    color: white;
+  }
 
-    .main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
 
-    .topbar {
-      background-color: #AED9E0;
-      color: black;
-      padding: 15px 30px;
-      font-size: 20px;
-      font-weight: bold;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      text-align: end;
-      border-bottom: 1px solid black;
-    }
+label {
+  font-size: 16px;
+  color: #333;
+  text-align: left;
+  margin-bottom: 5px;
+}
 
-    .content {
-      flex: 1;
-      padding: 30px;
-      background: linear-gradient(#AED9E0, #FAF3DD, #B5DCE1);;
-      overflow-y: auto;
-    }
+.sidebar {
+  width: 220px;
+  background-color: #AED9E0;
+  color: black;
+  padding: 20px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid black;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+  font-size: 1.4rem;
+}
+
+.sidebar a {
+  display: block;
+  color: #5E6472;
+  text-decoration: none;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.sidebar a:hover {
+  background-color: #B8F2E6;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.topbar {
+  background-color: #AED9E0;
+  color: black;
+  padding: 15px 30px;
+  font-size: 20px;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  text-align: end;
+  border-bottom: 1px solid black;
+}
+
+.content {
+  flex: 1;
+  padding: 30px;
+  background: linear-gradient(#AED9E0, #FAF3DD, #B5DCE1);
+  overflow-y: auto;
+}
+
+footer {
+  text-align: center;
+  padding: 5px;
+  color: #888;
+  background: #f0f0f0;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  gap: 40px;
+  padding: 20px;
+}
+
+.section {
+  display: flex;
+  gap: 20px;
+}
+
+.half {
+  flex: 1;
+  padding: 20px;
+  min-height: 250px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* General table styles */
+.table {
+  border-collapse: collapse; /* Ensures borders are merged for inner table borders */
+  width: 100%;
+  border: none; /* Remove outer border of the table */
+}
+
+/* Add light grey borders to inner table cells */
+.table th, .table td {
+  border: 1px solid #ddd; /* Light grey inner borders */
+  text-align: center;
+  font-size: 14px;
+  padding: 10px;
+}
+
+.table th {
+  font-size: 15px;
+}
+
+h4 {
+  text-align: left;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 25px;
+  margin: 5px;
+}
+
+h3, h2 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+button {
+  margin-top: auto;
+}
 
     footer {
       text-align: center;
@@ -158,6 +279,8 @@
       }
     }
   </style>
+  
+  
 </head>
 <body>
 
@@ -170,7 +293,7 @@
     <a href="#"><i class="fas fa-user"></i> Health Profile </a>
     <a href="{% url 'FoodAnalysis:food_analysis' %}"> <i class="fas fa-puzzle-piece"></i>  Food Analysis </a>
     <a href="{% url 'FitnessPlanning:fitness_planning_dashboard' %}"><i class="fas fa-spoon"></i> FitnessPlanning</a>
-    <a href="#"><i class="fas fa-book"></i> Guidance</a>
+    <a href="#"><i class="fas fa-book"></i> Nutrition Guidance</a>
     <a href="#"><i class="fas fa-heartbeat"></i> Wellness Tracker</a>
     <a href="{% url 'user_logout' %}" class="{% if request.path == '/logout/' %}active{% endif %}">
       <i class="fas fa-sign-out-alt"></i> Logout
@@ -190,9 +313,6 @@
       {% block content %}
       {% endblock %}
     </div>
-    <!-- <footer>
-        FitCheck 
-    </footer> -->
   </div>
 
 </body>
