@@ -140,6 +140,19 @@
         grid-column: 3 / 3;
         grid-row: 2 / 3;
     }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeInUp 0.5s ease-out forwards;
+    }
+  
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>

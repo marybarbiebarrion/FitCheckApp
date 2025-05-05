@@ -40,9 +40,9 @@
       <div style="text-align: center;">
         <p>
           <span style="font-weight: 300;">Detected Food:</span>
-          <span style="font-size: 1.5em; font-weight: bold;"> {{ analysis.food_name }}</span>
+          <span class="fade-in" style="font-size: 1.5em; font-weight: bold;"> {{ analysis.food_name }}</span>
         </p>
-        <p style="font-size: 1.1em; color: #555;">
+        <p class="fade-in" style="font-size: 1.1em; color: #555;">
           {{ ai_description }}
         </p>
       </div>
@@ -64,37 +64,37 @@
   <section id="lower-left">
     <h3>Nutrition Facts per 100g</h3>
     
-    <p style="margin-left: 20px; font-size: 0.95em;">
+    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
       <span style="font-weight: bold;">Calories:</span>
       <span style="font-weight: normal;">{{ analysis.calories }}</span>
       <span style="font-size: 0.9em;">kcal</span>
     </p>
-    <p style="margin-left: 20px; font-size: 0.95em;">
+    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
       <span style="font-weight: bold;">Protein:</span>
       <span style="font-weight: normal;">{{ analysis.protein }}</span>
       <span style="font-size: 0.9em;">g</span>
     </p>
-    <p style="margin-left: 20px; font-size: 0.95em;">
+    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
       <span style="font-weight: bold;">Carbohydrates:</span>
       <span style="font-weight: normal;">{{ analysis.carbohydrates }}</span>
       <span style="font-size: 0.9em;">g</span>
     </p>
-    <p style="margin-left: 20px; font-size: 0.95em;">
+    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
       <span style="font-weight: bold;">Fats:</span>
       <span style="font-weight: normal;">{{ analysis.fats }}</span>
       <span style="font-size: 0.9em;">g</span>
     </p>
-    <p style="margin-left: 20px; font-size: 0.95em;">
+    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
       <span style="font-weight: bold;">Fiber:</span>
       <span style="font-weight: normal;">{{ analysis.fiber }}</span>
       <span style="font-size: 0.9em;">g</span>
     </p>
-    <p style="margin-left: 20px; font-size: 0.95em;">
+    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
       <span style="font-weight: bold;">Sugars:</span>
       <span style="font-weight: normal;">{{ analysis.sugars }}</span>
       <span style="font-size: 0.9em;">g</span>
     </p>
-    <p style="margin-left: 20px; font-size: 0.95em;">
+    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
       <span style="font-weight: bold;">Sodium:</span>
       <span style="font-weight: normal;">{{ analysis.sodium }}</span>
       <span style="font-size: 0.9em;">mg</span>
@@ -104,15 +104,15 @@
 
   <section id="lower-middle">
     <h3>Ingredients</h3>
-    <p>{{ analysis.ingredients }}</p>
+    <p class="fade-in">{{ analysis.ingredients }}</p>
 
     <h3>Allergens</h3>
-    <p>{{ analysis.allergens }}</p>
+    <p class="fade-in">{{ analysis.allergens }}</p>
   </section>
 
   <section id="lower-right">
     <h3>Food Alternatives</h3>
-    <p style="white-space: pre-line;">{{ food_alternatives }}</p>
+    <p class="fade-in" style="white-space: pre-line;">{{ food_alternatives }}</p>
   </section>
   {% endif %}
 </div>
