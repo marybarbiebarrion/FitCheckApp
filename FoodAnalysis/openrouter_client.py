@@ -32,13 +32,6 @@ def ask_food_description(food_name):
     return description
 
 def ask_food_alternatives(food_name, ingredients, allergens):
-    # prompt = (
-    #     f"Suggest food alternatives for {food_name}, that is different from food itself, based on the following ingredients and allergens. "
-    #     f"List alternatives that have almost similar ingredients but exclude the allergens listed.\n"
-    #     f"Ingredients: {ingredients}\n"
-    #     f"Allergens: {allergens}\n"
-    #     f"Provide a list of alternatives with a short description and why each one is a good alternative."
-    # )
     prompt = (
         f"Suggest 3 food alternatives for {food_name}, that is different from food itself, but lacks the allergens in the initial food. "
         f"Allergens: {allergens}\n"
