@@ -101,6 +101,12 @@
       color: #888;
       background: #f0f0f0;
     }
+
+    /* You can also add specific custom styles that can be overridden by child templates */
+    .content.custom-style {
+      padding: 50px; /* Example of custom padding */
+      background-color: #ffffff; /* Custom background */
+    }
   </style>
 </head>
 <body>
@@ -108,10 +114,17 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <h2>FitCheck</h2>
+<<<<<<< Updated upstream:UserProfile/templates/base.html
     <a href="#" class="{% if request.path == '/dashboard/' %}active{% endif %}"><i class="fas fa-compass"></i> Dashboard</a>
     <a href="#"><i class="fas fa-user"></i> Health Profile </a>
+=======
+    <a href="{% url 'dashboard' %}" class="{% if request.path == '/dashboard/' %}active{% endif %}">
+      <i class="fas fa-compass"></i> Dashboard
+    </a>
+    <a href="#"> <i class="fas fa-puzzle-piece"></i> Health Profile </a>
+>>>>>>> Stashed changes:templates/base.html
     <a href="#"> <i class="fas fa-puzzle-piece"></i> Food Analysis </a>
-    <a href="#"><i class="fas fa-spoon"></i> FitnessPlanning</a>
+    <a href="#"><i class="fas fa-spoon"></i> Fitness Planning</a>
     <a href="#"><i class="fas fa-book"></i> Guidance</a>
     <a href="#"><i class="fas fa-heartbeat"></i> Wellness Tracker</a>
     <a href="{% url 'user_logout' %}" class="{% if request.path == '/logout/' %}active{% endif %}">
@@ -128,7 +141,7 @@
         <i class="fas fa-user-circle"></i>
       </a>
     </div>
-    <div class="content">
+    <div class="content {% block content_class %}{% endblock %}">
       {% block content %}
       {% endblock %}
     </div>
