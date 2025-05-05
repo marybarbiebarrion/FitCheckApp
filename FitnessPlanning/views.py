@@ -91,4 +91,4 @@ def fitness_planning_dashboard(request):
         'fasting_logs': FastingLog.objects.all().order_by('-date')[:5],
     }
 
-    return render(request, 'dashboard.html', context)
+    return render(request, 'fitness_planning.html', context)
