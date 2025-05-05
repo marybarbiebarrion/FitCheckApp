@@ -1,48 +1,50 @@
 {% extends 'base.html' %}
 {% block content %}
+    <!-- Meal Plan Generation -->
+    <div class="meal_plan" style="float:left; margin-top: -30px; margin-left: -30px; padding-left: 22px; width: 648px; height: 260px; flex-shrink: 0; border: 1.5px solid #000000; border-left-style: hidden; border-top-style: hidden">
     {% if current_meal %}
         <div id="top-right">
-            <h4> Next Meal: </h4>
-            <h2> {{ current_meal.get_meal_type_display }}: {{ current_meal.meal_id.meal_name }} </h2>
+            <h4 style="width: 617px; height: 20px; margin-bottom: 15px; font-size: 20px"> Next Meal: </h4>
+            <h2 style="font-size: 32px; margin-top: 0px; margin-bottom: 0px"> {{ current_meal.get_meal_type_display }}: {{ current_meal.meal_id.meal_name }} </h2>
         </div>
         <br />
         <form action="{% url 'NutritionGuidance:ng_nextmeal' %}" method="post">
             {% csrf_token %}
-            <button type="submit" class="button">Proceed to Next Meal</button>
+            <button type="submit" class="button" style="float: left; margin-left: 30px; margin-top: 47px; margin-right: 25px">Proceed to Next Meal</button>
         </form>
         <br />
         <form action="{% url 'NutritionGuidance:ng_recipe' current_meal.meal_id %}">
-            <button type="submit" class="button">View Recipe</button>
+            <button type="submit" class="button" style="float:left; margin-right: 25px; margin-top: 28px; padding-bottom: 15px">View Recipe</button>
         </form>
         <br />
         <form action="{% url 'NutritionGuidance:ng_planlist' %}">
-          <button type="submit" class="button">View Meal Plan</button>
+          <button type="submit" class="button" style="float:left; margin-top: 10px;">View Meal Plan</button>
         </form>
     {% else %}
-      <p> Generate a meal plan for: </p>
+      <p style="width: 617px; height: 20px; margin-bottom: 15px; font-size: 20px"> No meal plan found! Generate one now: </p>
       <form method="post">
           {% csrf_token %}
-          {{ form.as_p }}
-          <p> {{ message }} </p>
           <button type="submit" class="button">Generate Meal Plan</button>
       </form>
       <br />
     {% endif %}
+    </div>
     <!-- Hydration tracker -->
+    <div style="float: left; margin-top: -30px; padding-left: 22px; width: 580px; height: 260px; flex-shrink: 0; border: 1.5px solid #000000; border-left-style: hidden; border-top-style: hidden;">
     {% if ht %}
     {{ ht.water_goal|json_script:"water_goal" }}
     {{ ht.container_size|json_script:"cont_size" }}
     {{ ht.active_end|json_script:"active_end" }}
     {{ ht.active_start|json_script:"active_start" }}
-    <h4> Next water notification at: </h4>
-    <h2 id="next"></h2>
+    <h4 style="width: 617px; height: 20px; margin-bottom: 15px; font-size: 20px"> Next water notification at: </h4>
+    <h2 id="next" style="font-size: 64px; margin-top: 0px; margin-bottom: 0px"></h2>
     <br />
     <form action="{% url 'NutritionGuidance:ht_update' %}">
-        <button type="submit" class="button">Configure Hydration Tracker</button>
+        <button type="submit" class="button" style="float: left; margin-top: 10px; margin-left: 25px; margin-right: 35px">Configure Hydration Tracker</button>
     </form>
     <form action="{% url 'NutritionGuidance:ht_delete' %}" method="post">
         {% csrf_token %}
-        <button type="submit" class="button">Disable Hydration Tracker</button>
+        <button type="submit" class="button" style="float: left; margin-top: 10px">Disable Hydration Tracker</button>
     </form>
     <script>
         // variables calculations
@@ -122,9 +124,10 @@
 
     </script>
     {% else %}
-    <p>No tracker found! Create one now: </p>
+    <p style="width: 617px; height: 20px; margin-bottom: 15px; font-size: 20px">No tracker found! Create one now: </p>
     <form action="{% url 'NutritionGuidance:ht_create' %}">
         <button type="submit" class="button">Set Hydration Tracker</button>
       </form>
     {% endif %}
+    </div>
 {% endblock %}

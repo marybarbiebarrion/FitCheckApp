@@ -64,15 +64,6 @@ class Meal_Plan(models.Model):
     def __str__(self):
         return f'{self.user_id} - {self.meal_id.meal_name} ({self.day} {self.meal_type})'
     
-class Meal_Favorites(models.Model):
-    user_id = models.ForeignKey('UserProfile.User', related_name='meal_favorite', on_delete=models.CASCADE)
-    meal_id = models.ForeignKey('Meal', related_name='meal_favorite', on_delete=models.CASCADE)
-    is_ingredients = models.BooleanField(default=False)
-    is_calories = models.BooleanField(default=False)
-    
-    class Meta:
-        unique_together = ['user_id', 'meal_id'] # Ensures a user only has 1 entry per meal they've favorited
-    
 class Hydration_Tracker(models.Model):
     user_id = models.ForeignKey('UserProfile.User', related_name='hydration_tracker', on_delete=models.CASCADE)
     container_size = models.FloatField()

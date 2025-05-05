@@ -20,10 +20,7 @@ from UserProfile import views  # Import views from your app
 
 urlpatterns = [
     path('admin/', admin.site.urls),                 # Admin page
-    path('', views.user_create, name='home'),        # Default route redirects to user_create view
-    path('user_create/', views.user_create, name='user_create'),
-    path('health_profile/', views.health_profile, name='health_profile'),
-    path('dashboard/', views.dashboard, name='dashboard'),
+    path('', include('UserProfile.urls', namespace="UserProfile")),
     path('nutritionguidance/', include('NutritionGuidance.urls', namespace="NutritionGuidance")), # Add this line
     path('foodanalysis/', include('FoodAnalysis.urls', namespace="FoodAnalysis")),
     

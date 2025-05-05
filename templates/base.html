@@ -35,7 +35,7 @@
       background-color: white;
       border-color: white;
     }
-    
+
     .sidebar {
       width: 220px;
       background-color: #AED9E0;
@@ -65,6 +65,11 @@
       background-color: #B8F2E6;
     }
 
+    .sidebar a.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+
     .main {
       flex: 1;
       display: flex;
@@ -90,20 +95,6 @@
       overflow-y: auto;
     }
 
-    input[type=text] {
-        width: 20%;
-        padding: 12px 10px;
-        margin: 8px 0;
-        box-sizing: border-box;
-    }
-
-    input[type=number] {
-        width: 25%;
-        padding: 12px 10px;
-        margin: 8px 0;
-        box-sizing: border-box;
-    }
-
     footer {
       text-align: center;
       padding: 5px;
@@ -117,20 +108,28 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <h2>FitCheck</h2>
-    <a href="#"><i class="fas fa-compass"></i> Dashboard</a>
-    <a href="#"> <i class="fas fa-user"></i>  Profile </a>
-    <a href="#"> <i class="fas fa-puzzle-piece"></i>  Food Analysis </a>
+    <a href="{% url 'UserProfile:dashboard' %}" class="{% if request.path == '/dashboard/' %}active{% endif %}">
+        <i class="fas fa-compass"></i> Dashboard
+    </a>
+    <a href="#"><i class="fas fa-user"></i> Health Profile </a>
+    <a href="#"> <i class="fas fa-puzzle-piece"></i> Food Analysis </a>
     <a href="#"><i class="fas fa-spoon"></i> FitnessPlanning</a>
-    <a href="{% url 'NutritionGuidance:ng_index' %}"><i class="fas fa-book"></i> Nutrition Guidance</a>
+    <a href="{% url 'NutritionGuidance:ng_index' %}" class="{% if request.path == '/nutritionguidance/home/' %}active{% endif %}">
+        <i class="fas fa-book"></i> NutritionGuidance</a>
     <a href="#"><i class="fas fa-heartbeat"></i> Wellness Tracker</a>
-    <a href="#">Logout</a>
+    <a href="{% url 'UserProfile:user_logout' %}" class="{% if request.path == '/logout/' %}active{% endif %}">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </a>    
   </div>
 
   <!-- Main Area (Topbar + Content) -->
   <div class="main">
     <div class="topbar">
-      Welcome, User!
-      <i class="fas fa-user-circle"></i>
+      Welcome, {{ request.user.nickname|default:"User" }}!
+      <!-- Link the user circle icon to the profile edit page -->
+      <a href="{% url 'UserProfile:edit_profile' %}">
+        <i class="fas fa-user-circle"></i>
+      </a>
     </div>
     <div class="content">
       {% block content %}

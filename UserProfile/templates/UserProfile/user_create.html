@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Account</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(#AED9E0, #FAF3DD, #B5DCE1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 40px;
+      max-width: 700px;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+    h1 { text-align: center; margin-bottom: 30px; color: #333; }
+    form { display: flex; flex-direction: column; gap: 20px; }
+    .form-row { display: flex; flex-wrap: wrap; gap: 15px; }
+    .form-group { flex: 1; min-width: 120px; display: flex; flex-direction: column; }
+    label { font-weight: bold; margin-bottom: 5px; color: #444; }
+    input, select { padding: 10px; border: 1px solid #ccc; border-radius: 10px; font-size: 14px; }
+    input:focus, select:focus { outline: none; border-color: #AED9E0; box-shadow: 0 0 5px rgba(174, 217, 224, 0.5); }
+    .checkbox-group { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+    .checkbox-label { font-size: 14px; color: #333; display: flex; align-items: center; gap: 10px; }
+    .button { background-color: black; color: white; padding: 14px; border: none; border-radius: 25px; font-weight: bold; font-size: 16px; cursor: pointer; transition: all 0.3s ease; }
+    .button:hover { background-color: white; color: black; border: 1px solid black; }
+    .footer-link { margin-top: 10px; text-align: center; font-size: 14px; }
+    .footer-link a { color: #4CAF50; text-decoration: none; font-weight: bold; }
+
+    /* Tooltip styling for Privacy Terms */
+    .privacy-link {
+      position: relative;
+      cursor: pointer;
+      text-decoration: underline;
+      color: blue;
+    }
+
+    .privacy-tooltip {
+      display: none;
+      position: absolute;
+      left: 0;
+      bottom: 100%;
+      background-color: #f9f9f9;
+      color: #333;
+      border: 1px solid #ccc;
+      padding: 15px;
+      z-index: 1;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .privacy-link:hover .privacy-tooltip {
+      display: block;
+    }
+
+    /* Toast styles */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .toast {
+      background-color: #f44336;
+      color: white;
+      padding: 12px 20px;
+      margin-top: 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      opacity: 0.95;
+      animation: fadein 0.5s, fadeout 0.5s 4s;
+    }
+
+    @keyframes fadein {
+      from { opacity: 0; right: 0px; }
+      to { opacity: 0.95; right: 20px; }
+    }
+
+    @keyframes fadeout {
+      from { opacity: 0.95; }
+      to { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Create Your Account</h1>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <!-- Name Fields -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="id_first_name">First Name</label>
+          {{ form.first_name }}
+        </div>
+        <div class="form-group">
+          <label for="id_middle_name">Middle Name <span style="font-weight: normal;">(Optional)</span></label>
+          {{ form.middle_name }}
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="id_last_name">Last Name</label>
+          {{ form.last_name }}
+        </div>
+        <div class="form-group">
+          <label for="id_suffix">Suffix <span style="font-weight: normal;">(Optional)</span></label>
+          {{ form.suffix }}
+        </div>
+      </div>
+
+      <!-- Birth Info -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="id_birthdate">Birthdate</label>
+          {{ form.birthdate }}
+        </div>
+        <div class="form-group">
+          <label for="id_sex_at_birth">Sex at Birth</label>
+          {{ form.sex_at_birth }}
+        </div>
+      </div>
+
+      <!-- Email & Nickname -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="id_email">Email Address</label>
+          {{ form.email }}
+        </div>
+        <div class="form-group">
+          <label for="id_nickname">Nickname <span style="font-weight: normal;">(What should we call you?)</span></label>
+          {{ form.nickname }}
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="id_password1">Password</label>
+          {{ form.password1 }}
+        </div>
+        <div class="form-group">
+          <label for="id_password2">Confirm Password</label>
+          {{ form.password2 }}
+        </div>
+      </div>
+
+      <!-- Agreements -->
+      <div class="checkbox-group">
+        <label class="checkbox-label">
+          {{ form.expression_of_consent }} I agree to the
+          <span class="privacy-link">
+            data privacy terms.
+            <div class="privacy-tooltip">
+              <h3>Data Privacy Terms</h3>
+              <p>We value your privacy. This application collects personal information to provide personalized health and fitness services. Your data is securely stored and never shared with third parties without your consent, except when required by law.</p>
+              <p>You can access, update, or delete your data anytime.</p>
+            </div>
+          </span>
+        </label>
+        <label class="checkbox-label">
+          {{ form.declaration_undertaking }} I confirm the accuracy of my information.
+        </label>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="button">Sign Up</button>
+
+      <div class="footer-link">
+        Already have an account? <a href="{% url 'UserProfile:user_login' %}">Log in</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Toast Error Display -->
+  <div class="toast-container" id="toast-container">
+    {% if form.errors %}
+      {% for field in form %}
+        {% for error in field.errors %}
+          <div class="toast">{{ field.label }}: {{ error }}</div>
+        {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+        <div class="toast">{{ error }}</div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      flatpickr('.flatpickr', {
+        dateFormat: 'm/d/Y',
+        altInput: true,
+        altFormat: 'm/d/Y',
+        allowInput: true,
+      });
+
+      // Automatically remove toasts after 5s
+      setTimeout(() => {
+        const toasts = document.querySelectorAll('.toast');
+        toasts.forEach(toast => toast.remove());
+      }, 5000);
+    });
+  </script>
+</body>
+</html>

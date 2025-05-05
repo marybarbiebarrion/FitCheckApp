@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Allergen, Ingredient, Recipe, Recipe_Ingredients, Meal, Meal_Plan, Meal_Favorites, Hydration_Tracker
+from .models import Allergen, Ingredient, Recipe, Recipe_Ingredients, Meal, Meal_Plan, Hydration_Tracker
 
 class AllergenAdmin(admin.ModelAdmin):
     model = Allergen
@@ -20,9 +20,6 @@ class MealAdmin(admin.ModelAdmin):
 class MealPlanAdmin(admin.ModelAdmin):
     model = Meal_Plan
 
-class MealFavoriteAdmin(admin.ModelAdmin):
-    model = Meal_Favorites
-
 class HydrationTrackerAdmin(admin.ModelAdmin):
     model = Hydration_Tracker
 
@@ -31,6 +28,5 @@ admin.site.register(Recipe, RecipeAdmin)
 admin.site.register(Recipe_Ingredients, RecipeIngredientAdmin)
 admin.site.register(Meal, MealAdmin)
 admin.site.register(Meal_Plan, MealPlanAdmin)
-admin.site.register(Meal_Favorites, MealFavoriteAdmin)
 admin.site.register(Allergen, AllergenAdmin)
 admin.site.register(Hydration_Tracker, HydrationTrackerAdmin)
