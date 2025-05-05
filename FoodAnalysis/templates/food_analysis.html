@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1 style="margin-top: 0px; margin-bottom: 0px;">Food Analysis</h1>
+
+<div class="main-content">
+  <section id="upper-left">
+    <form method="post" enctype="multipart/form-data" id="upload-form">
+      {% csrf_token %}
+
+      <h3>Food Classifier</h3>
+
+      <div id="preview-container" style="text-align: center;">
+        {% if analysis %}
+          <img src="{{ analysis.image.url }}" alt="Uploaded Image" style="height: 200px; width: auto; border-radius: 10px;">
+        {% else %}
+          <div style="width: 80%; height: 200px; background-color: #eee; border-radius: 10px; margin: auto; display: flex; align-items: center; justify-content: center;">
+            <p style="color: #999;">No image uploaded</p>
+          </div><br>
+        {% endif %}
+      </div>
+
+      <input type="file" id="file-input" name="image" accept="image/*" style="display: none;" onchange="previewImage(this)">
+      <div style="display: flex; justify-content: center; margin-bottom: 0;">
+        <div style="display: flex; gap: 10px;">
+            <button type="button" class="button" onclick="document.getElementById('file-input').click();">Upload</button>
+            <button type="submit" name="analyze" class="button">Analyze</button>
+        </div>
+    </div>
+    </form>
+
+    <div style="text-align: center;" id="loading-indicator" hidden>
+      <p style="font-size: 1.3em; font-weight: bold;">
+        Analyzing new food<span id="dots">.</span>
+      </p>
+    </div>
+
+    {% if analysis %}
+      <div style="text-align: center;">
+        <p>
+          <span style="font-weight: 300;">Detected Food:</span>
+          <span class="fade-in" style="font-size: 1.5em; font-weight: bold;"> {{ analysis.food_name }}</span>
+        </p>
+        <p class="fade-in" style="font-size: 1.1em; color: #555;">
+          {{ ai_description }}
+        </p>
+      </div>
+    {% endif %}
+  </section>
+
+  <section id="upper-right">
+    <h3>Past Analyses</h3>
+    <ul>
+      {% for past in past_analyses %}
+        <li>{{ past.food_name }} - {{ past.analyzed_at|date:"F j, Y" }}, {{ past.analyzed_at|time:"g:i a" }}</li>
+      {% empty %}
+        <li>No past analyses available.</li>
+      {% endfor %}
+    </ul>
+  </section>
+  
+  {% if analysis %}
+  <section id="lower-left">
+    <h3>Nutrition Facts per 100g</h3>
+    
+    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
+      <span style="font-weight: bold;">Calories:</span>
+      <span style="font-weight: normal;">{{ analysis.calories }}</span>
+      <span style="font-size: 0.9em;">kcal</span>
+    </p>
+    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
+      <span style="font-weight: bold;">Protein:</span>
+      <span style="font-weight: normal;">{{ analysis.protein }}</span>
+      <span style="font-size: 0.9em;">g</span>
+    </p>
+    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
+      <span style="font-weight: bold;">Carbohydrates:</span>
+      <span style="font-weight: normal;">{{ analysis.carbohydrates }}</span>
+      <span style="font-size: 0.9em;">g</span>
+    </p>
+    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
+      <span style="font-weight: bold;">Fats:</span>
+      <span style="font-weight: normal;">{{ analysis.fats }}</span>
+      <span style="font-size: 0.9em;">g</span>
+    </p>
+    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
+      <span style="font-weight: bold;">Fiber:</span>
+      <span style="font-weight: normal;">{{ analysis.fiber }}</span>
+      <span style="font-size: 0.9em;">g</span>
+    </p>
+    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
+      <span style="font-weight: bold;">Sugars:</span>
+      <span style="font-weight: normal;">{{ analysis.sugars }}</span>
+      <span style="font-size: 0.9em;">g</span>
+    </p>
+    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
+      <span style="font-weight: bold;">Sodium:</span>
+      <span style="font-weight: normal;">{{ analysis.sodium }}</span>
+      <span style="font-size: 0.9em;">mg</span>
+    </p>
+  </section>
+  
+
+  <section id="lower-middle">
+    <h3>Ingredients</h3>
+    <p class="fade-in">{{ analysis.ingredients }}</p>
+
+    <h3>Allergens</h3>
+    <p class="fade-in">{{ analysis.allergens }}</p>
+  </section>
+
+  <section id="lower-right">
+    <h3>Food Alternatives</h3>
+    <p class="fade-in" style="white-space: pre-line;">{{ food_alternatives }}</p>
+  </section>
+  {% endif %}
+</div>
+
+<script>
+  document.getElementById('file-input').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const previewContainer = document.getElementById('preview-container');
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        previewContainer.innerHTML = `<img src="${e.target.result}" alt="Preview" style="height: 200px; width: auto; border-radius: 10px;"><br><br>`;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  document.getElementById('upload-form').addEventListener('submit', function() {
+    const loading = document.getElementById('loading-indicator');
+    const dots = document.getElementById('dots');
+
+    loading.hidden = false;
+
+    let count = 1;
+    const interval = setInterval(() => {
+      dots.textContent = '.'.repeat(count);
+      count = (count % 3) + 1;
+    }, 500);
+    
+    // Let form continue to submit normally
+  });
+</script>
+{% endblock %}

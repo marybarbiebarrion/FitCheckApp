@@ -24,6 +24,9 @@ load_dotenv()
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 
+# API KEY
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -40,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'UserProfile',
+    'FoodAnalysis',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +135,5 @@ AUTHENTICATION_BACKENDS = [
     'UserProfile.backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
