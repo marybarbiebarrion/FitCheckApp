@@ -65,6 +65,16 @@
           </tr>
         </tbody>
       </table>
+            <!-- Display Current Time -->
+      <div class="current-time">
+        <h3>Current Time: {{ current_time|date:"H:i:s" }}</h3>
+      </div>
+
+      <!-- Display Eating and Fasting Windows -->
+      <div class="window-info">
+        <p><strong>Eating Window:</strong> From {{ eating_window_start|date:"H:i" }} to {{ eating_window_end|date:"H:i" }}</p>
+        <p><strong>Fasting Window:</strong> From {{ fasting_window_start|date:"H:i" }} to {{ fasting_window_end|date:"H:i" }}</p>
+      </div>
     </div>
 
     <div class="half">
