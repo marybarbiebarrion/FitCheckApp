@@ -108,7 +108,9 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <h2>FitCheck</h2>
-    <a href="#" class="{% if request.path == '/dashboard/' %}active{% endif %}"><i class="fas fa-compass"></i> Dashboard</a>
+    <a href="{% url 'dashboard' %}" class="{% if request.path == '/dashboard/' %}active{% endif %}">
+      <i class="fas fa-compass"></i> Dashboard
+    </a>
     <a href="#"><i class="fas fa-user"></i> Health Profile </a>
     <a href="#"> <i class="fas fa-puzzle-piece"></i> Food Analysis </a>
     <a href="#"><i class="fas fa-spoon"></i> FitnessPlanning</a>
