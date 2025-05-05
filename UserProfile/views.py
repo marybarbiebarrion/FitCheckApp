@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from .forms import UserCreateForm, EditProfileForm
+from .forms import UserCreateForm, EditProfileForm, HealthProfileForm
 
 
 def user_create(request):
@@ -22,7 +22,21 @@ def user_create(request):
     return render(request, 'UserProfile/user_create.html', {'form': form, 'form_has_errors': form_has_errors})
 
 def health_profile(request):
-    return render(request, 'health_profile.html')
+    user = request.user  # Get the currently logged-in user
+    if request.method == 'POST':
+        # If it's a POST request, it means the user is submitting a form
+        form = HealthProfileForm(request.POST, instance=user)  # Bind the form to the user
+        if form.is_valid():
+            form.save()  # Save the form if it's valid
+            messages.success(request, "Your health profile has been updated!")
+            return redirect('UserProfile/health_profile')  # Redirect to the same page
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        # If it's a GET request, show the health profile form populated with the user's data
+        form = HealthProfileForm(instance=user)  # Populate form with existing health data
+
+    return render(request, 'UserProfile/health_profile.html', {'form': form})
 
 def dashboard(request):
     return render(request, 'dashboard.html')
