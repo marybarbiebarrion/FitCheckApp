@@ -49,7 +49,6 @@
     {% endif %}
   </section>
 
-  {% if analysis %}
   <section id="upper-right">
     <h3>Past Analyses</h3>
     <ul>
@@ -60,7 +59,8 @@
       {% endfor %}
     </ul>
   </section>
-
+  
+  {% if analysis %}
   <section id="lower-left">
     <h3>Nutrition Facts per 100g</h3>
     
