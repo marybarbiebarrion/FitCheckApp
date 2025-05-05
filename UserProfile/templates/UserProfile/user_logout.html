@@ -1,11 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
+
+<style>
+  .button {
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+    padding: 15px 30px;
+    border-radius: 20px;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .button:hover {
+    color: black;
+    background-color: white;
+  }
+
+  .button:active {
+    color: black;
+    background-color: white;
+    border-color: white;
+  }
+</style>
+
 <div style="text-align:center;">
   <h2>Are you sure you want to logout?</h2>
   <form method="post">
     {% csrf_token %}
-    <a href="{% url 'splash' %}" class="button" style="text-decoration: none;">Yes, Logout</a>
-    <a href="{% url 'dashboard' %}" class="button" style="margin-left: 10px; text-decoration: none;">Cancel</a>    
+    <a href="{% url 'splash' %}" class="button">Yes, Logout</a>
+    <a href="{% url 'dashboard' %}" class="button" style="margin-left: 10px;">Cancel</a>    
   </form>
 </div>
 {% endblock %}
