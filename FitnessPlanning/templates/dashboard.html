@@ -79,7 +79,7 @@
     </div>
 
     <div class="half">
-      <h4>Edit Fasting Schedule</h4>
+      <h3>Edit Fasting Schedule</h3>
       <form method="post">
         {% csrf_token %}
         {{ fasting_form.as_p }}
@@ -98,6 +98,7 @@
       </form>
     </div>
 
+    <div class="half">
       <h2>Calorie Deficit Planner</h2>
       <form method="post">
         {% csrf_token %}
