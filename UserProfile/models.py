@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from datetime import date
 
 class User(AbstractUser):
     username = None  # Remove inherited username field
@@ -15,6 +16,9 @@ class User(AbstractUser):
     birthdate = models.DateField(null=False)
     sex_at_birth_choices = [('M', 'Male'), ('F', 'Female')]
     sex_at_birth = models.CharField(max_length=1, choices=sex_at_birth_choices, null=False)
+    height = models.FloatField(null=True, blank=True)  # Height in centimeters
+    weight = models.FloatField(null=True, blank=True)  # Weight in kilograms
+
 
     # Email as unique identifier
     email = models.EmailField(unique=True, null=False)
@@ -87,3 +91,15 @@ class User(AbstractUser):
 
     def get_nickname(self):
         return self.nickname if self.nickname else "User"
+
+    @property
+    def get_age(self):
+        """
+        Calculate the age of the user based on the birthdate and current date.
+        """
+        today = date.today()
+        age = today.year - self.birthdate.year
+        # Adjust if the user's birthday hasn't occurred yet this year
+        if today.month < self.birthdate.month or (today.month == self.birthdate.month and today.day < self.birthdate.day):
+            age -= 1
+        return age

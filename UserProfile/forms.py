@@ -100,7 +100,7 @@ class HealthProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = [
-            'asthma', 'hypertension', 'thyroid_problem', 'acid_peptic_disorder',
+            'height','weight','asthma', 'hypertension', 'thyroid_problem', 'acid_peptic_disorder',
             'convulsions_or_seizure', 'anxiety_mood_problems', 'depression', 
             'diabetes', 'g6pd_deficiency', 'tuberculosis', 'stroke_heart_disease', 
             'kidney_urinary_problems', 'recurrent_headaches', 'eating_problems', 
