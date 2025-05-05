@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="dashboard-container">
+
+  <div class="section">
+    <div class="half">
+      {% if window_status %}
+        <h4>{{ window_status }}</h4>  
+      {% endif %}
+      <h3>Fasting Schedule for the Week</h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>00:00 - 06:00</strong></td>
+            <td>{{ fasting_result.monday_00_06 }}</td>
+            <td>{{ fasting_result.tuesday_00_06 }}</td>
+            <td>{{ fasting_result.wednesday_00_06 }}</td>
+            <td>{{ fasting_result.thursday_00_06 }}</td>
+            <td>{{ fasting_result.friday_00_06 }}</td>
+            <td>{{ fasting_result.saturday_00_06 }}</td>
+            <td>{{ fasting_result.sunday_00_06 }}</td>
+          </tr>
+          <tr>
+            <td><strong>06:00 - 12:00</strong></td>
+            <td>{{ fasting_result.monday_06_12 }}</td>
+            <td>{{ fasting_result.tuesday_06_12 }}</td>
+            <td>{{ fasting_result.wednesday_06_12 }}</td>
+            <td>{{ fasting_result.thursday_06_12 }}</td>
+            <td>{{ fasting_result.friday_06_12 }}</td>
+            <td>{{ fasting_result.saturday_06_12 }}</td>
+            <td>{{ fasting_result.sunday_06_12 }}</td>
+          </tr>
+          <tr>
+            <td><strong>12:00 - 18:00</strong></td>
+            <td>{{ fasting_result.monday_12_18 }}</td>
+            <td>{{ fasting_result.tuesday_12_18 }}</td>
+            <td>{{ fasting_result.wednesday_12_18 }}</td>
+            <td>{{ fasting_result.thursday_12_18 }}</td>
+            <td>{{ fasting_result.friday_12_18 }}</td>
+            <td>{{ fasting_result.saturday_12_18 }}</td>
+            <td>{{ fasting_result.sunday_12_18 }}</td>
+          </tr>
+          <tr>
+            <td><strong>18:00 - 24:00</strong></td>
+            <td>{{ fasting_result.monday_18_24 }}</td>
+            <td>{{ fasting_result.tuesday_18_24 }}</td>
+            <td>{{ fasting_result.wednesday_18_24 }}</td>
+            <td>{{ fasting_result.thursday_18_24 }}</td>
+            <td>{{ fasting_result.friday_18_24 }}</td>
+            <td>{{ fasting_result.saturday_18_24 }}</td>
+            <td>{{ fasting_result.sunday_18_24 }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+<div class="current-time">
+  <h3>Current Time: {{ current_time|date:"H:i:s" }}</h3>
+</div>
+
+<div class="window-info">
+  <h3>Your Eating and Fasting Windows</h3>
+  <p><strong>Eating Window:</strong> From {{ eating_window_start|date:"H:i" }} to {{ eating_window_end|date:"H:i" }}</p>
+  <p><strong>Fasting Window:</strong> From {{ fasting_window_start|date:"H:i" }} to {{ fasting_window_end|date:"H:i" }}</p>
+</div>
+    </div>
+
+    <div class="half">
+      <h4>Edit Fasting Schedule</h4>
+      <form method="post">
+        {% csrf_token %}
+        {{ fasting_form.as_p }}
+        <button type="submit" name="fasting-submit">Save Fasting Schedule</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="half">
+      <h2>Exercise Recommendation</h2>
+      <form method="post">
+        {% csrf_token %}
+        {{ exercise_form.as_p }}
+        <button type="submit" name="exercise-submit">Save Exercise</button>
+      </form>
+    </div>
+
+      <h2>Calorie Deficit Planner</h2>
+      <form method="post">
+        {% csrf_token %}
+        {{ deficit_form.as_p }}
+        <button type="submit" name="deficit-submit">Save Caloric Plan</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
