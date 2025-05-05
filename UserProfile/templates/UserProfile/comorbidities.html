@@ -1,0 +1,68 @@
+{% load static %}
+<div class="form-section">
+
+    <!-- Comorbidity checkboxes (3 per row for neat layout) -->
+    <div class="checkbox-grid">
+        <div class="checkbox-column">
+            <label class="checkbox-item">
+                <input type="checkbox" name="asthma" {% if user_health_profile.asthma %}checked{% endif %}> Asthma
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="acid_peptic_disorder" {% if user_health_profile.acid_peptic_disorder %}checked{% endif %}> Acid Peptic Disorder
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="depression" {% if user_health_profile.depression %}checked{% endif %}> Depression
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="tuberculosis" {% if user_health_profile.tuberculosis %}checked{% endif %}> Tuberculosis
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="recurrent_headaches" {% if user_health_profile.recurrent_headaches %}checked{% endif %}> Recurrent Headaches
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="surgeries" {% if user_health_profile.surgeries %}checked{% endif %}> Surgeries Undertaken
+            </label>
+        </div>
+        <div class="checkbox-column">
+            <label class="checkbox-item">
+                <input type="checkbox" name="hypertension" {% if user_health_profile.hypertension %}checked{% endif %}> Hypertension
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="convulsions_or_seizure" {% if user_health_profile.convulsions_or_seizure %}checked{% endif %}> Convulsions or Seizures
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="anxiety_mood_problems" {% if user_health_profile.anxiety_mood_problems %}checked{% endif %}> Anxiety or Mood Problems
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="g6pd_deficiency" {% if user_health_profile.g6pd_deficiency %}checked{% endif %}> G6PD Deficiency
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="eating_problems" {% if user_health_profile.eating_problems %}checked{% endif %}> Eating or Nutritional Problems
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="covid_history" {% if user_health_profile.covid_history %}checked{% endif %}> COVID-19 History
+            </label>
+        </div>
+        <div class="checkbox-column">
+            <label class="checkbox-item">
+                <input type="checkbox" name="thyroid_problem" {% if user_health_profile.thyroid_problem %}checked{% endif %}> Thyroid Problem
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="stroke_heart_disease" {% if user_health_profile.stroke_heart_disease %}checked{% endif %}> Stroke or Heart Disease
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="diabetes" {% if user_health_profile.diabetes %}checked{% endif %}> Diabetes
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="kidney_urinary_problems" {% if user_health_profile.kidney_urinary_problems %}checked{% endif %}> Kidney or Urinary Problems
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="suicidal_thoughts" {% if user_health_profile.suicidal_thoughts %}checked{% endif %}> Suicidal Thoughts
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="menstrual_problems" {% if user_health_profile.menstrual_problems %}checked{% endif %}> Menstrual Problems
+            </label>
+        </div>
+    </div>
+</div>
+

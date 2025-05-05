@@ -1,6 +1,125 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Welcome to Your Dashboard</h1>
-  <p>Manage your account and view your health profile here.</p>
+<div class="container mt-4">
+  <h1 class="text-center mb-4" style="font-size: 2.5rem; color: #333;">Welcome to Your Dashboard</h1>
+
+  <!-- Fitness Trivia Section -->
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg rounded-lg fitness-trivia-card">
+        <div class="card-header text-white text-center" style="background-color: #AED9E0;">
+          <h3 class="mb-0">Fitness Trivia</h3>
+        </div>
+        <div class="card-body d-flex align-items-center justify-content-center" style="height: 200px;">
+          <p class="lead trivia-text" style="font-size: 1.2rem; font-style: italic; color: #333; text-align: center;">
+            {{ fitness_trivia }}
+          </p>
+        </div>
+        <div class="card-footer text-center">
+          <!-- Match the button style from base.html -->
+          <button class="button" onclick="window.location.reload();">
+            Next Trivia
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Your existing comorbidities and allergies cards go here -->
+  <div class="row">
+    <!-- Your existing dashboard content (e.g., comorbidities and allergies) -->
+  </div>
+</div>
+
+<!-- Custom CSS for the Fitness Trivia Card -->
+<style>
+  /* Main Card Styling */
+  .fitness-trivia-card {
+    border: none;
+    border-radius: 20px;
+    background-color: #FAF3DD;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+    margin-bottom: 30px;
+  }
+
+  /* Hover Effect */
+  .fitness-trivia-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Card Header */
+  .card-header {
+    padding: 20px 0;
+    background-color: #AED9E0 !important;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Card Body */
+  .card-body {
+    padding: 30px;
+    background-color: #B5DCE1;
+    border-radius: 0 0 20px 20px;
+  }
+
+  /* Trivia Text */
+  .card-body .trivia-text {
+    font-size: 1.4rem;
+    font-style: italic;
+    color: #333;
+    letter-spacing: 1px;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  /* Card Footer */
+  .card-footer {
+    background-color: transparent;
+    padding: 20px;
+    border-top: 1px solid #ddd;
+  }
+
+  /* Match Button Style from Base */
+  .button {
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+    padding: 15px 30px;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .button:hover {
+    background-color: white;
+    color: black;
+  }
+
+  .button:active {
+    background-color: white;
+    color: black;
+    border-color: white;
+  }
+
+  /* Responsive Design: Adjust for smaller screens */
+  @media (max-width: 768px) {
+    .fitness-trivia-card {
+      padding: 20px;
+    }
+    .card-header h3 {
+      font-size: 1.8rem;
+    }
+    .card-body .trivia-text {
+      font-size: 1.2rem;
+    }
+    .button {
+      font-size: 1rem;
+      padding: 10px 25px;
+    }
+  }
+</style>
+
 {% endblock %}

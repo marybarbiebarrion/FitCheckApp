@@ -94,3 +94,26 @@ class EditProfileForm(UserChangeForm):
         widgets = {
             'address': forms.Textarea(attrs={'rows': 3}),
         }
+
+# Health Profile Form (to allow the user to update their health information)
+class HealthProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'height','weight','asthma', 'hypertension', 'thyroid_problem', 'acid_peptic_disorder',
+            'convulsions_or_seizure', 'anxiety_mood_problems', 'depression', 
+            'diabetes', 'g6pd_deficiency', 'tuberculosis', 'stroke_heart_disease', 
+            'kidney_urinary_problems', 'recurrent_headaches', 'eating_problems', 
+            'suicidal_thoughts', 'surgeries', 'covid_history', 'menstrual_problems', 
+            'other_medical_conditions', 'diagnosis_date', 'illness_status', 
+            'other_medications', 'smoker', 'alcohol_rate', 'alcohol_units_per_day',
+            'psychoactive_substance', 'special_needs', 'medications_taken', 'allergies', 
+            'allergy_name', 'allergy_severity'
+        ]
+        widgets = {
+            'diagnosis_date': forms.DateInput(attrs={'type': 'date'}),
+            'illness_status': forms.Textarea(attrs={'rows': 2}),
+            'other_medical_conditions': forms.Textarea(attrs={'rows': 3}),
+            'other_medications': forms.Textarea(attrs={'rows': 3}),
+            'medications_taken': forms.Textarea(attrs={'rows': 3}),
+        }
