@@ -38,6 +38,32 @@
     .footer-link { margin-top: 10px; text-align: center; font-size: 14px; }
     .footer-link a { color: #4CAF50; text-decoration: none; font-weight: bold; }
 
+    /* Tooltip styling for Privacy Terms */
+    .privacy-link {
+      position: relative;
+      cursor: pointer;
+      text-decoration: underline;
+      color: blue;
+    }
+
+    .privacy-tooltip {
+      display: none;
+      position: absolute;
+      left: 0;
+      bottom: 100%;
+      background-color: #f9f9f9;
+      color: #333;
+      border: 1px solid #ccc;
+      padding: 15px;
+      z-index: 1;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .privacy-link:hover .privacy-tooltip {
+      display: block;
+    }
+
     /* Toast styles */
     .toast-container {
       position: fixed;
@@ -137,7 +163,15 @@
       <!-- Agreements -->
       <div class="checkbox-group">
         <label class="checkbox-label">
-          {{ form.expression_of_consent }} I agree to the data privacy terms.
+          {{ form.expression_of_consent }} I agree to the
+          <span class="privacy-link">
+            data privacy terms.
+            <div class="privacy-tooltip">
+              <h3>Data Privacy Terms</h3>
+              <p>We value your privacy. This application collects personal information to provide personalized health and fitness services. Your data is securely stored and never shared with third parties without your consent, except when required by law.</p>
+              <p>You can access, update, or delete your data anytime.</p>
+            </div>
+          </span>
         </label>
         <label class="checkbox-label">
           {{ form.declaration_undertaking }} I confirm the accuracy of my information.
