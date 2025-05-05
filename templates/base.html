@@ -169,7 +169,7 @@
     </a>
     <a href="#"><i class="fas fa-user"></i> Health Profile </a>
     <a href="{% url 'FoodAnalysis:food_analysis' %}"> <i class="fas fa-puzzle-piece"></i>  Food Analysis </a>
-    <a href="#"><i class="fas fa-spoon"></i> FitnessPlanning</a>
+    <a href="{% url 'FitnessPlanning:fitness_planning_dashboard' %}"><i class="fas fa-spoon"></i> FitnessPlanning</a>
     <a href="#"><i class="fas fa-book"></i> Guidance</a>
     <a href="#"><i class="fas fa-heartbeat"></i> Wellness Tracker</a>
     <a href="{% url 'user_logout' %}" class="{% if request.path == '/logout/' %}active{% endif %}">
