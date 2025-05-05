@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Health Profile</title>
+    <link rel="stylesheet" href="{% static 'css/health_profile.css' %}">
+    <script defer src="{% static 'js/health_profile.js' %}"></script>
+</head>
+<body>
+    {% block content %}
+    <div class="container">
+        <h1>My Health Profile</h1>
+
+        <!-- Personal Information Section -->
+        <div class="section">
+            <button class="collapsible">Personal Information</button>
+            <div class="content">
+                <label>First Name:</label>
+                <input type="text" value="{{ user.first_name }}" readonly>
+
+                <label>Middle Name:</label>
+                <input type="text" value="{{ user.middle_name }}" readonly>
+
+                <label>Last Name:</label>
+                <input type="text" value="{{ user.last_name }}" readonly>
+
+                <label>Nickname/Suffix:</label>
+                <input type="text" name="nickname" value="{{ user.nickname }}">
+
+                <label>Sex at Birth:</label>
+                <input type="text" value="{{ user.sex_at_birth }}" readonly>
+
+                <label>Birthdate:</label>
+                <input type="date" value="{{ user.birthdate }}" readonly>
+
+                <label>Height (cm):</label>
+                <input type="number" name="height" value="{{ user.height }}">
+
+                <label>Weight (kg):</label>
+                <input type="number" name="weight" value="{{ user.weight }}">
+
+            </div>
+        </div>
+
+        <!-- Location and Contact Information Section -->
+        <div class="section">
+            <button class="collapsible">Location and Contact Information</button>
+            <div class="content">
+                <label>Email:</label>
+                <input type="email" value="{{ user.email }}" readonly>
+
+                <label>Mobile Number:</label>
+                <input type="tel" name="mobile" value="{{ user.mobile }}">
+
+                <label>Barangay:</label>
+                <input type="text" name="barangay" value="{{ user.barangay }}">
+
+                <label>City:</label>
+                <input type="text" name="city" value="{{ user.city }}">
+
+                <label>Region:</label>
+                <select name="region" id="region-select">
+                    <option>{{ user.region }}</option>
+                </select>
+
+                <label>Province:</label>
+                <select name="province" id="province-select">
+                    <option>{{ user.province }}</option>
+                </select>
+
+                <label>Country:</label>
+                <select name="country">
+                    <option>Philippines</option>
+                    <option>Other</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Emergency Contact Information Section -->
+        <div class="section">
+            <button class="collapsible">Emergency Contacts</button>
+            <div class="content">
+                <label>Primary Contact Name:</label>
+                <input type="text" name="primary_contact_name" value="{{ user.primary_contact_name }}">
+
+                <label>Primary Contact Email:</label>
+                <input type="email" name="primary_contact_email" value="{{ user.primary_contact_email }}">
+
+                <label>Primary Contact Mobile:</label>
+                <input type="tel" name="primary_contact_mobile" value="{{ user.primary_contact_mobile }}">
+
+                <label>Secondary Contact Name:</label>
+                <input type="text" name="secondary_contact_name" value="{{ user.secondary_contact_name }}">
+
+                <label>Secondary Contact Email:</label>
+                <input type="email" name="secondary_contact_email" value="{{ user.secondary_contact_email }}">
+
+                <label>Secondary Contact Mobile:</label>
+                <input type="tel" name="secondary_contact_mobile" value="{{ user.secondary_contact_mobile }}">
+            </div>
+        </div>
+
+        <!-- Comorbidities Section -->
+        <div class="section">
+            <button class="collapsible">Comorbidities</button>
+            <div class="content">
+                <label><input type="checkbox" name="comorbidity" value="asthma"> Asthma</label>
+                <label><input type="checkbox" name="comorbidity" value="hypertension"> Hypertension</label>
+                <label><input type="checkbox" name="comorbidity" value="thyroid_problem"> Thyroid problem</label>
+                <label><input type="checkbox" name="comorbidity" value="acid_peptic_disorder"> Acid peptic disorder</label>
+                <label><input type="checkbox" name="comorbidity" value="convulsions_or_seizures"> Convulsions or seizures</label>
+                <label><input type="checkbox" name="comorbidity" value="anxiety_or_mood_problems"> Anxiety or mood problems</label>
+                <label><input type="checkbox" name="comorbidity" value="depression"> Depression</label>
+                <label><input type="checkbox" name="comorbidity" value="diabetes"> Diabetes</label>
+                <label><input type="checkbox" name="comorbidity" value="g6pd_deficiency"> G6PD deficiency</label>
+                <label><input type="checkbox" name="comorbidity" value="tuberculosis"> Tuberculosis</label>
+                <label><input type="checkbox" name="comorbidity" value="stroke_or_heart_disease"> Stroke or heart disease</label>
+                <label><input type="checkbox" name="comorbidity" value="kidney_or_urinary_problems"> Kidney or urinary problems</label>
+                <label><input type="checkbox" name="comorbidity" value="recurrent_headaches"> Recurrent headaches</label>
+                <label><input type="checkbox" name="comorbidity" value="eating_or_nutritional_problems"> Eating or nutritional problems</label>
+                <label><input type="checkbox" name="comorbidity" value="suicidal_thoughts"> Suicidal thoughts</label>
+                <label><input type="checkbox" name="comorbidity" value="surgeries_undertaken"> Surgeries undertaken</label>
+                <label><input type="checkbox" name="comorbidity" value="covid_19_history"> COVID-19 history</label>
+                <label><input type="checkbox" name="comorbidity" value="menstrual_problems"> Menstrual problems</label>
+
+                <label>Other medical conditions:</label>
+                <input type="text" name="other_conditions" value="{{ user.other_conditions }}">
+
+                <label>Diagnosis date:</label>
+                <input type="date" name="diagnosis_date" value="{{ user.diagnosis_date }}">
+
+                <label>Illness status:</label>
+                <select name="illness_status">
+                    <option value="Under treatment" {% if user.illness_status == 'Under treatment' %}selected{% endif %}>Under treatment</option>
+                    <option value="Managed" {% if user.illness_status == 'Managed' %}selected{% endif %}>Managed</option>
+                    <option value="Cured" {% if user.illness_status == 'Cured' %}selected{% endif %}>Cured</option>
+                </select>
+
+                <label>Other medications:</label>
+                <input type="text" name="other_medications" value="{{ user.other_medications }}">
+
+                <label>Smoker:</label>
+                <select name="smoker">
+                    <option value="No" {% if user.smoker == 'No' %}selected{% endif %}>No</option>
+                    <option value="Yes" {% if user.smoker == 'Yes' %}selected{% endif %}>Yes</option>
+                </select>
+
+                <label>Alcohol rate:</label>
+                <input type="radio" name="alcohol_rate" value="Never" {% if user.alcohol_rate == 'Never' %}checked{% endif %}> Never
+                <input type="radio" name="alcohol_rate" value="Occasionally" {% if user.alcohol_rate == 'Occasionally' %}checked{% endif %}> Occasionally
+                <input type="radio" name="alcohol_rate" value="Frequently" {% if user.alcohol_rate == 'Frequently' %}checked{% endif %}> Frequently
+
+                <label>Alcohol units per day:</label>
+                <input type="radio" name="alcohol_units" value="1-2" {% if user.alcohol_units == '1-2' %}checked{% endif %}> 1-2
+                <input type="radio" name="alcohol_units" value="3-5" {% if user.alcohol_units == '3-5' %}checked{% endif %}> 3-5
+                <input type="radio" name="alcohol_units" value=">5" {% if user.alcohol_units == '>5' %}checked{% endif %}> >5
+
+                <label>Psychoactive substance:</label>
+                <select name="psychoactive">
+                    <option value="No" {% if user.psychoactive == 'No' %}selected{% endif %}>No</option>
+                    <option value="Yes" {% if user.psychoactive == 'Yes' %}selected{% endif %}>Yes</option>
+                </select>
+
+                <label>Special needs:</label>
+                <select name="special_needs">
+                    <option value="No" {% if user.special_needs == 'No' %}selected{% endif %}>No</option>
+                    <option value="Yes" {% if user.special_needs == 'Yes' %}selected{% endif %}>Yes</option>
+                </select>
+
+                <label>Medications taken:</label>
+                <select name="medications_taken">
+                    <option value="None" {% if user.medications_taken == 'None' %}selected{% endif %}>None</option>
+                    <option value="Other" {% if user.medications_taken == 'Other' %}selected{% endif %}>Other</option>
+                </select>
+
+                <label>Allergies:</label>
+                <select name="allergies">
+                    <option value="No" {% if user.allergies == 'No' %}selected{% endif %}>No</option>
+                    <option value="Yes" {% if user.allergies == 'Yes' %}selected{% endif %}>Yes</option>
+                </select>
+
+                <label>Allergy name:</label>
+                <select name="allergy_name">
+                    <option value="Nuts">Nuts</option>
+                    <option value="Dairy">Dairy</option>
+                    <option value="Shellfish">Shellfish</option>
+                    <option value="Gluten">Gluten</option>
+                    <option value="Eggs">Eggs</option>
+                    <option value="Soy">Soy</option>
+                    <option value="Sesame">Sesame</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label>Allergy severity:</label>
+                <select name="allergy_severity">
+                    <option value="Mild">Mild</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="Severe">Severe</option>
+                </select>
+
+                <label>Daily caloric intake:</label>
+                <input type="text" name="daily_caloric_intake" value="{{ user.daily_caloric_intake }}">
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit">Save Profile</button>
+    </div>
+{% endblock %}
+</body>
+</html>
