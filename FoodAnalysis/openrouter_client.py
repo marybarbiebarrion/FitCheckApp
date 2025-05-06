@@ -50,6 +50,6 @@ def ask_food_alternatives(food_name, ingredients, allergens):
     alternatives = response.choices[0].message.content.strip()
     
     # formatted_alternatives = "\n\n".join(alternatives.split("\n"))
-    formatted_alternatives = normalize_newlines(alternatives)
+    # formatted_alternatives = normalize_newlines(alternatives)
     
-    return formatted_alternatives 
+    return alternatives 

@@ -267,6 +267,28 @@ button {
         grid-row: 2 / 3;
     }
 
+    .past-analysis-card {
+      display: flex;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      color: #2c3e50;
+      transition: all 0.3s ease;
+    }
+    
+    .past-analysis-card:hover {
+      background-color: #f0f0f0;
+      border-color: #000;
+      color: #000;
+      cursor: pointer;
+    }
+    
+    .past-analysis-card:hover div {
+      color: #000;
+    }
+  
     .fade-in {
       opacity: 0;
       transform: translateY(10px);
