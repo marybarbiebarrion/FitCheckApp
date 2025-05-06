@@ -16,11 +16,17 @@ This is necessary for getting PostgreSQL to work.
 
 1. If on a fresh install, run the fitcheck-setup.sql in postgres using the command:
 
-        /i fitcheck-setup.sql
+        psql -U user_name -d postgres
+
+        DROP DATABASE fitcheck_db;
+        
+        CREATE DATABASE fitcheck_db;
+        \c fitcheck_db
+        \i fitcheck-setup.sql
     
     Note that this **deletes** the database and all data inside it. This is also configured such that the postgres user is just named "postgres", so make the necessary changes both in the file and in settings.py.
 
-2. Make migrations for **each app.**
+3. Make migrations for **each app.**
 
         python manage.py makemigrations UserProfile
         python manage.py makemigrations FoodAnalysis
@@ -29,13 +35,13 @@ This is necessary for getting PostgreSQL to work.
         python manage.py makemigrations [wellnesstracker]
     Doing only makemigrations outputs no changes detected, and even I'm unsure why. You can run a normal makemigrations afterwards just to be sure.
 
-3. Migrate, then run the fitcheck-populate.sql file inside postgres.
+4. Migrate, then run the fitcheck-populate.sql file inside postgres.
 
         python manage.py migrate
         [IN POSTGRES]
         /i fitcheck-populate.sql
     [NOTE: fitcheck-populate.sql doesn't have anything yet, so skip this for now.]
-4. Run the server.
+5. Run the server.
 
         python manage.py runserver
 
