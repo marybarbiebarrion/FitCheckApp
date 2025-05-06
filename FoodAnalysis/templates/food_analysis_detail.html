@@ -2,8 +2,35 @@
 {% load static %}
 
 {% block content %}
-<h1 style="margin-top: 0px; margin-bottom: 0px;">Food Analysis Detail</h1>
+<style>
+  .button {
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+    padding: 15px 30px;
+    border-radius: 20px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    margin: 0;
+  }
+
+  .button:hover {
+    color: black;
+    background-color: white;
+  }
+
+  .button:active {
+    color: black;
+    background-color: white;
+    border-color: white;
+  }
+</style>
 <a href="{% url 'FoodAnalysis:food_analysis' %}" class="button">Back to Analysis</a>
+<br><br>
+<h1 style="margin-top: 0px; margin-bottom: 0px;">Food Analysis Detail</h1>
 
 <div class="main-content">
   <section id="upper-left">
@@ -23,8 +50,13 @@
   </section>
 
   <section id="upper-right">
-    <h3>Analysis Date</h3>
-    <p>{{ analysis.analyzed_at|date:"F j, Y" }}, {{ analysis.analyzed_at|time:"g:i a" }}</p>
+    <h3>Analysis Date and Time</h3>
+    <div style="display: flex; gap: 20px; padding: 12px 16px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9; min-width: 400px; flex-wrap: nowrap;">
+      <div style="font-weight: bold; color: #2c3e50;">Date:</div>
+      <div style="color: #555; white-space: nowrap;">{{ analysis.analyzed_at|date:"F j, Y" }}</div>
+      <div style="font-weight: bold; color: #2c3e50;">Time:</div>
+      <div style="color: #555;">{{ analysis.analyzed_at|time:"g:i a" }}</div>
+    </div>
   </section>
 
   <section id="lower-left">

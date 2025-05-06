@@ -51,19 +51,21 @@
 
   <section id="upper-right">
     <h3>Past Analyses</h3>
-    <ul>
+    {% if past_analyses %}
+    <div style="display: flex; flex-direction: column; gap: 10px;">
       {% for past in past_analyses %}
-        <li>
-          <a href="{% url 'FoodAnalysis:food_analysis_detail' past.pk %}">
-            <span style="font-weight: bold; font-size: 1.05em; color: #2c3e50;">{{ past.food_name }}</span> – 
-          {{ past.analyzed_at|date:"F j, Y" }}, {{ past.analyzed_at|time:"g:i a" }}
+        <a href="{% url 'FoodAnalysis:food_analysis_detail' past.pk %}" style="text-decoration: none;">
+          <div style="display: flex; gap: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+            <div style="flex: 2; font-weight: bold; color: #2c3e50;">{{ past.food_name }}</div>
+            <div style="flex: 1; color: #555;">{{ past.analyzed_at|date:"F j, Y" }}</div>
+            <div style="flex: 1; color: #555;">{{ past.analyzed_at|time:"g:i a" }}</div>
+          </div>
         </a>
-          </a>
-        </li>
-      {% empty %}
-        <li>No past analyses available.</li>
       {% endfor %}
-    </ul>
+    </div>
+  {% else %}
+    <p>No past analyses available.</p>
+  {% endif %}
   </section>
   
   {% if analysis %}
