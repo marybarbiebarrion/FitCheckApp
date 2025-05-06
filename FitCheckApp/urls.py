@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('UserProfile.urls')),
     path('', include('FoodAnalysis.urls')),  # Add this line
     path('fitnessPlanning/', include('FitnessPlanning.urls', namespace="FitnessPlanning")),
+    path('nutritionguidance/', include('NutritionGuidance.urls', namespace="NutritionGuidance")),
 ]
 
 if settings.DEBUG:

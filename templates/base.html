@@ -334,7 +334,8 @@ button {
 <a href="{% url 'health_profile' %}"><i class="fas fa-user"></i> Health Profile </a>
     <a href="{% url 'FoodAnalysis:food_analysis' %}"> <i class="fas fa-puzzle-piece"></i>  Food Analysis </a>
     <a href="{% url 'FitnessPlanning:fitness_planning_dashboard' %}"><i class="fas fa-spoon"></i> FitnessPlanning</a>
-    <a href="#"><i class="fas fa-book"></i> Nutrition Guidance</a>
+    <a href="{% url 'NutritionGuidance:ng_index' %}" class="{% if request.path == '/nutritionguidance/home/' %}active{% endif %}">
+        <i class="fas fa-book"></i> NutritionGuidance</a>
     <a href="#"><i class="fas fa-heartbeat"></i> Wellness Tracker</a>
     <a href="{% url 'user_logout' %}" class="{% if request.path == '/logout/' %}active{% endif %}">
       <i class="fas fa-sign-out-alt"></i> Logout
