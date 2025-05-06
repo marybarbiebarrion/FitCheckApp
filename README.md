@@ -34,8 +34,7 @@ This is necessary for getting PostgreSQL to work.
 
         python manage.py migrate
         [IN POSTGRES]
-        /i fitcheck-populate.sql
-    [NOTE: fitcheck-populate.sql doesn't have anything yet, so skip this for now.]
+        \i fitcheck-populate.sql
 5. Run the server.
 
         python manage.py runserver
