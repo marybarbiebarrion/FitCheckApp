@@ -28,7 +28,7 @@ club_sandwich,"bread, turkey, bacon, lettuce, tomato, mayonnaise","gluten, egg"
 crab_cakes,"crab meat, breadcrumbs, egg, mayonnaise, spices","gluten, egg, shellfish"
 creme_brulee,"cream, egg yolks, sugar, vanilla","dairy, egg"
 croque_madame,"bread, ham, cheese, egg, béchamel sauce","gluten, dairy, egg"
-Cupcakes,"flour, sugar, eggs, butter, frosting","gluten, dairy, egg"
+cup_cakes,"flour, sugar, eggs, butter, frosting","gluten, dairy, egg"
 deviled_eggs,"eggs, mayonnaise, mustard, paprika",egg
 donuts,"flour, sugar, eggs, milk, butter, yeast","gluten, dairy, egg"
 dumplings,"flour wrapper, pork or vegetables, soy sauce, garlic","gluten, soy"
@@ -53,7 +53,7 @@ grilled_salmon,"salmon, olive oil, lemon, garlic, herbs",fish
 guacamole,"avocados, lime, onions, tomatoes, cilantro",none
 gyoza,"wheat wrappers, pork, cabbage, garlic, soy sauce","gluten, soy"
 hamburger,"beef patty, burger bun, lettuce, tomato, cheese","gluten, dairy"
-Hot and Sour Soup,"tofu, mushrooms, vinegar, pepper, soy sauce",soy
+hot_and_sour_soup,"tofu, mushrooms, vinegar, pepper, soy sauce",soy
 hot_dog,"hot dog bun, sausage, mustard, ketchup, relish",gluten
 huevos_rancheros,"eggs, tortillas, salsa, beans, cheese","egg, dairy, gluten"
 hummus,"chickpeas, tahini, lemon, garlic, olive oil",sesame
