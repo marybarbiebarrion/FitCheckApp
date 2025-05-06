@@ -12,6 +12,34 @@ This is necessary for getting PostgreSQL to work.
 
 4. To add your section, **make an app.** This means there should only be 5 apps in total.
 
+## RUNNING THE SERVER
+
+1. If on a fresh install, run the fitcheck-setup.sql in postgres using the command:
+
+        /i fitcheck-setup.sql
+    
+    Note that this **deletes** the database and all data inside it. This is also configured such that the postgres user is just named "postgres", so make the necessary changes both in the file and in settings.py.
+
+2. Make migrations for **each app.**
+
+        python manage.py makemigrations UserProfile
+        python manage.py makemigrations FoodAnalysis
+        python manage.py makemigrations FitnessPlanning
+        python manage.py makemigrations NutritionGuidance
+        python manage.py makemigrations [wellnesstracker]
+    Doing only makemigrations outputs no changes detected, and even I'm unsure why. You can run a normal makemigrations afterwards just to be sure.
+
+3. Migrate, then run the fitcheck-populate.sql file inside postgres.
+
+        python manage.py migrate
+        [IN POSTGRES]
+        /i fitcheck-populate.sql
+    [NOTE: fitcheck-populate.sql doesn't have anything yet, so skip this for now.]
+4. Run the server.
+
+        python manage.py runserver
+
+
 Additional resources:
 [Complete Tutorial: Set-up PostgreSQL Database with Django Application](https://medium.com/django-unleashed/complete-tutorial-set-up-postgresql-database-with-django-application-d9e789ffa384)
 
