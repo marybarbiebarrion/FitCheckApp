@@ -1,12 +1,115 @@
 {% extends 'base.html' %}
 {% block content %}
+<style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      height: 100vh;
+      display: flex;
+    }
+
+    button {
+        margin-top: 0px;
+    }
+
+    .button {
+      background-color: black;
+      color:white;
+      border: 1px, solid, black;
+      padding: 15px 30px;
+      border-radius: 20px;
+    }
+
+    .button:hover {
+      color: black;
+      background-color: white;
+    }
+    .button:active {
+      color: black;
+      background-color: white;
+      border-color: white;
+    }
+
+    .sidebar {
+      width: 220px;
+      background-color: #AED9E0;
+      color: black;
+      padding: 20px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid black;
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+      font-size: 1.4rem;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #5E6472;
+      text-decoration: none;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 5px;
+    }
+
+    .sidebar a:hover {
+      background-color: #B8F2E6;
+    }
+
+    .sidebar a.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .topbar {
+      background-color: #AED9E0;
+      color: black;
+      padding: 15px 30px;
+      font-size: 20px;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: end;
+      border-bottom: 1px solid black;
+    }
+
+    .content {
+      flex: 1;
+      padding: 30px;
+      background: linear-gradient(#AED9E0, #FAF3DD, #B5DCE1);;
+      overflow-y: auto;
+    }
+
+    footer {
+      text-align: center;
+      padding: 5px;
+      color: #888;
+      background: #f0f0f0;
+    }
+    form {
+        float: left;
+    }
+</style>
     <!-- Meal Plan Generation -->
     <div class="meal_plan" style="float:left; margin-top: -30px; margin-left: -30px; padding-left: 22px; width: 648px; height: 260px; flex-shrink: 0; border: 1.5px solid #000000; border-left-style: hidden; border-top-style: hidden">
     {% if current_meal %}
-        <div id="top-right">
-            <h4 style="width: 617px; height: 20px; margin-bottom: 15px; font-size: 20px"> Next Meal: </h4>
-            <h2 style="font-size: 32px; margin-top: 0px; margin-bottom: 0px"> {{ current_meal.get_meal_type_display }}: {{ current_meal.meal_id.meal_name }} </h2>
-        </div>
+        <h4 style="width: 617px; height: 20px; margin-bottom: 15px; font-size: 20px"> Next Meal: </h4>
+        <h2 style="font-size: 32px; margin-top: 0px; margin-bottom: 0px"> {{ current_meal.get_meal_type_display }}: {{ current_meal.meal_id.meal_name }} </h2>
+
         <br />
         <form action="{% url 'NutritionGuidance:ng_nextmeal' %}" method="post">
             {% csrf_token %}
@@ -18,7 +121,7 @@
         </form>
         <br />
         <form action="{% url 'NutritionGuidance:ng_planlist' %}">
-          <button type="submit" class="button" style="float:left; margin-top: 10px;">View Meal Plan</button>
+          <button type="submit" class="button" style="float: left; margin-top: 10px">View Meal Plan</button>
         </form>
     {% else %}
       <p style="width: 617px; height: 20px; margin-bottom: 15px; font-size: 20px"> No meal plan found! Generate one now: </p>

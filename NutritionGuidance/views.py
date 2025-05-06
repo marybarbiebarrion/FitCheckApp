@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from UserProfile.models import User
 from .forms import HydrationTrackerForm
 from .models import Meal, Meal_Plan, Hydration_Tracker
+from FitnessPlanning.models import CalorieDeficitPlanner
 
 
 @login_required(login_url='/')
@@ -12,7 +13,8 @@ def ng_homeview(request):
     message = ""
     if request.method == 'POST':
         user = User.objects.get(user_id=request.user.user_id)
-        queried_meals = Meal.objects.exclude(allergen_id__allergen_name__contains="Milk").filter(calories__lte=2000/3).order_by('?')[:21]
+        allergies = user.allergy_name
+        queried_meals = Meal.objects.exclude(allergen_id__allergen_name__contains=allergies).filter(calories__lte=2100/3).order_by('?')[:21]
             # assign them to different meal types (breakfast, lunch, dinner)
         meal_type = ["breakfast", "lunch", "dinner"]
             # assign them to different days of the week
