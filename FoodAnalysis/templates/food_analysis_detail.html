@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block content %}
 <style>
@@ -41,7 +42,7 @@
     <div style="text-align: center; margin-top: 20px;">
       <p>
         <span style="font-weight: 300;">Detected Food:</span>
-        <span style="font-size: 1.5em; font-weight: bold;">{{ analysis.food_name }}</span>
+        <span style="font-size: 1.5em; font-weight: bold;">{{ analysis.food_name|fix_food_name }}</span>
       </p>
       <p style="font-size: 1.1em; color: #555;">
         {{ analysis.description }}
