@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block content %}
 <h1 style="margin-top: 0px; margin-bottom: 0px;">Food Analysis</h1>
@@ -40,7 +41,7 @@
       <div style="text-align: center;">
         <p>
           <span style="font-weight: 300;">Detected Food:</span>
-          <span class="fade-in" style="font-size: 1.5em; font-weight: bold;"> {{ analysis.food_name }}</span>
+          <span class="fade-in" style="font-size: 1.5em; font-weight: bold;"> {{ analysis.food_name|fix_food_name }}</span>
         </p>
         <p class="fade-in" style="font-size: 1.1em; color: #555;">
           {{ ai_description }}
@@ -52,11 +53,11 @@
   <section id="upper-right">
     <h3>Past Analyses</h3>
     {% if past_analyses %}
-    <div style="display: flex; flex-direction: column; gap: 10px;">
+    <div class="scrollable-list">
       {% for past in past_analyses %}
         <a href="{% url 'FoodAnalysis:food_analysis_detail' past.pk %}" style="text-decoration: none;">
           <div style="display: flex; gap: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
-            <div style="flex: 2; font-weight: bold; color: #2c3e50;">{{ past.food_name }}</div>
+            <div style="flex: 2; font-weight: bold; color: #2c3e50;">{{ past.food_name|fix_food_name }}</div>
             <div style="flex: 1; color: #555;">{{ past.analyzed_at|date:"F j, Y" }}</div>
             <div style="flex: 1; color: #555;">{{ past.analyzed_at|time:"g:i a" }}</div>
           </div>
@@ -71,43 +72,45 @@
   {% if analysis %}
   <section id="lower-left">
     <h3>Nutrition Facts per 100g</h3>
-    
-    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
-      <span style="font-weight: bold;">Calories:</span>
-      <span style="font-weight: normal;">{{ analysis.calories }}</span>
-      <span style="font-size: 0.9em;">kcal</span>
-    </p>
-    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
-      <span style="font-weight: bold;">Protein:</span>
-      <span style="font-weight: normal;">{{ analysis.protein }}</span>
-      <span style="font-size: 0.9em;">g</span>
-    </p>
-    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
-      <span style="font-weight: bold;">Carbohydrates:</span>
-      <span style="font-weight: normal;">{{ analysis.carbohydrates }}</span>
-      <span style="font-size: 0.9em;">g</span>
-    </p>
-    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
-      <span style="font-weight: bold;">Fats:</span>
-      <span style="font-weight: normal;">{{ analysis.fats }}</span>
-      <span style="font-size: 0.9em;">g</span>
-    </p>
-    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
-      <span style="font-weight: bold;">Fiber:</span>
-      <span style="font-weight: normal;">{{ analysis.fiber }}</span>
-      <span style="font-size: 0.9em;">g</span>
-    </p>
-    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
-      <span style="font-weight: bold;">Sugars:</span>
-      <span style="font-weight: normal;">{{ analysis.sugars }}</span>
-      <span style="font-size: 0.9em;">g</span>
-    </p>
-    <p class="fade-in" style="margin-left: 20px; font-size: 0.95em;">
-      <span style="font-weight: bold;">Sodium:</span>
-      <span style="font-weight: normal;">{{ analysis.sodium }}</span>
-      <span style="font-size: 0.9em;">mg</span>
-    </p>
+  
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+        <span style="font-weight: bold;">Calories:</span>
+        <span>{{ analysis.calories }} kcal</span>
+      </div>
+  
+      <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+        <span style="font-weight: bold;">Protein:</span>
+        <span>{{ analysis.protein }} g</span>
+      </div>
+  
+      <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+        <span style="font-weight: bold;">Carbohydrates:</span>
+        <span>{{ analysis.carbohydrates }} g</span>
+      </div>
+  
+      <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+        <span style="font-weight: bold;">Fats:</span>
+        <span>{{ analysis.fats }} g</span>
+      </div>
+  
+      <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+        <span style="font-weight: bold;">Fiber:</span>
+        <span>{{ analysis.fiber }} g</span>
+      </div>
+  
+      <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+        <span style="font-weight: bold;">Sugars:</span>
+        <span>{{ analysis.sugars }} g</span>
+      </div>
+  
+      <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+        <span style="font-weight: bold;">Sodium:</span>
+        <span>{{ analysis.sodium }} mg</span>
+      </div>
+    </div>
   </section>
+  
   
 
   <section id="lower-middle">
