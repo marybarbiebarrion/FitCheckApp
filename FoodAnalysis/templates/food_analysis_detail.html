@@ -61,28 +61,50 @@
   </section>
 
   <section id="lower-left">
-    <h3>Nutrition Facts per 100g</h3>
-    <p style="margin-left: 20px; font-size: 0.95em;">
-      <strong>Calories:</strong> {{ analysis.calories }} kcal
-    </p>
-    <p style="margin-left: 20px; font-size: 0.95em;">
-      <strong>Protein:</strong> {{ analysis.protein }} g
-    </p>
-    <p style="margin-left: 20px; font-size: 0.95em;">
-      <strong>Carbohydrates:</strong> {{ analysis.carbohydrates }} g
-    </p>
-    <p style="margin-left: 20px; font-size: 0.95em;">
-      <strong>Fats:</strong> {{ analysis.fats }} g
-    </p>
-    <p style="margin-left: 20px; font-size: 0.95em;">
-      <strong>Fiber:</strong> {{ analysis.fiber }} g
-    </p>
-    <p style="margin-left: 20px; font-size: 0.95em;">
-      <strong>Sugars:</strong> {{ analysis.sugars }} g
-    </p>
-    <p style="margin-left: 20px; font-size: 0.95em;">
-      <strong>Sodium:</strong> {{ analysis.sodium }} mg
-    </p>
+    <h3 id="nutrition-heading">Nutrition Facts per 100g</h3>
+
+    <!-- Food Weight Input -->
+    <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; margin-bottom: 10px;">
+      <label for="food-weight" style="font-weight: bold;">Food Weight (grams):</label>
+      <input type="number" id="food-weight" style="padding: 5px;" value="100" min="1">
+    </div>
+  
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+        <span style="font-weight: bold;">Calories:</span>
+        <span id="calories-value">{{ analysis.calories }} kcal</span>
+      </div>
+  
+      <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+        <span style="font-weight: bold;">Protein:</span>
+        <span id="protein-value">{{ analysis.protein }} g</span>
+      </div>
+  
+      <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+        <span style="font-weight: bold;">Carbohydrates:</span>
+        <span id="carbs-value">{{ analysis.carbohydrates }} g</span>
+      </div>
+  
+      <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+        <span style="font-weight: bold;">Fats:</span>
+        <span id="fats-value">{{ analysis.fats }} g</span>
+      </div>
+  
+      <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+        <span style="font-weight: bold;">Fiber:</span>
+        <span id="fiber-value">{{ analysis.fiber }} g</span>
+      </div>
+  
+      <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+        <span style="font-weight: bold;">Sugars:</span>
+        <span id="sugars-value">{{ analysis.sugars }} g</span>
+      </div>
+  
+      <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+        <span style="font-weight: bold;">Sodium:</span>
+        <span id="sodium-value">{{ analysis.sodium }} mg</span>
+      </div>
+    </div>
   </section>
 
   <section id="lower-middle">
@@ -98,4 +120,58 @@
     <p style="white-space: pre-line;">{{ analysis.alternatives }}</p>
   </section>
 </div>
+
+<script>
+  // Get elements
+  const foodWeightInput = document.getElementById('food-weight');
+  const caloriesValue = document.getElementById('calories-value');
+  const proteinValue = document.getElementById('protein-value');
+  const carbsValue = document.getElementById('carbs-value');
+  const fatsValue = document.getElementById('fats-value');
+  const fiberValue = document.getElementById('fiber-value');
+  const sugarsValue = document.getElementById('sugars-value');
+  const sodiumValue = document.getElementById('sodium-value');
+
+  // Default values (nutrition facts per 100g)
+  const nutritionFacts = {
+    calories: {{ analysis.calories }},
+    protein: {{ analysis.protein }},
+    carbohydrates: {{ analysis.carbohydrates }},
+    fats: {{ analysis.fats }},
+    fiber: {{ analysis.fiber }},
+    sugars: {{ analysis.sugars }},
+    sodium: {{ analysis.sodium }}
+  };
+
+  // Function to update the nutrition values based on food weight
+  function updateNutrition() {
+    const foodWeight = foodWeightInput.value;
+    
+    // Calculate adjusted values
+    const adjustedCalories = (nutritionFacts.calories * foodWeight) / 100;
+    const adjustedProtein = (nutritionFacts.protein * foodWeight) / 100;
+    const adjustedCarbs = (nutritionFacts.carbohydrates * foodWeight) / 100;
+    const adjustedFats = (nutritionFacts.fats * foodWeight) / 100;
+    const adjustedFiber = (nutritionFacts.fiber * foodWeight) / 100;
+    const adjustedSugars = (nutritionFacts.sugars * foodWeight) / 100;
+    const adjustedSodium = (nutritionFacts.sodium * foodWeight) / 100;
+    const nutritionHeading = document.getElementById('nutrition-heading');
+
+    // Update the values in the UI
+    nutritionHeading.textContent = `Nutrition Facts per ${foodWeight}g`;
+    caloriesValue.textContent = `${adjustedCalories.toFixed(2)} kcal`;
+    proteinValue.textContent = `${adjustedProtein.toFixed(2)} g`;
+    carbsValue.textContent = `${adjustedCarbs.toFixed(2)} g`;
+    fatsValue.textContent = `${adjustedFats.toFixed(2)} g`;
+    fiberValue.textContent = `${adjustedFiber.toFixed(2)} g`;
+    sugarsValue.textContent = `${adjustedSugars.toFixed(2)} g`;
+    sodiumValue.textContent = `${adjustedSodium.toFixed(2)} mg`;
+  }
+
+  // Add event listener to update nutrition facts on food weight input change
+  foodWeightInput.addEventListener('input', updateNutrition);
+
+  // Initialize on page load
+  updateNutrition();
+</script>
 {% endblock %}
