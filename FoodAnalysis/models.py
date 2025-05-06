@@ -10,6 +10,7 @@ class UploadedImage(models.Model):
 class FoodAnalysis(models.Model):
     image = models.ImageField(upload_to='food_images/')
     food_name = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
     ingredients = models.TextField()
     allergens = models.TextField()
     alternatives = models.TextField()

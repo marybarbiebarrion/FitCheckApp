@@ -13,6 +13,7 @@ from django.conf import settings
 from .models import FoodAnalysis
 from .forms import FoodAnalysisForm
 from .openrouter_client import ask_food_description, ask_food_alternatives
+from django.shortcuts import get_object_or_404
 
 # Load the trained model
 MODEL_PATH = os.path.join(settings.BASE_DIR, "model", "resnet18_food101.pth")
@@ -20,7 +21,7 @@ MODEL_PATH = os.path.join(settings.BASE_DIR, "model", "resnet18_food101.pth")
 model_data = torch.load(MODEL_PATH, map_location=torch.device("cpu"))
 
 if isinstance(model_data, dict) and "model_state_dict" in model_data:
-    print("Detected dictionary with 'model_state_dict'. Extracting weights...")
+    # print("Detected dictionary with 'model_state_dict'. Extracting weights...")
 
     # Initialize a new ResNet18 model
     model = models.resnet18(weights=None)
@@ -42,10 +43,10 @@ if isinstance(model_data, dict) and "model_state_dict" in model_data:
     model.load_state_dict(model_data["model_state_dict"])  
     model = model.to("cpu")
     model.eval()
-    print("Model loaded successfully using extracted state_dict.")
+    # print("Model loaded successfully using extracted state_dict.")
 
 elif isinstance(model_data, dict):
-    print("Detected pure state_dict. Loading into ResNet18 model...")
+    # print("Detected pure state_dict. Loading into ResNet18 model...")
     model = models.resnet18(weights=None)
     
     # Adjust FC layer if needed
@@ -62,10 +63,10 @@ elif isinstance(model_data, dict):
 
 
 else:
-    print("Detected full model. Loading directly...")
+    # print("Detected full model. Loading directly...")
     model = model_data
     model.eval()
-    print("Model loaded successfully as a full model.")
+    # print("Model loaded successfully as a full model.")
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
@@ -234,6 +235,7 @@ def food_analysis_view(request):
                 food_name=results['food_name'],
                 ingredients=results['ingredients'],
                 allergens=results['allergens'],
+                description=ai_description,
                 alternatives=food_alternatives,
                 calories=results['calories'],
                 protein=results['protein'],
@@ -250,4 +252,13 @@ def food_analysis_view(request):
         'past_analyses': FoodAnalysis.objects.all().order_by('-analyzed_at')[:5],
         'ai_description': ai_description,
         'food_alternatives': food_alternatives
+    })
+
+def food_analysis_detail_view(request, pk):
+    analysis = get_object_or_404(FoodAnalysis, pk=pk)
+
+    return render(request, 'food_analysis_detail.html', {
+        'analysis': analysis,
+        'ai_description': analysis.description,
+        'food_alternatives': analysis.alternatives
     })

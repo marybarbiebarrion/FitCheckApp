@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1 style="margin-top: 0px; margin-bottom: 0px;">Food Analysis Detail</h1>
+<a href="{% url 'FoodAnalysis:food_analysis' %}" class="button">Back to Analysis</a>
+
+<div class="main-content">
+  <section id="upper-left">
+    <div style="text-align: center;">
+      <img src="{{ analysis.image.url }}" alt="Analyzed Image" style="height: 200px; width: auto; border-radius: 10px;">
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+      <p>
+        <span style="font-weight: 300;">Detected Food:</span>
+        <span style="font-size: 1.5em; font-weight: bold;">{{ analysis.food_name }}</span>
+      </p>
+      <p style="font-size: 1.1em; color: #555;">
+        {{ analysis.description }}
+      </p>
+    </div>
+  </section>
+
+  <section id="upper-right">
+    <h3>Analysis Date</h3>
+    <p>{{ analysis.analyzed_at|date:"F j, Y" }}, {{ analysis.analyzed_at|time:"g:i a" }}</p>
+  </section>
+
+  <section id="lower-left">
+    <h3>Nutrition Facts per 100g</h3>
+    <p style="margin-left: 20px; font-size: 0.95em;">
+      <strong>Calories:</strong> {{ analysis.calories }} kcal
+    </p>
+    <p style="margin-left: 20px; font-size: 0.95em;">
+      <strong>Protein:</strong> {{ analysis.protein }} g
+    </p>
+    <p style="margin-left: 20px; font-size: 0.95em;">
+      <strong>Carbohydrates:</strong> {{ analysis.carbohydrates }} g
+    </p>
+    <p style="margin-left: 20px; font-size: 0.95em;">
+      <strong>Fats:</strong> {{ analysis.fats }} g
+    </p>
+    <p style="margin-left: 20px; font-size: 0.95em;">
+      <strong>Fiber:</strong> {{ analysis.fiber }} g
+    </p>
+    <p style="margin-left: 20px; font-size: 0.95em;">
+      <strong>Sugars:</strong> {{ analysis.sugars }} g
+    </p>
+    <p style="margin-left: 20px; font-size: 0.95em;">
+      <strong>Sodium:</strong> {{ analysis.sodium }} mg
+    </p>
+  </section>
+
+  <section id="lower-middle">
+    <h3>Ingredients</h3>
+    <p>{{ analysis.ingredients }}</p>
+
+    <h3>Allergens</h3>
+    <p>{{ analysis.allergens }}</p>
+  </section>
+
+  <section id="lower-right">
+    <h3>Food Alternatives</h3>
+    <p style="white-space: pre-line;">{{ analysis.alternatives }}</p>
+  </section>
+</div>
+{% endblock %}
