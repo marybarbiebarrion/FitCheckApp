@@ -17,11 +17,6 @@ This is necessary for getting PostgreSQL to work.
 1. If on a fresh install, run the fitcheck-setup.sql in postgres using the command:
 
         psql -U user_name -d postgres
-
-        DROP DATABASE fitcheck_db;
-        
-        CREATE DATABASE fitcheck_db;
-        \c fitcheck_db
         \i fitcheck-setup.sql
     
     Note that this **deletes** the database and all data inside it. This is also configured such that the postgres user is just named "postgres", so make the necessary changes both in the file and in settings.py.
