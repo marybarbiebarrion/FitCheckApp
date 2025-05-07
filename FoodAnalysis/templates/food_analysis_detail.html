@@ -109,15 +109,52 @@
 
   <section id="lower-middle">
     <h3>Ingredients</h3>
-    <p>{{ analysis.ingredients }}</p>
+    {% if analysis.ingredients %}
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        {% for ingredient in analysis.ingredients|split_by_comma %}
+          {% if ingredient %}
+            <div style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; color: #2c3e50; display: inline-flex;">
+              {{ ingredient }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No ingredients listed.</p>
+    {% endif %}
 
     <h3>Allergens</h3>
-    <p>{{ analysis.allergens }}</p>
+    {% if analysis.allergens %}
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        {% for allergen in analysis.allergens|split_by_comma %}
+          {% if allergen %}
+            <div style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; color: #2c3e50; display: inline-flex;">
+              {{ allergen }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No allergens listed.</p>
+    {% endif %}
+
   </section>
 
   <section id="lower-right">
     <h3>Food Alternatives</h3>
-    <p style="white-space: pre-line;">{{ analysis.alternatives }}</p>
+    {% if food_alternatives %}
+      <div class="scrollable-list" style="display: flex; flex-direction: column; gap: 10px;">
+        {% for alt in food_alternatives.splitlines %}
+          {% if alt.strip %}
+            <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; color: #2c3e50;">
+              {{ alt }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No alternatives available.</p>
+    {% endif %}
   </section>
 </div>
 

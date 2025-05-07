@@ -121,10 +121,10 @@
   <section id="lower-middle">
     <h3>Ingredients</h3>
     {% if analysis.ingredients %}
-      <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
         {% for ingredient in analysis.ingredients|split_by_comma %}
           {% if ingredient %}
-            <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; color: #2c3e50;">
+            <div style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; color: #2c3e50; display: inline-flex;">
               {{ ingredient }}
             </div>
           {% endif %}
@@ -133,13 +133,13 @@
     {% else %}
       <p>No ingredients listed.</p>
     {% endif %}
-  
+
     <h3>Allergens</h3>
     {% if analysis.allergens %}
-      <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
         {% for allergen in analysis.allergens|split_by_comma %}
           {% if allergen %}
-            <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; color: #2c3e50;">
+            <div style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; color: #2c3e50; display: inline-flex;">
               {{ allergen }}
             </div>
           {% endif %}
@@ -148,6 +148,7 @@
     {% else %}
       <p>No allergens listed.</p>
     {% endif %}
+
   </section>
   
   
@@ -175,58 +176,7 @@
 </div>
 
 <script>
-  // Get elements
-  const foodWeightInput = document.getElementById('food-weight');
-  const caloriesValue = document.getElementById('calories-value');
-  const proteinValue = document.getElementById('protein-value');
-  const carbsValue = document.getElementById('carbs-value');
-  const fatsValue = document.getElementById('fats-value');
-  const fiberValue = document.getElementById('fiber-value');
-  const sugarsValue = document.getElementById('sugars-value');
-  const sodiumValue = document.getElementById('sodium-value');
-
-  // Default values (nutrition facts per 100g)
-  const nutritionFacts = {
-    calories: {{ analysis.calories }},
-    protein: {{ analysis.protein }},
-    carbohydrates: {{ analysis.carbohydrates }},
-    fats: {{ analysis.fats }},
-    fiber: {{ analysis.fiber }},
-    sugars: {{ analysis.sugars }},
-    sodium: {{ analysis.sodium }}
-  };
-
-  // Function to update the nutrition values based on food weight
-  function updateNutrition() {
-    const foodWeight = foodWeightInput.value;
-    
-    // Calculate adjusted values
-    const adjustedCalories = (nutritionFacts.calories * foodWeight) / 100;
-    const adjustedProtein = (nutritionFacts.protein * foodWeight) / 100;
-    const adjustedCarbs = (nutritionFacts.carbohydrates * foodWeight) / 100;
-    const adjustedFats = (nutritionFacts.fats * foodWeight) / 100;
-    const adjustedFiber = (nutritionFacts.fiber * foodWeight) / 100;
-    const adjustedSugars = (nutritionFacts.sugars * foodWeight) / 100;
-    const adjustedSodium = (nutritionFacts.sodium * foodWeight) / 100;
-    const nutritionHeading = document.getElementById('nutrition-heading');
-
-    // Update the values in the UI
-    nutritionHeading.textContent = `Nutrition Facts per ${foodWeight}g`;
-    caloriesValue.textContent = `${adjustedCalories.toFixed(2)} kcal`;
-    proteinValue.textContent = `${adjustedProtein.toFixed(2)} g`;
-    carbsValue.textContent = `${adjustedCarbs.toFixed(2)} g`;
-    fatsValue.textContent = `${adjustedFats.toFixed(2)} g`;
-    fiberValue.textContent = `${adjustedFiber.toFixed(2)} g`;
-    sugarsValue.textContent = `${adjustedSugars.toFixed(2)} g`;
-    sodiumValue.textContent = `${adjustedSodium.toFixed(2)} mg`;
-  }
-
-  // Add event listener to update nutrition facts on food weight input change
-  foodWeightInput.addEventListener('input', updateNutrition);
-
-  // Initialize on page load
-  updateNutrition();
-
+  // === IMAGE PREVIEW ===
   document.getElementById('file-input').addEventListener('change', function(event) {
     const file = event.target.files[0];
     if (file) {
@@ -239,6 +189,7 @@
     }
   });
 
+  // === LOADING INDICATOR ===
   document.getElementById('upload-form').addEventListener('submit', function() {
     const loading = document.getElementById('loading-indicator');
     const dots = document.getElementById('dots');
@@ -250,8 +201,51 @@
       dots.textContent = '.'.repeat(count);
       count = (count % 3) + 1;
     }, 500);
-    
-    // Let form continue to submit normally
+
+    // Let form continue submitting
   });
 </script>
+
+{% if analysis %}
+<script>
+  // === NUTRITION FACTS CALCULATOR ===
+  const foodWeightInput = document.getElementById('food-weight');
+  const caloriesValue = document.getElementById('calories-value');
+  const proteinValue = document.getElementById('protein-value');
+  const carbsValue = document.getElementById('carbs-value');
+  const fatsValue = document.getElementById('fats-value');
+  const fiberValue = document.getElementById('fiber-value');
+  const sugarsValue = document.getElementById('sugars-value');
+  const sodiumValue = document.getElementById('sodium-value');
+  const nutritionHeading = document.getElementById('nutrition-heading');
+
+  const nutritionFacts = {
+    calories: {{ analysis.calories }},
+    protein: {{ analysis.protein }},
+    carbohydrates: {{ analysis.carbohydrates }},
+    fats: {{ analysis.fats }},
+    fiber: {{ analysis.fiber }},
+    sugars: {{ analysis.sugars }},
+    sodium: {{ analysis.sodium }}
+  };
+
+  function updateNutrition() {
+    const foodWeight = parseFloat(foodWeightInput.value) || 0;
+
+    caloriesValue.textContent = `${(nutritionFacts.calories * foodWeight / 100).toFixed(2)} kcal`;
+    proteinValue.textContent = `${(nutritionFacts.protein * foodWeight / 100).toFixed(2)} g`;
+    carbsValue.textContent = `${(nutritionFacts.carbohydrates * foodWeight / 100).toFixed(2)} g`;
+    fatsValue.textContent = `${(nutritionFacts.fats * foodWeight / 100).toFixed(2)} g`;
+    fiberValue.textContent = `${(nutritionFacts.fiber * foodWeight / 100).toFixed(2)} g`;
+    sugarsValue.textContent = `${(nutritionFacts.sugars * foodWeight / 100).toFixed(2)} g`;
+    sodiumValue.textContent = `${(nutritionFacts.sodium * foodWeight / 100).toFixed(2)} mg`;
+
+    nutritionHeading.textContent = `Nutrition Facts per ${foodWeight}g`;
+  }
+
+  foodWeightInput.addEventListener('input', updateNutrition);
+  updateNutrition();
+</script>
+{% endif %}
+
 {% endblock %}
