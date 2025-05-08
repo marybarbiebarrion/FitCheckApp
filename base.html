@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}FitCheck{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://kit.fontawesome.com/4a1b605065.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      height: 100vh;
+      display: flex;
+    }
+    
+    button {
+      background-color: black;
+      color: white;
+      border: 1px solid black;
+      padding: 15px 30px;
+      border-radius: 20px;
+    }
+    
+      .button:hover {
+        color: black;
+        background-color: white;
+      }
+      .button:active {
+        color: black;
+        background-color: white;
+        border-color: white;
+      }
+      .sidebar {
+        width: 220px;
+        background-color: #AED9E0;
+        color: black;
+        padding: 20px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid black;
+      }
+    
+    input[type="text"], input[type="number"], input[type="month"], textarea {
+      padding: 10px;
+      border: 1px solid #ddd; /* Light grey border */
+      border-radius: 5px;
+      font-size: 14px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    input[type="text"]:focus, input[type="number"]:focus, input[type="month"]:focus, textarea:focus {
+      outline: none;
+      border-color: #AED9E0;
+      box-shadow: 0 0 5px rgba(173, 217, 224, 0.8);
+    }
+    
+    textarea {
+      height: 30px;
+    }
+    
+      .sidebar a.active {
+        background-color: #4CAF50;
+        color: white;
+      }
+    
+      .main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+    
+    label {
+      font-size: 16px;
+      color: #333;
+      text-align: left;
+      margin-bottom: 5px;
+    }
+    
+    .sidebar {
+      width: 220px;
+      background-color: #AED9E0;
+      color: black;
+      padding: 20px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid black;
+    }
+    
+    .sidebar h2 {
+      margin-top: 0;
+      font-size: 1.4rem;
+    }
+    
+    .sidebar a {
+      display: block;
+      color: #5E6472;
+      text-decoration: none;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    
+    .sidebar a:hover {
+      background-color: #B8F2E6;
+    }
+    
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    
+    .topbar {
+      background-color: #AED9E0;
+      color: black;
+      padding: 15px 30px;
+      font-size: 20px;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: end;
+      border-bottom: 1px solid black;
+    }
+    
+    .content {
+      flex: 1;
+      padding: 30px;
+      background: linear-gradient(#AED9E0, #FAF3DD, #B5DCE1);
+      overflow-y: auto;
+      padding-top: 60px;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 5px;
+      color: #888;
+      background: #f0f0f0;
+    }
+    
+    .dashboard-container {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      gap: 40px;
+      padding: 20px;
+    }
+    
+    .section {
+      display: flex;
+      gap: 20px;
+    }
+    
+    .half {
+      flex: 1;
+      padding: 20px;
+      min-height: 250px;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 15px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }    
+    .row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: nowrap;
+    }
+
+    .cell {
+      flex: 1 1 0;
+      min-width: 150px;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      word-break: break-word;
+    }
+
+    .header-row .cell {
+      font-weight: bold;
+      background-color: #f0f0f0;
+    }
+    .table {
+      border-collapse: collapse; /* Ensures borders are merged for inner table borders */
+      width: 100%;
+      border: none; /* Remove outer border of the table */
+    }
+    
+    /* Add light grey borders to inner table cells */
+    .table th, .table td {
+      border: 1px solid #ddd; /* Light grey inner borders */
+      text-align: center;
+      font-size: 14px;
+      padding: 10px;
+    }
+    
+    .table th {
+      font-size: 15px;
+    }
+    
+    h4 {
+      text-align: left;
+      text-decoration: none;
+      font-weight: normal;
+      font-size: 25px;
+      margin: 5px;
+    }
+    
+    h3, h2 {
+      text-align: center;
+    }
+    
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-grow: 1;
+    }
+    
+    button {
+      margin-top: auto;
+    }
+    
+        footer {
+          text-align: center;
+          padding: 5px;
+          color: #888;
+          background: #f0f0f0;
+        }
+    
+        /* Grid layout for the content */
+        .main-content {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;  /* 3 columns */
+          grid-template-rows: auto auto;
+          gap: 20px;  /* Controls both row and column spacing */
+          padding: 20px;
+          width: 100%;
+      }
+      
+      #upper-left, #upper-right, #lower-left, #lower-middle, #lower-right {
+          background-color: rgba(255, 255, 255, 0.9);
+          padding: 20px;
+          border-radius: 15px;
+          box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+          width: 100%;
+      }
+      
+        /* Adjust grid placement */
+        #upper-left {
+            grid-column: 1 / 3;
+            grid-row: 1 / 2;
+        }
+    
+        #upper-right {
+            grid-column: 3 / 3;
+            grid-row: 1 / 2;
+        }
+    
+        #lower-left {
+            grid-column: 1 / 2;
+            grid-row: 2 / 3;
+        }
+    
+        #lower-middle {
+            grid-column: 2 / 2;
+            grid-row: 2 / 3;
+        }
+    
+        #lower-right {
+            grid-column: 3 / 3;
+            grid-row: 2 / 3;
+        }
+    
+        .past-analysis-card {
+          display: flex;
+          gap: 10px;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          background-color: #f9f9f9;
+          color: #2c3e50;
+          transition: all 0.3s ease;
+        }
+        
+        .past-analysis-card:hover {
+          background-color: #f0f0f0;
+          border-color: #000;
+          color: #000;
+          cursor: pointer;
+        }
+        
+        .past-analysis-card:hover div {
+          color: #000;
+        }
+      
+        .fade-in {
+          opacity: 0;
+          transform: translateY(10px);
+          animation: fadeInUp 0.5s ease-out forwards;
+        }
+  
+        @keyframes fadeInUp {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }   
+  </style>
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>FitCheck</h2>
+    <a href="#"><i class="fas fa-compass"></i> Dashboard</a>
+    <a href="#"><i class="fas fa-user"></i> Profile</a>
+    <a href="#"><i class="fas fa-puzzle-piece"></i> Food Analysis</a>
+    <a href="{% url 'wellnesstracker:bmi_form' %}"><i class="fas fa-spoon"></i> BMI Tracker</a>
+    <a href="#"><i class="fas fa-book"></i> Guidance</a>
+    <a href="#"><i class="fas fa-heartbeat"></i> Wellness Tracker</a>
+    <a href="#">Logout</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <div class="topbar">
+      Welcome, User!
+      <i class="fas fa-user-circle"></i>
+    </div>
+    <div class="content">
+      <nav>
+        <a href="{% url 'wellnesstracker:bmi_form' %}"><i class="fas fa-spoon"></i> BMI Tracker</a>
+        <a href="{% url 'wellnesstracker:mood_form' %}"><i class="fas fa-smile"></i> Mood Tracker</a>
+        <a href="{% url 'wellnesstracker:sleep_form' %}"><i class="fas fa-bed"></i> Sleep Tracker</a>
+        <a href="{% url 'wellnesstracker:past_analyses' %}"><i class="fas fa-history"></i> View Past Analyses</a>        
+      </nav>
+
+      {% block content %}
+      <!-- Example Flex-Based Table -->
+      <div class="table-wrapper">
+        <div class="row header-row">
+          <div class="cell">Name</div>
+          <div class="cell">BMI</div>
+          <div class="cell">Status</div>
+          <div class="cell">Date</div>
+        </div>
+        <!-- Dynamically Render Data from View -->
+        {% for entry in bmi_entries %}
+        <div class="row">
+          <div class="cell">{{ entry.name }}</div>
+          <div class="cell">{{ entry.bmi }}</div>
+          <div class="cell">{{ entry.status }}</div>
+          <div class="cell">{{ entry.date }}</div>
+        </div>
+        {% empty %}
+        <div class="row">
+          <div class="cell" colspan="4">No data available</div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endblock %}
+    </div>
+  </div>
+
+  <script src="/static/js/script.js"></script>
+</body>
+</html>
