@@ -3,6 +3,13 @@
 {% block title %}Sleep Tracker{% endblock %}
 
 {% block content %}
+<nav>
+    <a href="{% url 'wellnesstrack:bmi_form' %}"><i class="fas fa-spoon"></i> BMI Tracker</a>
+    <a href="{% url 'wellnesstrack:mood_form' %}"><i class="fas fa-smile"></i> Mood Tracker</a>
+    <a href="{% url 'wellnesstrack:sleep_form' %}"><i class="fas fa-bed"></i> Sleep Tracker</a>
+    <a href="{% url 'wellnesstrack:past_analyses' %}"><i class="fas fa-history"></i> View Past Analyses</a>        
+</nav>
+<br>
   <div class="mini-box">
     <h2>Log Your Sleep</h2>
     

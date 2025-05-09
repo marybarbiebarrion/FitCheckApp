@@ -193,6 +193,24 @@ footer {
   font-size: 15px;
 }
 
+    .table {
+      border-collapse: collapse; /* Ensures borders are merged for inner table borders */
+      width: 100%;
+      border: none; /* Remove outer border of the table */
+    }
+    
+    /* Add light grey borders to inner table cells */
+    .table th, .table td {
+      border: 1px solid #ddd; /* Light grey inner borders */
+      text-align: center;
+      font-size: 14px;
+      padding: 10px;
+    }
+    
+    .table th {
+      font-size: 15px;
+    }
+
 h4 {
   text-align: left;
   text-decoration: none;
@@ -358,7 +376,7 @@ button {
     <a href="{% url 'FitnessPlanning:fitness_planning_dashboard' %}"><i class="fas fa-spoon"></i> FitnessPlanning</a>
     <a href="{% url 'NutritionGuidance:ng_index' %}" class="{% if request.path == '/nutritionguidance/home/' %}active{% endif %}">
         <i class="fas fa-book"></i> NutritionGuidance</a>
-    <a href="#"><i class="fas fa-heartbeat"></i> Wellness Tracker</a>
+    <a href="{% url 'wellnesstrack:past_analyses' %}"><i class="fas fa-history"></i> Wellness Tracker</a>  
     <a href="{% url 'user_logout' %}" class="{% if request.path == '/logout/' %}active{% endif %}">
       <i class="fas fa-sign-out-alt"></i> Logout
     </a>    

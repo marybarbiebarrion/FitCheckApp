@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'UserProfile',
     'FoodAnalysis',
     'FitnessPlanning',
-    'NutritionGuidance'
+    'NutritionGuidance',
     'wellnesstrack'
 ]
 
