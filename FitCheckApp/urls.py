@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('FoodAnalysis.urls')),  # Add this line
     path('fitnessPlanning/', include('FitnessPlanning.urls', namespace="FitnessPlanning")),
     path('nutritionguidance/', include('NutritionGuidance.urls', namespace="NutritionGuidance")),
+    path('wellness/', include('wellnesstrack.urls', namespace='wellnesstrack')),
 ]
 
 if settings.DEBUG:

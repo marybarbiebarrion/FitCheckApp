@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'FoodAnalysis',
     'FitnessPlanning',
     'NutritionGuidance'
+    'wellnesstrack'
 ]
 
 MIDDLEWARE = [
